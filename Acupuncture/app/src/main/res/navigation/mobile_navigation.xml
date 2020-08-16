@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_game"
+        android:name="com.example.acupuncture.gameFragment"
+        android:label="@string/title_game"
+        tools:layout="@layout/fragment_game" />
+
+    <fragment
+        android:id="@+id/navigation_face"
+        android:name="com.example.acupuncture.faceFragment"
+        android:label="@string/title_face"
+        tools:layout="@layout/fragment_face" />
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.acupuncture.homeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_chat"
+        android:name="com.example.acupuncture.chatFragment"
+        android:label="@string/title_chat"
+        tools:layout="@layout/fragment_chat" />
+
+    <fragment
+        android:id="@+id/navigation_doctor"
+        android:name="com.example.acupuncture.doctorFragment"
+        android:label="@string/title_doctor"
+        tools:layout="@layout/fragment_doctor" />
+</navigation>

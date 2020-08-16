@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--<style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>-->
+
+    <!--<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" >
+    &lt;!&ndash;    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />&ndash;&gt;
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item> &lt;!&ndash;新增一個item，用於控制menu&ndash;&gt;
+    </style>-->
+
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>  <!--把該屬性改為false即可使menu位置位於toolbar之下-->
+    </style>
+</resources>

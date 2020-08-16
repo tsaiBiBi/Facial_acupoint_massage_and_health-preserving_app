@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/profile"
+            android:title="個人資料" />
+        <item
+            android:id="@+id/nav_drink"
+            android:icon="?android:attr/textSelectHandle"
+            android:title="飲水紀錄" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@android:drawable/ic_dialog_info"
+            android:title="關於" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="?attr/homeAsUpIndicator"
+            android:title="登出" />
+    </group>
+
+</menu>

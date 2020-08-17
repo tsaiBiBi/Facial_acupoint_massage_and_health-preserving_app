@@ -80,7 +80,7 @@
                             android:textSize="20sp" />
 
                         <EditText
-                            android:id="@+id/eT_name_regis"
+                            android:id="@+id/eT_name_my"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
@@ -100,7 +100,7 @@
                             android:textSize="20sp" />
 
                         <EditText
-                            android:id="@+id/eT_account_regis"
+                            android:id="@+id/eT_account_my"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
@@ -119,7 +119,7 @@
                             android:textSize="20sp" />
 
                         <EditText
-                            android:id="@+id/eT_password_regis"
+                            android:id="@+id/eT_password_my"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
@@ -138,7 +138,7 @@
                             android:textSize="20sp" />
 
                         <EditText
-                            android:id="@+id/eT_height_regis"
+                            android:id="@+id/eT_height_my"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
@@ -158,7 +158,7 @@
                             android:textSize="20sp" />
 
                         <EditText
-                            android:id="@+id/eT_weight_regis"
+                            android:id="@+id/eT_weight_my"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
@@ -183,14 +183,14 @@
                             android:orientation="horizontal">
 
                             <RadioButton
-                                android:id="@+id/rBt_man_regis"
+                                android:id="@+id/rBt_man_my"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="男"
                                 android:textSize="20sp" />
 
                             <RadioButton
-                                android:id="@+id/rBt_woman_regis"
+                                android:id="@+id/rBt_woman_my"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="女"
@@ -211,11 +211,11 @@
                             android:textSize="20sp" />
 
                         <EditText
-                            android:id="@+id/dT_birth_regis"
+                            android:id="@+id/dT_birth_my"
                             android:layout_width="175dp"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:inputType="number" />
+                            android:inputType="date" />
 
                     </TableRow>
 

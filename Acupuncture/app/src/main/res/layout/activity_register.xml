@@ -42,7 +42,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/bt_regis_back"
+                        android:id="@+id/btn_regis_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
@@ -55,7 +55,7 @@
                         android:textStyle="bold" />
 
                     <Button
-                        android:id="@+id/bt_regis_ok"
+                        android:id="@+id/btn_regis_ok"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -183,19 +183,20 @@
                             android:textSize="20sp" />
 
                         <RadioGroup
+                            android:id="@+id/rBt_gender_regis"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
                             <RadioButton
-                                android:id="@+id/rBt_man_regis"
+                                android:id="@+id/male"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="男"
                                 android:textSize="20sp" />
 
                             <RadioButton
-                                android:id="@+id/rBt_woman_regis"
+                                android:id="@+id/female"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="女"

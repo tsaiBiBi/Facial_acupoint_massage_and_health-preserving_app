@@ -3,146 +3,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <!--<TextView
-        android:id="@+id/textView"
-        android:layout_width="183dp"
-        android:layout_height="357dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="25dp"
-        android:background="@drawable/view_shape"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/car"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/button_shape"
-        android:text="暈車"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/eye"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="165dp"
-        android:background="@drawable/button_shape"
-        android:text="眼部疲勞"
-        app:layout_constraintEnd_toEndOf="@+id/car"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/car"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/sleep"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/button_shape"
-        android:text="失眠"
-        app:layout_constraintEnd_toEndOf="@+id/eye"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/eye"
-        app:layout_constraintTop_toBottomOf="@+id/eye" />
-
-    <Button
-        android:id="@+id/pretty"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/button_shape"
-        android:text="臉部美容"
-        app:layout_constraintEnd_toEndOf="@+id/sleep"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/sleep"
-        app:layout_constraintTop_toBottomOf="@+id/sleep" />
-
-    <Button
-        android:id="@+id/nose"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="125dp"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/button_shape"
-        android:text="鼻塞"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/cold"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="164dp"
-        android:background="@drawable/button_shape"
-        android:text="預防感冒"
-        app:layout_constraintEnd_toEndOf="@+id/nose"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/nose"
-        app:layout_constraintTop_toTopOf="parent" />-->
+    android:layout_height="match_parent"
+    android:background="#E0E4DA">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="80dp"
+            android:layout_height="400dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="20dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:scrollbarStyle="outsideOverlay">
 
                 <Button
                     android:id="@+id/nose"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/button_shape"
                     android:text="鼻塞"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="normal" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/car"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
                     android:text="暈車"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="normal" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/sleep"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
                     android:text="失眠"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
                 <Button
                     android:id="@+id/cold"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
                     android:text="預防感冒"
                     android:textColor="#FFFFFF"
@@ -152,7 +72,7 @@
                     android:id="@+id/pretty"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
                     android:text="臉部美容"
                     android:textColor="#FFFFFF"
@@ -162,22 +82,32 @@
                     android:id="@+id/eye"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
                     android:text="眼部疲勞"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
-            </TableRow>
 
-        </TableLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="330dp"
-            android:layout_height="214dp"
-            android:layout_marginTop="50dp"
+            android:layout_width="230dp"
+            android:layout_height="400dp"
+            android:layout_marginLeft="40dp"
             android:background="@drawable/view_shape"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textColor="#33352D"
+            android:textSize="24sp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="49dp"
+            android:layout_height="16dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

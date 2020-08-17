@@ -40,4 +40,7 @@
             android:screenOrientation="portrait" />
     </application>
 
+    <!--permission add-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>

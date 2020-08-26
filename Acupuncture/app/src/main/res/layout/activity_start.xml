@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E0E4DA"
+    android:background="#e0e0e0"
     tools:context=".StartActivity">
 
     <ImageView
@@ -13,6 +13,7 @@
         android:layout_height="525dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.67"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bamboo" />
@@ -21,37 +22,37 @@
         android:id="@+id/bt_login"
         android:layout_width="150dp"
         android:layout_height="99dp"
-        android:layout_marginStart="176dp"
+        android:layout_marginStart="200dp"
         android:background="@drawable/login"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.678" />
+        app:layout_constraintVertical_bias="0.669" />
 
     <Button
         android:id="@+id/bt_register"
-        android:layout_width="177dp"
-        android:layout_height="94dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="160dp"
+        android:layout_height="73dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/register"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.452" />
+        app:layout_constraintVertical_bias="0.469" />
 
     <Button
         android:id="@+id/bt_guest"
-        android:layout_width="156dp"
-        android:layout_height="104dp"
-        android:layout_marginStart="36dp"
+        android:layout_width="160dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="56dp"
         android:background="@drawable/guest"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.964" />
+        app:layout_constraintVertical_bias="0.96" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

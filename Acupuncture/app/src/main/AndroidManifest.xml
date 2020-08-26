@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     package="com.example.acupuncture">
+    <!-- permission add -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -10,22 +12,20 @@
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileActivity"
-            android:screenOrientation="portrait"
-            android:label="個人資料">
-
-        </activity>
+        <activity android:name=".EditActivity"
+            android:label="修改資料"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="個人資料"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".RegisterActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".LoginActivity"
             android:label="Login"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog">
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog"></activity>
         <activity
             android:name=".StartActivity"
             android:screenOrientation="portrait">
@@ -39,8 +39,5 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
     </application>
-
-    <!--permission add-->
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

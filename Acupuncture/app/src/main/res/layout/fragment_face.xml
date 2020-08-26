@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E0E4DA">
+    android:background="#e0e0e0">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -93,12 +93,12 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="230dp"
+            android:layout_width="250dp"
             android:layout_height="400dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/view_shape"
             android:text="TextView"
-            android:textColor="#33352D"
+            android:textColor="#00251a"
             android:textSize="24sp" />
 
         <android.support.constraint.Guideline

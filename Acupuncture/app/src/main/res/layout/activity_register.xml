@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E0E4DA"
+    android:background="#e0e0e0"
     tools:context=".MainActivity">
 
     <android.support.v4.widget.NestedScrollView
@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"
-                        android:backgroundTint="#2A5E0D"
+                        android:backgroundTint="#ffab40"
                         android:foregroundTint="#FFFFFF"
                         android:text="返回"
                         android:textColor="#FFFFFF"
@@ -59,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:backgroundTint="#2D6110"
+                        android:backgroundTint="#ffab40"
                         android:text="註冊"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp"
@@ -179,7 +179,7 @@
                             android:id="@+id/tV_gender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="性別  "
+                            android:text="角色"
                             android:textSize="20sp" />
 
                         <RadioGroup
@@ -225,6 +225,7 @@
                                 android:layout_width="175dp"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
+                                android:hint="2000-01-01"
                                 android:inputType="number" />
 
                             <Button

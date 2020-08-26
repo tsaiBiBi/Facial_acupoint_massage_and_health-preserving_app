@@ -16,7 +16,7 @@
     <!-- 邊框線 -->
     <stroke
         android:width="2dp"
-        android:color="#AF928F"
+        android:color="#ffab40"
         android:dashGap="0dp"
         android:dashWidth="0dp" />
 </shape>

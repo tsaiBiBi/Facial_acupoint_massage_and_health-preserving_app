@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#e0e0e0"
-    tools:context=".ProfileActivity">
+    tools:context=".EditActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -40,38 +40,66 @@
                 android:background="#FFFFFF"
                 app:cardCornerRadius="5dp">
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab_edit"
+                <Button
+                    android:id="@+id/btn_edit_ok"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
+                    android:layout_gravity="bottom|right"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:clickable="true"
-                    android:tint="#B0FFFFFF"
-                    app:maxImageSize="30dp"
-                    app:srcCompat="@android:drawable/ic_menu_edit" />
+                    android:backgroundTint="#ffab40"
+                    android:text="修改"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="normal|bold" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iV_photo_my"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp"
-                    android:src="@drawable/meow"
-                    app:srcCompat="@drawable/meow" />
+                    android:layout_marginTop="30dp">
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fab_edit_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:tint="#FFFFFF"
+                        app:fabCustomSize="30dp"
+                        app:fabSize="mini"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0"
+                        app:maxImageSize="25dp"
+                        app:srcCompat="@android:drawable/ic_menu_add" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iV_photo_edit"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/meow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/meow" />
+                </android.support.constraint.ConstraintLayout>
 
                 <TableLayout
                     android:id="@+id/tableLayout"
                     android:layout_width="wrap_content"
-                    android:layout_height="368dp"
+                    android:layout_height="358dp"
                     android:layout_margin="25dp"
                     android:gravity="bottom|center">
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="15dp">
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/tV_name"
@@ -80,37 +108,37 @@
                             android:text="名稱  "
                             android:textSize="20sp" />
 
-                        <TextView
-                            android:id="@+id/eT_name_my"
+                        <EditText
+                            android:id="@+id/eT_name_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:inputType="textPersonName" />
 
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="15dp">
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/tV_account"
+                            android:id="@+id/tV_password"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="帳號  "
+                            android:text="密碼  "
                             android:textSize="20sp" />
 
-                        <TextView
-                            android:id="@+id/eT_account_my"
+                        <EditText
+                            android:id="@+id/eT_password_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:inputType="textPassword" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="15dp">
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/tV_height"
@@ -119,18 +147,18 @@
                             android:text="身高"
                             android:textSize="20sp" />
 
-                        <TextView
-                            android:id="@+id/eT_height_my"
+                        <EditText
+                            android:id="@+id/eT_height_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:inputType="number" />
 
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="15dp">
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/tV_weight"
@@ -139,18 +167,18 @@
                             android:text="體重"
                             android:textSize="20sp" />
 
-                        <TextView
-                            android:id="@+id/eT_weight_my"
+                        <EditText
+                            android:id="@+id/eT_weight_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:inputType="number" />
 
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp">
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/tV_gender"
@@ -165,39 +193,19 @@
                             android:orientation="horizontal">
 
                             <RadioButton
-                                android:id="@+id/rBt_man_my"
+                                android:id="@+id/rBt_man_edit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="男"
                                 android:textSize="20sp" />
 
                             <RadioButton
-                                android:id="@+id/rBt_woman_my"
+                                android:id="@+id/rBt_woman_edit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="女"
                                 android:textSize="20sp" />
                         </RadioGroup>
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="76dp">
-
-                        <TextView
-                            android:id="@+id/tV_birth"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="生日"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/dT_birth_my"
-                            android:layout_width="175dp"
-                            android:layout_height="wrap_content"
-                            android:ems="10" />
-
                     </TableRow>
 
                 </TableLayout>

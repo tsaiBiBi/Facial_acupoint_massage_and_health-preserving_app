@@ -15,6 +15,7 @@ import com.example.webservice.User;
 import java.util.Calendar;
 
 public class RegisterActivity extends AppCompatActivity {
+
     public static RadioGroup rgrp_gender;
     public static Integer int_year, int_month, int_day , int_gender;
     public static EditText et_name , et_account , et_password , et_height , et_weight , et_birth;

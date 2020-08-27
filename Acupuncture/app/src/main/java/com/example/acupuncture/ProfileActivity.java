@@ -10,15 +10,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.dataclass.SharedPrefManager;
+
+import java.util.HashMap;
+
 public class ProfileActivity extends AppCompatActivity {
 
+    SharedPrefManager sharedprefmanager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        chk_usr_identity();
+        // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+
         if (actionBar != null) {
             // 設置返回鍵
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -34,6 +43,13 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void chk_usr_identity() {
+        sharedprefmanager = new SharedPrefManager(this);
+        if (sharedprefmanager.chk_login()) {
+
+        }
     }
 
     @Override

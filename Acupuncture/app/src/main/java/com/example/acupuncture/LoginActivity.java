@@ -1,5 +1,6 @@
 package com.example.acupuncture;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -7,17 +8,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.dataclass.SharedPrefManager;
 import com.example.webservice.User;
 
 public class LoginActivity extends AppCompatActivity {
 
     Button btn_back , btn_login;
     public static EditText et_account , et_password;
+    SharedPrefManager sharedprefmanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        // class
+        sharedprefmanager = new SharedPrefManager(this);
 
         // edittext
         et_account  = (EditText) findViewById(R.id.eT_account_log);
@@ -27,16 +32,22 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = (Button) findViewById(R.id.btn_log_ok);
         btn_back  = (Button) findViewById(R.id.btn_log_back);
 
-
         // 判斷空值及登入
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String faccount  = et_account.getText().toString();
                 String fpassword = et_password.getText().toString();
-                if(!chk_null(faccount , fpassword)) {
-                    User.login(LoginActivity.this , faccount , fpassword);
+                if (!chk_null(faccount, fpassword)) {
+                    User.login(LoginActivity.this, faccount, fpassword);
                 }
+
+                if (sharedprefmanager.chk_login()) {
+                    Intent intent = new Intent();
+                    intent.setClass(LoginActivity.this , MainActivity.class);
+                    startActivity(intent);
+                }
+                finish();
             }
         });
 

@@ -1,24 +1,30 @@
 package com.example.acupuncture;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.dataclass.SharedPrefManager;
+
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    SharedPrefManager sharedprefmanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +34,14 @@ public class MainActivity extends AppCompatActivity {
         // 取得 BottomNav__obj
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
+        // nav
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
 
+        // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         // 設定右上角的 menu
         toolbar.inflateMenu(R.menu.menu_toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -44,12 +53,17 @@ public class MainActivity extends AppCompatActivity {
 
         // 將 drawerLayout 和 toolbar 整合，出現「三」按鈕
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        // sidebar
         NavigationView navViewSide = (NavigationView) findViewById(R.id.nav_view_side);
+
+        // get sidebar textview
+        View headerView = navViewSide.getHeaderView(0);
+        TextView nav_user_name = (TextView) headerView.findViewById(R.id.username);
+
         // 側滑選單點擊事件
         navViewSide.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -70,12 +84,26 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case R.id.nav_logout:
-
+                        sharedprefmanager.logout();
                         break;
                     default:
                 }
                 return true;
             }
         });
+        chk_usr_identity(nav_user_name);
+    }
+
+    // 辨別使用者為會員或者訪客
+    private void chk_usr_identity(TextView nav_user_name) {
+        sharedprefmanager = new SharedPrefManager(this);
+        if(sharedprefmanager.chk_login()) {
+            HashMap<String , String> user = sharedprefmanager.get_user_detail();
+            String vname = user.get(SharedPrefManager.NAME);
+            nav_user_name.setText(vname);
+        }
+        else {
+            nav_user_name.setText("guest");
+        }
     }
 }

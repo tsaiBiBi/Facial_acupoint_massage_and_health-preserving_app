@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
+        android:elevation="2dp"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +36,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cardView2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="500dp"
                 android:background="#FFFFFF"
                 app:cardCornerRadius="5dp">
@@ -57,21 +58,20 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="25dp"
                     android:src="@drawable/meow"
                     app:srcCompat="@drawable/meow" />
 
                 <TableLayout
                     android:id="@+id/tableLayout"
                     android:layout_width="wrap_content"
-                    android:layout_height="368dp"
+                    android:layout_height="380dp"
                     android:layout_margin="25dp"
                     android:gravity="bottom|center">
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="15dp">
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/tV_name"
@@ -80,18 +80,18 @@
                             android:text="名稱  "
                             android:textSize="20sp" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/eT_name_my"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:focusable="false" />
 
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="15dp">
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/tV_account"
@@ -100,17 +100,17 @@
                             android:text="帳號  "
                             android:textSize="20sp" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/eT_account_my"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:focusable="false" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="15dp">
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/tV_height"
@@ -119,18 +119,18 @@
                             android:text="身高"
                             android:textSize="20sp" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/eT_height_my"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:focusable="false" />
 
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="15dp">
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/tV_weight"
@@ -139,18 +139,19 @@
                             android:text="體重"
                             android:textSize="20sp" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/eT_weight_my"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:focusable="false" />
 
                     </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginTop="5dp">
 
                         <TextView
                             android:id="@+id/tV_gender"
@@ -168,6 +169,7 @@
                                 android:id="@+id/rBt_man_my"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:clickable="false"
                                 android:text="男"
                                 android:textSize="20sp" />
 
@@ -175,6 +177,7 @@
                                 android:id="@+id/rBt_woman_my"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:clickable="false"
                                 android:text="女"
                                 android:textSize="20sp" />
                         </RadioGroup>
@@ -182,21 +185,21 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="76dp">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/tV_birth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
                             android:text="生日"
                             android:textSize="20sp" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/dT_birth_my"
                             android:layout_width="175dp"
                             android:layout_height="wrap_content"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:focusable="false" />
 
                     </TableRow>
 

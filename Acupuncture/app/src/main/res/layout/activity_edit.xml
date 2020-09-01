@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
+        android:elevation="2dp"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,15 +87,14 @@
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/meow" />
+                        app:layout_constraintVertical_bias="0.0" />
                 </android.support.constraint.ConstraintLayout>
 
                 <TableLayout
                     android:id="@+id/tableLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="358dp"
-                    android:layout_margin="25dp"
+                    android:layout_margin="20dp"
                     android:gravity="bottom|center">
 
                     <TableRow
@@ -125,6 +125,7 @@
                             android:id="@+id/tV_password"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
                             android:text="密碼  "
                             android:textSize="20sp" />
 
@@ -133,7 +134,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="10"
+                            android:focusable="false"
                             android:inputType="textPassword" />
+
+                        <Button
+                            android:id="@+id/btn_editpwd"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/baseline_keyboard_arrow_right_black_48dp"
+                            android:backgroundTint="#ACABAB"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                        </LinearLayout>
+
                     </TableRow>
 
                     <TableRow
@@ -178,7 +197,8 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp">
 
                         <TextView
                             android:id="@+id/tV_gender"

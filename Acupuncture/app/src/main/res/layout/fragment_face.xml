@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v4.widget.NestedScrollView
-            android:layout_width="80dp"
+            android:layout_width="85dp"
             android:layout_height="match_parent"
             android:fillViewport="true"
             android:scrollbars="vertical">
@@ -31,8 +31,8 @@
 
                 <Button
                     android:id="@+id/nose"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/button_shape"
                     android:text="鼻塞"
@@ -41,8 +41,8 @@
 
                 <Button
                     android:id="@+id/car"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
                     android:text="暈車"
@@ -51,8 +51,8 @@
 
                 <Button
                     android:id="@+id/sleep"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
                     android:text="失眠"
@@ -61,8 +61,8 @@
 
                 <Button
                     android:id="@+id/cold"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
                     android:text="預防感冒"
@@ -71,8 +71,8 @@
 
                 <Button
                     android:id="@+id/pretty"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
                     android:text="臉部美容"
@@ -81,8 +81,8 @@
 
                 <Button
                     android:id="@+id/eye"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
                     android:text="眼部疲勞"
@@ -111,6 +111,24 @@
                     android:scrollbars="vertical">
 
                     <Button
+                        android:id="@+id/next"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/next"
+                        app:layout_constraintBottom_toBottomOf="@+id/txtvAcupTitle"
+                        app:layout_constraintEnd_toEndOf="@+id/txtvAcupTitle"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/last"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/last"
+                        app:layout_constraintBottom_toBottomOf="@+id/txtvAcupTitle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
                         android:id="@+id/openCamera"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -131,9 +149,9 @@
                         android:id="@+id/txtvAcupTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="穴道名稱"
-                        android:gravity="center"
                         android:layout_marginVertical="10dp"
+                        android:gravity="center"
+                        android:hint="穴道名稱"
                         android:textColor="#00251a"
                         android:textSize="30sp"
                         app:layout_constraintEnd_toEndOf="parent"

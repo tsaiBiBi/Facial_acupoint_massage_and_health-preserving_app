@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.webservice.User;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -58,13 +59,15 @@ public class RegisterActivity extends AppCompatActivity {
                 int_year = c.get(Calendar.YEAR);
                 int_month = c.get(Calendar.MONTH);
                 int_day = c.get(Calendar.DAY_OF_MONTH);
-                new DatePickerDialog(RegisterActivity.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dialog = new DatePickerDialog(RegisterActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         String format = setDateFormat(year, month, day);
                         et_birth.setText(format);
                     }
-                }, int_year, int_month, int_day).show();
+                }, int_year, int_month, int_day);
+                dialog.getDatePicker().setMaxDate((new Date()).getTime());
+                dialog.show();
             }
         });
 

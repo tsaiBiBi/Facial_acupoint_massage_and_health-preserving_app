@@ -3,26 +3,26 @@
 
     <item
         android:id="@+id/navigation_game"
-        android:icon="@drawable/ic_videogame_asset_black_24dp"
+        android:icon="@drawable/game"
         android:title="@string/title_game" />
 
     <item
         android:id="@+id/navigation_face"
-        android:icon="@drawable/ic_mood_black_24dp"
+        android:icon="@drawable/mood"
         android:title="@string/title_face" />
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/home"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_chat"
-        android:icon="@drawable/ic_chat_black_24dp"
+        android:icon="@drawable/chat"
         android:title="@string/title_chat" />
 
     <item
         android:id="@+id/navigation_doctor"
-        android:icon="@drawable/ic_local_hospital_black_24dp"
+        android:icon="@drawable/hospital"
         android:title="@string/title_doctor" />
 </menu>

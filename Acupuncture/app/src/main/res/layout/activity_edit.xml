@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e0e0e0"
+    android:background="#004d40"
     tools:context=".EditActivity">
 
     <android.support.v7.widget.Toolbar
@@ -21,8 +21,9 @@
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="30dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,14 +31,14 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cardView2"
-                android:layout_width="wrap_content"
-                android:layout_height="500dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="#FFFFFF"
                 app:cardCornerRadius="5dp">
 
@@ -55,10 +56,166 @@
                     android:textStyle="normal|bold" />
 
                 <android.support.constraint.ConstraintLayout
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="30dp">
+
+                    <TableLayout
+                        android:id="@+id/tableLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iV_photo_edit"
+                        app:layout_constraintVertical_bias="0.20">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/tV_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="名稱  "
+                                android:textSize="20sp" />
+
+                            <EditText
+                                android:id="@+id/eT_name_edit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:focusable="false"
+                                android:inputType="textPersonName" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/tV_password"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="密碼  "
+                                android:textSize="20sp" />
+
+                            <EditText
+                                android:id="@+id/eT_password_edit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:focusable="false"
+                                android:inputType="textPassword" />
+
+                            <Button
+                                android:id="@+id/btn_editpwd"
+                                android:layout_width="30dp"
+                                android:layout_height="40dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/editpwd"
+                                android:backgroundTint="#ACABAB"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                            </LinearLayout>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/tV_height"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="身高"
+                                android:textSize="20sp" />
+
+                            <EditText
+                                android:id="@+id/eT_height_edit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:inputType="number" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/tV_weight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="體重"
+                                android:textSize="20sp" />
+
+                            <EditText
+                                android:id="@+id/eT_weight_edit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:inputType="number" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:id="@+id/tV_gender"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="角色"
+                                android:textSize="20sp" />
+
+                            <RadioGroup
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/rBt_man_edit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="男"
+                                    android:textSize="20sp" />
+
+                                <RadioButton
+                                    android:id="@+id/rBt_woman_edit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="女"
+                                    android:textSize="20sp" />
+                            </RadioGroup>
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iV_photo_edit"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/meow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/fab_edit_photo"
@@ -68,167 +225,13 @@
                         android:tint="#FFFFFF"
                         app:fabCustomSize="30dp"
                         app:fabSize="mini"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="1.0"
+                        app:layout_constraintBottom_toBottomOf="@+id/iV_photo_edit"
+                        app:layout_constraintEnd_toEndOf="@+id/iV_photo_edit"
+                        app:layout_constraintStart_toEndOf="@+id/iV_photo_edit"
+                        app:layout_constraintTop_toBottomOf="@+id/iV_photo_edit"
                         app:maxImageSize="25dp"
-                        app:srcCompat="@android:drawable/ic_menu_add" />
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iV_photo_edit"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/meow"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:srcCompat="@drawable/add" />
                 </android.support.constraint.ConstraintLayout>
-
-                <TableLayout
-                    android:id="@+id/tableLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="358dp"
-                    android:layout_margin="20dp"
-                    android:gravity="bottom|center">
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/tV_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="名稱  "
-                            android:textSize="20sp" />
-
-                        <EditText
-                            android:id="@+id/eT_name_edit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/tV_password"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="密碼  "
-                            android:textSize="20sp" />
-
-                        <EditText
-                            android:id="@+id/eT_password_edit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="textPassword" />
-
-                        <Button
-                            android:id="@+id/btn_editpwd"
-                            android:layout_width="30dp"
-                            android:layout_height="40dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/baseline_keyboard_arrow_right_black_48dp"
-                            android:backgroundTint="#ACABAB"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                        </LinearLayout>
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/tV_height"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="身高"
-                            android:textSize="20sp" />
-
-                        <EditText
-                            android:id="@+id/eT_height_edit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="number" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/tV_weight"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="體重"
-                            android:textSize="20sp" />
-
-                        <EditText
-                            android:id="@+id/eT_weight_edit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="number" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dp">
-
-                        <TextView
-                            android:id="@+id/tV_gender"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="角色"
-                            android:textSize="20sp" />
-
-                        <RadioGroup
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/rBt_man_edit"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="男"
-                                android:textSize="20sp" />
-
-                            <RadioButton
-                                android:id="@+id/rBt_woman_edit"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="女"
-                                android:textSize="20sp" />
-                        </RadioGroup>
-                    </TableRow>
-
-                </TableLayout>
 
             </android.support.v7.widget.CardView>
         </LinearLayout>

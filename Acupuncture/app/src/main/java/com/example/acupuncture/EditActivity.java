@@ -1,6 +1,7 @@
 package com.example.acupuncture;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,11 +18,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.FileNotFoundException;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -103,7 +107,7 @@ public class EditActivity extends AppCompatActivity {
             // 如果是 document 型別的 Uri, 則通過 document id 處理
             String docId = DocumentsContract.getDocumentId(uri);
             if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
-                String id = docId.split(":")[1];  // 解析出數字格式的id
+                String id = docId.split(":")[1];  // 解析出數字格式的 id
                 String selection = MediaStore.Images.Media._ID + "=" + id;
                 imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
             } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
@@ -114,7 +118,7 @@ public class EditActivity extends AppCompatActivity {
             // 如果是 cntent 型別的 Uri, 則使用普通方式處理
             imagePath = getImagePath(uri, null);
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            // 如果是 file 型別的Uri, 直接獲取圖片路徑即可
+            // 如果是 file 型別的 Uri, 直接獲取圖片路徑即可
             imagePath = uri.getPath();
         }
         displayImage(imagePath);
@@ -152,4 +156,5 @@ public class EditActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -7,7 +7,7 @@
             android:title="個人資料" />
         <item
             android:id="@+id/nav_drink"
-            android:icon="?android:attr/textSelectHandle"
+            android:icon="@drawable/drink"
             android:title="飲水紀錄" />
         <item
             android:id="@+id/nav_about"
@@ -15,7 +15,7 @@
             android:title="關於" />
         <item
             android:id="@+id/nav_logout"
-            android:icon="?attr/homeAsUpIndicator"
+            android:icon="@drawable/logout"
             android:title="登出" />
     </group>
 

@@ -78,7 +78,9 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.nav_drink:
-
+                        Intent drink = new Intent();
+                        drink.setClass(MainActivity.this, DrinkActivity.class);
+                        startActivity(drink);
                         break;
                     case R.id.nav_about:
 

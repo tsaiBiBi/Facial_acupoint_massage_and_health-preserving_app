@@ -60,12 +60,12 @@
                     android:textSize="20sp" />
 
                 <Button
-                    android:id="@+id/cold"
+                    android:id="@+id/pain"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
-                    android:text="預防感冒"
+                    android:text="緩解疼痛"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
 
@@ -85,7 +85,17 @@
                     android:layout_height="75dp"
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
-                    android:text="眼部疲勞"
+                    android:text="眼睛保健"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/cold"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/button_shape"
+                    android:text="預防感冒"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp" />
 
@@ -169,6 +179,21 @@
                         android:textColor="#00251a"
                         android:textSize="25sp"
                         app:layout_constraintTop_toBottomOf="@+id/txtvAcupTitle" />
+
+                    <TextView
+                        android:id="@+id/txtvAcupPosition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="31dp"
+                        android:layout_marginVertical="14dp"
+                        android:text="穴道位置"
+                        android:lineSpacingMultiplier="1.5"
+                        android:textColor="	#3C3C3C"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toTopOf="@+id/imageAcup"
+                        app:layout_constraintTop_toTopOf="@+id/txtvAcup"
+                        app:layout_constraintVertical_bias="1.0"
+                        tools:layout_editor_absoluteX="5dp" />
 
                     <ImageView
                         android:id="@+id/imageAcup"

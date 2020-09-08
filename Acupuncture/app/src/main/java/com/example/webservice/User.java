@@ -25,7 +25,7 @@ public class User {
 
     private static RequestQueue requestQueue;
     static SharedPrefManager sharedprefmanager;
-
+    public static boolean acupIsGotten;
     // 註冊
     public static void register(final Context cxt_register, final String fname, final String faccount, final String fpassword, final String fheight, final String fweight, final String fbirth, final Integer fgender) {
 
@@ -199,6 +199,7 @@ public class User {
                     public void onResponse(JSONArray response) {
                         try {
                             String name, part, position, times, func, detail, img;
+                            acupIsGotten = true;
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
                                 name = jsonObject.getString("acup_name");

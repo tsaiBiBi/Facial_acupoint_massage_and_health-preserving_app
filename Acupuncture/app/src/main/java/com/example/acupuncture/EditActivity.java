@@ -1,6 +1,7 @@
 package com.example.acupuncture;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -62,7 +64,7 @@ public class EditActivity extends AppCompatActivity {
         });
 
         // 點擊跳至修改密碼頁面
-        Button editpwd = (Button) findViewById(R.id.btn_editpwd);
+        EditText editpwd = (EditText) findViewById(R.id.eT_password_edit);
         editpwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,13 +75,30 @@ public class EditActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+            Log.e("uri", uri.toString());
+            ContentResolver cr = this.getContentResolver();
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                // 將 Bitmap 設定到 ImageView
+                photo.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                Log.e("Exception", e.getMessage(), e);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private void openAlbum() {
         Intent intent = new Intent("android.intent.action.GET_CONTENT");
         intent.setType("image/*");
         startActivityForResult(intent, EDIT_PHOTO);  // 打開相簿
     }
 
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case 1:
@@ -102,6 +121,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
     // 處理圖片
+    @TargetApi(19)
     private void handleImageOnKitKat(Intent data){
         String imagePath = null;
         Uri uri = data.getData();
@@ -157,6 +177,5 @@ public class EditActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
+    }*/
 }

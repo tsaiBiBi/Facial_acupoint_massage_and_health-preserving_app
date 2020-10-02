@@ -5,12 +5,35 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 public class homeFragment extends Fragment {
 
+    ImageView gender_image;
+
+    public homeFragment() {}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        gender_image = (ImageView) view.findViewById(R.id.image);;
+        set_gender_img();
+        return view;
     }
 
+    public void set_gender_img() {
+        MainActivity activity = (MainActivity) getActivity();
+        String vgender = activity.set_gender_img();
+        if(vgender.equals("1")) {
+            gender_image.setImageResource(R.drawable.man);
+        }
+        else {
+            gender_image.setImageResource(R.drawable.girl);
+        }
+    }
+
+    public void onResume() {
+        super.onResume();
+        set_gender_img();
+    }
 }

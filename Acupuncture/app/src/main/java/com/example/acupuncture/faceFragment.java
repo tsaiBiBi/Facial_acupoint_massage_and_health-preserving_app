@@ -12,8 +12,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dataclass.Acup;
 import com.example.dataclass.Urls;
-import com.example.webservice.User;
+import com.example.webservice.Acupuncture;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class faceFragment extends Fragment {
     TextView txtvAcupTitle, txtvAcup;
 
     static int showingAcup = -1;
+    static Urls urls;
     boolean lastCanBePressed, nextCanBePressed;
 
     public static List<Acup> acupunctures = new ArrayList<>();
@@ -37,8 +39,8 @@ public class faceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_face, container, false);
         // 從資料庫去拿所有穴道的資料
-        if (!User.acupIsGotten) {
-            User.acup(getActivity());
+        if (!Acupuncture.acupIsGotten) {
+            Acupuncture.acup(getActivity());
         }
         btnNose = v.findViewById(R.id.nose);
         btnCar = v.findViewById(R.id.car);
@@ -163,7 +165,7 @@ public class faceFragment extends Fragment {
                             String detail = acupunctures.get(i).detail;
                             txtvAcupTitle.setText(acupList[which]);
                             txtvAcup.setText(detail);
-                            String urlImage = Urls.img_url + acupunctures.get(i).img;
+                            String urlImage = urls.acup_img_url + acupunctures.get(i).img;
                             Picasso.with(getActivity()).load(urlImage).into(ivAcup);
 
                             // 設置左排按鈕顏色

@@ -14,7 +14,7 @@ import com.example.webservice.User;
 public class LoginActivity extends AppCompatActivity {
 
     Button btn_back , btn_login;
-    public static EditText et_account , et_password;
+    public EditText et_account , et_password;
     SharedPrefManager sharedprefmanager;
 
     @Override

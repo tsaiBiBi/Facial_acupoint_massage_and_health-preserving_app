@@ -1,15 +1,12 @@
 package com.example.acupuncture;
 
 import android.Manifest;
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 
+import com.example.webservice.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -18,26 +15,85 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditActivity extends AppCompatActivity {
 
+    public static EditText et_name , et_height , et_weight;
+    public static RadioButton radio_man , radio_woman;
+    public static Integer int_gender;
     public static final int EDIT_PHOTO = 2;
+    RadioGroup rgrp_gender;
+    public Button btn_edit;
     private ImageView photo;
+    private Bitmap bitmap;
+    public String img_url;
+    public CircleImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+
+        // image
+        img = (CircleImageView) findViewById(R.id.iV_photo_edit);
+
+        // edittext
+        et_name = (EditText) findViewById(R.id.eT_name_edit);
+        et_height = (EditText) findViewById(R.id.eT_height_edit);
+        et_weight = (EditText) findViewById(R.id.eT_weight_edit);
+
+        // button
+        btn_edit = (Button) findViewById(R.id.btn_edit_ok);
+
+        // radio
+        rgrp_gender = (RadioGroup) findViewById(R.id.rBt_gender_edit);
+        radio_man = (RadioButton) findViewById(R.id.rBt_man_edit);
+        radio_woman = (RadioButton) findViewById(R.id.rBt_woman_edit);
+
+        // set intent value
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        et_name.setText(extras.getString("usr_name"));
+        et_height.setText(extras.getString("usr_height"));
+        et_weight.setText(extras.getString("usr_weight"));
+        img_url = extras.getString("img_url");
+        int_gender = extras.getInt("usr_gender");
+
+        Func.set_user_image(EditActivity.this , img_url , img);
+
+        // gender
+        if(extras.getInt("usr_gender") == 1) {
+            radio_man.setChecked(true);
+        }
+        else {
+            radio_woman.setChecked(true);
+        }
+
+        // radio
+        rgrp_gender = (RadioGroup) findViewById(R.id.rBt_gender_edit);
+
+        // 判斷性別
+        rgrp_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group , int selected) {
+                int_gender = selected == R.id.rBt_man_edit ? 1 : 0;
+            }
+        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,6 +117,20 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
+        // 判斷空值及登入
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String fname   = et_name.getText().toString();
+                String fheight = et_height.getText().toString();
+                String fweight = et_weight.getText().toString();
+                Integer fgender = int_gender;
+                if (!chk_null(fname , fheight , fweight , fgender)) {
+                    User.edit(EditActivity.this, fname , fheight , fweight , fgender);
+                }
+            }
+        });
+
         // 點擊跳至修改密碼頁面
         Button editpwd = (Button) findViewById(R.id.btn_editpwd);
         editpwd.setOnClickListener(new View.OnClickListener() {
@@ -80,83 +150,45 @@ public class EditActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case 1:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openAlbum();
-                } else {
-                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-        }
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case EDIT_PHOTO:
-                handleImageOnKitKat(data);
-        }
-    }
-
-    // 處理圖片
-    private void handleImageOnKitKat(Intent data){
-        String imagePath = null;
-        Uri uri = data.getData();
-        if (DocumentsContract.isDocumentUri(this, uri)) {
-            // 如果是 document 型別的 Uri, 則通過 document id 處理
-            String docId = DocumentsContract.getDocumentId(uri);
-            if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
-                String id = docId.split(":")[1];  // 解析出數字格式的 id
-                String selection = MediaStore.Images.Media._ID + "=" + id;
-                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
-            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
-                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
-                imagePath = getImagePath(contentUri, null);
+        if (resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+            Log.i("uri", uri.toString());
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver() , uri);
+                photo.setImageBitmap(bitmap);
             }
-        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            // 如果是 cntent 型別的 Uri, 則使用普通方式處理
-            imagePath = getImagePath(uri, null);
-        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            // 如果是 file 型別的 Uri, 直接獲取圖片路徑即可
-            imagePath = uri.getPath();
-        }
-        displayImage(imagePath);
-    }
-
-    private String getImagePath(Uri uri,String selection) {
-        String path = null;
-        // 通過 Uri 和 selection 來獲取真實的圖片路徑
-        Cursor cursor = getContentResolver().query(uri,null,selection,null,null);
-        if (cursor != null) {
-            if(cursor.moveToFirst()){
-                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            catch (IOException e) {
+                e.printStackTrace();
             }
-            cursor.close();
+            upload_img(get_string_image(bitmap));
         }
-        return path;
-    }
-    // 顯示圖片
-    private void displayImage(String imagePath) {
-        if (imagePath != null) {
-            Bitmap bitmap= BitmapFactory.decodeFile(imagePath);
-            photo.setImageBitmap(bitmap);
-        }else {
-            Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
-        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // 點擊返回鍵，關閉當前活動
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    // 上傳圖片
+    private void upload_img(final String img) {
+        User.upload_img(EditActivity.this , img);
     }
 
+    public String get_string_image(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG , 100 , byteArrayOutputStream);
+
+        byte[] image_byte_array = byteArrayOutputStream.toByteArray();
+        String encode_img = Base64.encodeToString(image_byte_array , Base64.DEFAULT);
+        Log.i("uri", encode_img);
+        return encode_img;
+    }
+
+
+    // 確認是否有欄位為空值
+    private boolean chk_null(String fname , String fheight , String fweight , Integer fgender) {
+        Boolean is_null = false;
+        if(fname.isEmpty() || fheight.isEmpty() || fweight.isEmpty() || fgender == null) {
+            Toast.makeText(EditActivity.this ,"請填完所有欄位" , Toast.LENGTH_LONG).show();
+            is_null = true;
+        }
+        return is_null;
+    }
 }

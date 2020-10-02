@@ -88,7 +88,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
-                                android:focusable="false"
                                 android:inputType="textPersonName" />
 
                         </TableRow>
@@ -184,6 +183,7 @@
                                 android:textSize="20sp" />
 
                             <RadioGroup
+                                android:id="@+id/rBt_gender_edit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">

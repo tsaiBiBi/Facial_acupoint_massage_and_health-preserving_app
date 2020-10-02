@@ -3,12 +3,15 @@ package com.example.acupuncture;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.example.dataclass.Urls;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -20,10 +23,14 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.dataclass.SharedPrefManager;
 
 import java.util.HashMap;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private TextView nav_user_name;
+    private CircleImageView nav_user_image;
+    public String img_url;
     SharedPrefManager sharedprefmanager;
 
     @Override
@@ -62,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
         // get sidebar textview
         View headerView = navViewSide.getHeaderView(0);
-        TextView nav_user_name = (TextView) headerView.findViewById(R.id.username);
+        nav_user_name = (TextView) headerView.findViewById(R.id.username);
+        nav_user_image = (CircleImageView) headerView.findViewById(R.id.icon_image);
 
         // 側滑選單點擊事件
         navViewSide.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -100,12 +108,31 @@ public class MainActivity extends AppCompatActivity {
     private void chk_usr_identity(TextView nav_user_name) {
         sharedprefmanager = new SharedPrefManager(this);
         if(sharedprefmanager.chk_login()) {
-            HashMap<String , String> user = sharedprefmanager.get_user_detail();
-            String vname = user.get(SharedPrefManager.NAME);
-            nav_user_name.setText(vname);
+            getPrefs();
         }
         else {
             nav_user_name.setText("guest");
         }
+    }
+
+    // 設定使用者名稱
+    private void getPrefs() {
+        HashMap<String , String> user = sharedprefmanager.get_user_detail();
+        nav_user_name.setText(user.get(SharedPrefManager.NAME));
+        img_url = Urls.self_img_url + user.get(SharedPrefManager.IMG);
+        Func.set_user_image(MainActivity.this , img_url , nav_user_image);
+    }
+
+    public String set_gender_img() {
+        String vgender = sharedprefmanager.get_user_detail().get(SharedPrefManager.GENDER);
+        return vgender;
+    }
+
+    // refresh
+    protected void onResume() {
+        super.onResume();
+        getPrefs();
+        set_gender_img();
+        Func.set_user_image_no_cache(MainActivity.this , img_url , nav_user_image);
     }
 }

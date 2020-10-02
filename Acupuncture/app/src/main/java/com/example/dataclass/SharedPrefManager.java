@@ -20,6 +20,7 @@ public class SharedPrefManager {
     public  static final String ID         = "ID";
     public  static final String GENDER     = "GENDER";
     public  static final String NAME       = "NAME";
+    public  static final String IMG        = "IMG";
 
     public SharedPrefManager(Context context) {
         this.context = context;
@@ -27,13 +28,29 @@ public class SharedPrefManager {
         editor = sharedPreferences.edit();
     }
 
-    public void create_shared_pref(String id , String name , String gender) {
+    // 建立
+    public void create_shared_pref(String id , String name , String gender , String img) {
 
         editor.putBoolean(IS_LOGIN , true);
         editor.putString(ID , id);
         editor.putString(GENDER , gender);
         editor.putString(NAME , name);
+        editor.putString(IMG , img);
         editor.apply();
+    }
+
+    // 重設
+    public void reset_shared_pref(String name , String gender) {
+
+        editor.remove(GENDER).putString(GENDER , gender);
+        editor.remove(NAME).putString(NAME , name);
+        editor.commit();
+    }
+
+    // 重設圖片
+    public void reset_shared_img(String img) {
+        editor.remove(IMG).putString(IMG , img);
+        editor.commit();
     }
 
     public boolean is_login() {
@@ -49,6 +66,7 @@ public class SharedPrefManager {
         }
     }
 
+    // 使用者登出清理
     public void logout() {
         editor.clear().commit();
         context.startActivity(new Intent(context , StartActivity.class));
@@ -59,6 +77,7 @@ public class SharedPrefManager {
         user.put(ID     , sharedPreferences.getString(ID , null));
         user.put(GENDER , sharedPreferences.getString(GENDER , null));
         user.put(NAME   , sharedPreferences.getString(NAME , null));
+        user.put(IMG    , sharedPreferences.getString(IMG , null));
         return user;
     }
 }

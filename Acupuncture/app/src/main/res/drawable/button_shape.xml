@@ -15,8 +15,8 @@
     <corners android:radius="15dp" />
     <!-- 邊框線 -->
     <stroke
-        android:width="2dp"
-        android:color="#ffab40"
+        android:width="3dp"
+        android:color="#00251a"
         android:dashGap="0dp"
         android:dashWidth="0dp" />
 </shape>

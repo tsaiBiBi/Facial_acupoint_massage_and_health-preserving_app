@@ -42,11 +42,12 @@ public class LoginActivity extends AppCompatActivity {
                     User.login(LoginActivity.this, faccount, fpassword);
                 }
 
-                if (sharedprefmanager.chk_login()) {
+                if(sharedprefmanager.chk_login() == true) {
                     Intent intent = new Intent();
-                    intent.setClass(LoginActivity.this , MainActivity.class);
+                    intent.setClass(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
+
                 finish();
             }
         });

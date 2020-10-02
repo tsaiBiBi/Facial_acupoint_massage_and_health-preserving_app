@@ -45,10 +45,13 @@ public class StartActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 Class activity;
                 
-                if(sharedprefmanager.chk_login()) {
+                if (sharedprefmanager.chk_login()) {
                     Toast.makeText(StartActivity.this, "您已登入", Toast.LENGTH_LONG).show();
+                    activity = MainActivity.class;
                 }
-                activity = MainActivity.class;
+                else {
+                    activity = LoginActivity.class;
+                }
 
                 intent.setClass(StartActivity.this, activity);
                 startActivity(intent);

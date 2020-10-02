@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_about:
 
                         break;
+
                     case R.id.nav_logout:
                         sharedprefmanager.logout();
                         break;
@@ -124,10 +125,8 @@ public class MainActivity extends AppCompatActivity {
     // 設定使用者名稱
     private void getPrefs() {
         HashMap<String , String> user = sharedprefmanager.get_user_detail();
-        String name = user.get(SharedPrefManager.NAME);
-        String img = user.get(SharedPrefManager.IMG);
-        name = name == null ? "遊客" : name;
-        img = img == null ? "default.png" : img;
+        String name = user.get(SharedPrefManager.NAME) == null ? "遊客" : user.get(SharedPrefManager.NAME);
+        String img = user.get(SharedPrefManager.IMG) == null ? "遊客" : user.get(SharedPrefManager.IMG);
         nav_user_name.setText(name);
         img_url = Urls.self_img_url + img;
         Func.set_user_image(MainActivity.this , img_url , nav_user_image);

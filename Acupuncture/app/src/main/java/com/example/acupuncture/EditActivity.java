@@ -1,6 +1,7 @@
 package com.example.acupuncture;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,8 +19,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -30,6 +33,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import java.io.FileNotFoundException;
+import java.util.Calendar;
+import java.util.Date;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -37,12 +43,16 @@ public class EditActivity extends AppCompatActivity {
     public static RadioButton radio_man , radio_woman;
     public static Integer int_gender;
     public static final int EDIT_PHOTO = 2;
-    RadioGroup rgrp_gender;
     public Button btn_edit;
     private ImageView photo;
     private Bitmap bitmap;
     public String img_url;
     public CircleImageView img;
+    public static Integer int_year, int_month, int_day;
+    public static EditText et_birth;
+
+    Button btn_date;
+    RadioGroup rgrp_gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +104,8 @@ public class EditActivity extends AppCompatActivity {
                 int_gender = selected == R.id.rBt_man_edit ? 1 : 0;
             }
         });
+        et_birth = (EditText) findViewById(R.id.dT_birth_edit);
+        btn_date = (Button)findViewById(R.id.dBt_birth);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -141,6 +153,26 @@ public class EditActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // 選擇日期
+        btn_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar c = Calendar.getInstance();
+                int_year = c.get(Calendar.YEAR);
+                int_month = c.get(Calendar.MONTH);
+                int_day = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(EditActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        String format = setDateFormat(year, month, day);
+                        et_birth.setText(format);
+                    }
+                }, int_year, int_month, int_day);
+                dialog.getDatePicker().setMaxDate((new Date()).getTime());
+                dialog.show();
+            }
+        });
     }
 
     private void openAlbum() {
@@ -170,14 +202,32 @@ public class EditActivity extends AppCompatActivity {
 
     public String get_string_image(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG , 100 , byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
 
         byte[] image_byte_array = byteArrayOutputStream.toByteArray();
-        String encode_img = Base64.encodeToString(image_byte_array , Base64.DEFAULT);
+        String encode_img = Base64.encodeToString(image_byte_array, Base64.DEFAULT);
         Log.i("uri", encode_img);
         return encode_img;
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openAlbum();
+                } else {
+                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+        }
+    }
+
+    // 顯示日期
+    private String setDateFormat(int year,int monthOfYear,int dayOfMonth){
+        return String.valueOf(year) + "-" + String.valueOf(monthOfYear + 1) + "-" + String.valueOf(dayOfMonth);
+    }
 
     // 確認是否有欄位為空值
     private boolean chk_null(String fname , String fheight , String fweight , Integer fgender) {
@@ -187,5 +237,16 @@ public class EditActivity extends AppCompatActivity {
             is_null = true;
         }
         return is_null;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // 點擊返回鍵，關閉當前活動
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

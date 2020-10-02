@@ -46,12 +46,10 @@ public class StartActivity extends AppCompatActivity {
                 Class activity;
                 
                 if(sharedprefmanager.chk_login()) {
-                    Toast.makeText(StartActivity.this , "您已登入", Toast.LENGTH_LONG).show();
-                    activity = MainActivity.class;
+                    Toast.makeText(StartActivity.this, "您已登入", Toast.LENGTH_LONG).show();
                 }
-                else {
-                    activity = LoginActivity.class;
-                }
+                activity = MainActivity.class;
+
                 intent.setClass(StartActivity.this, activity);
                 startActivity(intent);
             }

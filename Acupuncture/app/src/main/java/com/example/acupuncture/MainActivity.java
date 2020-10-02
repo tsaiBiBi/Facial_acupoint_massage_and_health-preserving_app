@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -81,9 +82,14 @@ public class MainActivity extends AppCompatActivity {
                 // 各選項點擊事件
                 switch (menuItem.getItemId()) {
                     case R.id.nav_profile:
-                        Intent intent = new Intent();
-                        intent.setClass(MainActivity.this, ProfileActivity.class);
-                        startActivity(intent);
+                        if(sharedprefmanager.get_user_detail().get(SharedPrefManager.ID) == null) {
+                            Toast.makeText(MainActivity.this, "訪客無法使用此功能", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Intent intent = new Intent();
+                            intent.setClass(MainActivity.this, ProfileActivity.class);
+                            startActivity(intent);
+                        }
                         break;
                     case R.id.nav_drink:
                         Intent drink = new Intent();
@@ -118,13 +124,18 @@ public class MainActivity extends AppCompatActivity {
     // 設定使用者名稱
     private void getPrefs() {
         HashMap<String , String> user = sharedprefmanager.get_user_detail();
-        nav_user_name.setText(user.get(SharedPrefManager.NAME));
-        img_url = Urls.self_img_url + user.get(SharedPrefManager.IMG);
+        String name = user.get(SharedPrefManager.NAME);
+        String img = user.get(SharedPrefManager.IMG);
+        name = name == null ? "遊客" : name;
+        img = img == null ? "default.png" : img;
+        nav_user_name.setText(name);
+        img_url = Urls.self_img_url + img;
         Func.set_user_image(MainActivity.this , img_url , nav_user_image);
     }
 
     public String set_gender_img() {
         String vgender = sharedprefmanager.get_user_detail().get(SharedPrefManager.GENDER);
+        vgender = vgender == null ? "0" : vgender;
         return vgender;
     }
 

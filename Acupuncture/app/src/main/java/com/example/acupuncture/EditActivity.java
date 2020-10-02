@@ -132,7 +132,7 @@ public class EditActivity extends AppCompatActivity {
         });
 
         // 點擊跳至修改密碼頁面
-        Button editpwd = (Button) findViewById(R.id.btn_editpwd);
+        EditText editpwd = (EditText) findViewById(R.id.eT_password_edit);
         editpwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,17 +153,14 @@ public class EditActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Uri uri = data.getData();
-            Log.i("uri", uri.toString());
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver() , uri);
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 photo.setImageBitmap(bitmap);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             upload_img(get_string_image(bitmap));
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     // 上傳圖片

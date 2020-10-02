@@ -80,13 +80,15 @@
                                 android:id="@+id/tV_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:text="名稱  "
-                                android:textSize="20sp" />
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
 
                             <EditText
                                 android:id="@+id/eT_name_edit"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
                                 android:ems="10"
                                 android:inputType="textPersonName" />
 
@@ -102,12 +104,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:text="密碼  "
-                                android:textSize="20sp" />
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
 
                             <EditText
                                 android:id="@+id/eT_password_edit"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
                                 android:ems="10"
                                 android:focusable="false"
                                 android:inputType="textPassword" />
@@ -129,13 +132,15 @@
                                 android:id="@+id/tV_height"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:text="身高"
-                                android:textSize="20sp" />
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
 
                             <EditText
                                 android:id="@+id/eT_height_edit"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
                                 android:ems="10"
                                 android:inputType="number" />
 
@@ -149,13 +154,15 @@
                                 android:id="@+id/tV_weight"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:text="體重"
-                                android:textSize="20sp" />
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
 
                             <EditText
                                 android:id="@+id/eT_weight_edit"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
                                 android:ems="10"
                                 android:inputType="number" />
 
@@ -163,19 +170,21 @@
 
                         <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="10dp">
+                            android:layout_height="match_parent">
 
                             <TextView
                                 android:id="@+id/tV_gender"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:text="角色"
-                                android:textSize="20sp" />
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
 
                             <RadioGroup
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
+                                android:gravity="center_vertical"
                                 android:orientation="horizontal">
 
                                 <RadioButton
@@ -192,6 +201,40 @@
                                     android:text="女"
                                     android:textSize="20sp" />
                             </RadioGroup>
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/tV_birth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="生日"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <TableRow
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/dT_birth_edit"
+                                    android:layout_width="177dp"
+                                    android:layout_height="50dp"
+                                    android:ems="10"
+                                    android:inputType="date" />
+
+                                <Button
+                                    android:id="@+id/dBt_birth"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:background="@android:drawable/ic_menu_today" />
+
+                            </TableRow>
+
                         </TableRow>
 
                     </TableLayout>
@@ -213,7 +256,7 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:tint="#FFFFFF"
-                        app:fabCustomSize="30dp"
+                        app:fabCustomSize="24dp"
                         app:fabSize="mini"
                         app:layout_constraintBottom_toBottomOf="@+id/iV_photo_edit"
                         app:layout_constraintEnd_toEndOf="@+id/iV_photo_edit"

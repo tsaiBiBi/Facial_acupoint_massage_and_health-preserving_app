@@ -9,3 +9,5 @@
 - 2020/09/10 v1.3.3 微調介面及程式碼(**鎔瑄**)
 - 2020/10/02 v1.3.4 微調介面/修改icon/新增修改生日功能(**鎔瑄**)
 - 2020/10/02 v1.4.0 會員修改資料/照片上傳(**kiwi**)
+
+- 2020/10/25 加    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />  在 Manifest 中

@@ -14,7 +14,15 @@
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DrinkActivity"></activity>
+        <activity android:name=".DiseaseclickedActivity"
+            android:label="病徵點擊次數統計"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ScreenTimeActivity"
+            android:label="螢幕使用時間統計"
+            android:screenOrientation="portrait" />
+        <activity android:name=".TimeSetActivity" />
+        <activity android:name=".DrinkActivity" />
         <activity
             android:name=".EditpwdActivity"
             android:label="修改密碼"

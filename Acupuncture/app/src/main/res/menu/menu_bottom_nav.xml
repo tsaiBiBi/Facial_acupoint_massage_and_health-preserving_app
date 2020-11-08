@@ -18,8 +18,8 @@
 
     <item
         android:id="@+id/navigation_chat"
-        android:icon="@drawable/chat"
-        android:title="@string/title_chat" />
+        android:icon="@drawable/dashboard"
+        android:title="@string/title_dashboard" />
 
     <item
         android:id="@+id/navigation_doctor"

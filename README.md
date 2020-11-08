@@ -11,3 +11,5 @@
 - 2020/10/02 v1.4.0 會員修改資料/照片上傳(**kiwi**)
 
 - 2020/10/25 加   `android:usesCleartextTraffic="true"`  在 Manifest 中
+
+- 2020/11/08 v1.4.1 修改chat為dashboard/新增螢幕使用、病徵按壓統計介面(**鎔瑄**)

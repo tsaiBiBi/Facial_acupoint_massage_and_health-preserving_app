@@ -4,7 +4,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,7 +17,7 @@ import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
 
-public class DiseaseclickedActivity extends AppCompatActivity {
+public class DiseaseClickedActivity extends AppCompatActivity {
 
     int[] colorClassArray = new int[]{0xFF554499, 0xFFabcd44, 0xFF789542};
     private int count = 7;

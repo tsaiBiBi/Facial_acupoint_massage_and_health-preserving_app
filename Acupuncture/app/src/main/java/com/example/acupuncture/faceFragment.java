@@ -3,8 +3,11 @@ package com.example.acupuncture;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,23 +18,24 @@ import android.widget.TextView;
 import com.example.dataclass.Acup;
 import com.example.dataclass.Urls;
 import com.example.webservice.Acupuncture;
+import com.example.webservice.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class faceFragment extends Fragment {
-    Button btnNose, btnCar, btnSleep, btnCold, btnPretty, btnEye, btnPain;
-    Button btnOpenCam;
-    Button btnNext, btnLast;
-    Button btnNowSymp, btnLastSymp;
-    boolean btnLastIsSetted;
-    ImageView ivAcup;
-    TextView txtvAcupTitle, txtvAcup;
+    private Button btnNose, btnCar, btnSleep, btnCold, btnPretty, btnEye, btnPain;
+    private Button btnOpenCam;
+    private Button btnNext, btnLast;
+    private Button btnNowSymp, btnLastSymp;
+    private boolean btnLastIsSetted;
+    private ImageView ivAcup;
+    private TextView txtvAcupTitle, txtvAcup;
+    private Urls urls;
 
-    static int showingAcup = -1;
-    static Urls urls;
-    boolean lastCanBePressed, nextCanBePressed;
+    private static int showingAcup = -1;
+    private boolean lastCanBePressed, nextCanBePressed;
 
     public static List<Acup> acupunctures = new ArrayList<>();
 
@@ -42,6 +46,8 @@ public class faceFragment extends Fragment {
         if (!Acupuncture.acupIsGotten) {
             Acupuncture.acup(getActivity());
         }
+        showingAcup = -1;
+
         btnNose = v.findViewById(R.id.nose);
         btnCar = v.findViewById(R.id.car);
         btnSleep = v.findViewById(R.id.sleep);
@@ -59,11 +65,8 @@ public class faceFragment extends Fragment {
         btnNext = v.findViewById(R.id.next);
         btnLast = v.findViewById(R.id.last);
 
-        // 有資料時才可以按
-//        if(nowShowingAcup > 0) {
-            btnNext.setOnClickListener(btnNextAcup);
-            btnLast.setOnClickListener(btnLastAcup);
-//        }
+        btnNext.setOnClickListener(btnNextAcup);
+        btnLast.setOnClickListener(btnLastAcup);
 
         btnNose.setOnClickListener(btnAcupList);
         btnCar.setOnClickListener(btnAcupList);
@@ -73,14 +76,9 @@ public class faceFragment extends Fragment {
         btnEye.setOnClickListener(btnAcupList);
         btnPain.setOnClickListener(btnAcupList);
 
-        btnOpenCam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(); //呼叫照相機
-                intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
-                startActivity(intent);
-            }
-        });
+        btnOpenCam.setBackgroundResource(R.drawable.button_shape_notallowed);
+        btnOpenCam.setTextColor(Color.GRAY);
+        btnOpenCam.setOnClickListener(openCamOnListener);
 
         return v;
     }
@@ -90,6 +88,20 @@ public class faceFragment extends Fragment {
         Acup nowAcup = new Acup(num, name, part, position, times, func, detail, img);
         acupunctures.add(nowAcup);
     }
+
+    // 可按壓開啟相機鍵
+    private View.OnClickListener openCamOnListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(showingAcup > 0) {
+                Intent intent = new Intent(); //呼叫照相機
+                intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
+                Integer acupID = acupunctures.get(showingAcup).num;
+                User.pressedRec(getActivity(), acupID);
+                startActivity(intent);
+            }
+        }
+    };
 
     private View.OnClickListener btnAcupList = new View.OnClickListener() {
         @Override
@@ -169,7 +181,7 @@ public class faceFragment extends Fragment {
                             Picasso.with(getActivity()).load(urlImage).into(ivAcup);
 
                             // 設置左排按鈕顏色
-                            if(!btnLastIsSetted){
+                            if (!btnLastIsSetted) {
                                 btnLastSymp = btnNowSymp;
                                 btnLastIsSetted = true;
                             }
@@ -183,6 +195,10 @@ public class faceFragment extends Fragment {
                             lastBtnControl();
                             // 右還有資料就可亮
                             nextBtnControl();
+
+                            btnOpenCam.setTextColor(Color.WHITE);
+                            btnOpenCam.setBackgroundResource(R.drawable.button_shape);
+
                             break;
                         }
                     }
@@ -193,34 +209,35 @@ public class faceFragment extends Fragment {
         }
     };
 
-    public void lastBtnControl(){
+    public void lastBtnControl() {
         // 如果此時TextView中的穴道號碼-1也等於現在的穴道名稱
         // 左還有資料就可亮
-        if(acupunctures.get(showingAcup - 1).num > 0 && acupunctures.get(showingAcup - 1).name.equals( acupunctures.get(showingAcup).name)){
+        if (acupunctures.get(showingAcup - 1).num > 0 && acupunctures.get(showingAcup - 1).name.equals(acupunctures.get(showingAcup).name)) {
             btnLast.setBackgroundResource(R.drawable.lastok);
             lastCanBePressed = true;
-        }else {
+        } else {
             btnLast.setBackgroundResource(R.drawable.last);
             lastCanBePressed = false;
         }
     }
 
-    public void nextBtnControl(){
+    public void nextBtnControl() {
         // 如果此時TextView中的穴道號碼+1也等於現在的穴道名稱
         // 右還有資料就可亮
-        if(acupunctures.get(showingAcup + 1).num < acupunctures.size() && acupunctures.get(showingAcup + 1).name.equals( acupunctures.get(showingAcup).name)){
+        if (acupunctures.get(showingAcup + 1).num < acupunctures.size() && acupunctures.get(showingAcup + 1).name.equals(acupunctures.get(showingAcup).name)) {
             btnNext.setBackgroundResource(R.drawable.nextok);
             nextCanBePressed = true;
-        }else {
+        } else {
             btnNext.setBackgroundResource(R.drawable.next);
             nextCanBePressed = false;
         }
     }
+
     private View.OnClickListener btnLastAcup = new View.OnClickListener() {
 
         @Override
         public void onClick(View view) {
-            if(showingAcup > 0 && lastCanBePressed) {
+            if (showingAcup > 0 && lastCanBePressed) {
                 // 更改現狀
                 showingAcup = showingAcup - 1;
                 txtvAcup.setText(acupunctures.get(showingAcup).detail);
@@ -240,7 +257,7 @@ public class faceFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            if(showingAcup > 0 && nextCanBePressed) {
+            if (showingAcup > 0 && nextCanBePressed) {
                 // 更改現狀
                 showingAcup = showingAcup + 1;
                 txtvAcup.setText(acupunctures.get(showingAcup).detail);
@@ -256,10 +273,11 @@ public class faceFragment extends Fragment {
             }
         }
     };
+
     // 更改左排按鈕
-    public void leftButtonControl(String function){
+    public void leftButtonControl(String function) {
         // 先改變btnNowSymp
-        switch (function){
+        switch (function) {
             case "鼻子不適":
                 btnNowSymp = btnNose;
                 break;

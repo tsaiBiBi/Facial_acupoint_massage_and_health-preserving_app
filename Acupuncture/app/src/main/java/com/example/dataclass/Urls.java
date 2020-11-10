@@ -11,6 +11,7 @@ public class Urls {
     public static final String acup       = root_url + "acupuncture/get_acup";
     public static final String acup_img_url = root_url + "resources/pic/acup/";
     public static final String self_img_url = root_url + "resources/pic/self/";
+    public static final String questions       = root_url + "question/get";
 
 }
 

@@ -78,15 +78,17 @@ public class ScreenTimeActivity extends AppCompatActivity {
         // 設定 x 軸
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);  // x 軸顯示在下方
-        xAxis.setTextSize(12);  // x 軸文字大小
+        xAxis.setTextSize(16);  // x 軸文字大小
         xAxis.setTextColor(Color.parseColor("#00251a"));  // x 軸文字顏色
         // 去除 x 軸
         xAxis.setDrawAxisLine(false);
 
         // 設定左側 y 軸
         YAxis yAxis = chart.getAxisLeft();
-        yAxis.setTextSize(12);
+        yAxis.setTextSize(16);
         yAxis.setTextColor(Color.parseColor("#00251a"));
+
+        chart.setScaleEnabled(false);  // 圖表禁止縮放
 
         // 超時設定(NumberPicker)
         overtime = findViewById(R.id.overtime);

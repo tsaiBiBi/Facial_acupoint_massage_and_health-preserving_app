@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class DiseaseClickedActivity extends AppCompatActivity {
 
-    int[] colorClassArray = new int[]{0xFF554499, 0xFFabcd44, 0xFF789542};
+    int[] colorClassArray = new int[]{0xFF616621, 0xFFAC7D87, 0xFFE5CC53};  // 542200 2D1200
     private int count = 7;
 
     @Override
@@ -63,14 +63,16 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         XAxis xAxis = chart.getXAxis();
         // x 軸顯示在下方
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(12);
-        xAxis.setTextColor(Color.parseColor("#00251a"));
+        xAxis.setTextSize(16);
+        xAxis.setTextColor(Color.parseColor("#FFFFFF"));
         // 去除 x 軸
-        xAxis.setDrawAxisLine(false);
+        //xAxis.setDrawAxisLine(false);
 
         YAxis yAxis = chart.getAxisLeft();
-        yAxis.setTextSize(12);
-        yAxis.setTextColor(Color.parseColor("#00251a"));
+        yAxis.setTextSize(16);
+        yAxis.setTextColor(Color.parseColor("#FFFFFF"));
+
+        chart.setScaleEnabled(false);  // 圖表禁止縮放
     }
 
     private ArrayList<BarEntry> dataValue() {

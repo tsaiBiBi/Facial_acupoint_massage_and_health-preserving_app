@@ -2,6 +2,7 @@ package com.example.webservice;
 
 // widget & data structure
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
@@ -18,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 // dataclass & activity
+import com.example.acupuncture.DiseaseClickedActivity;
 import com.example.acupuncture.ProfileActivity;
 import com.example.acupuncture.faceFragment;
 import com.example.dataclass.SharedPrefManager;
@@ -27,6 +30,7 @@ public class User {
 
     private static RequestQueue requestQueue;
     static SharedPrefManager sharedprefmanager;
+    public static boolean recordIsGotten;
 
     // 註冊
     public static void register(final Context cxt_register, final String fname, final String faccount, final String fpassword, final String fheight, final String fweight, final String fbirth, final Integer fgender) {
@@ -312,6 +316,40 @@ public class User {
         };
         requestQueue = Volley.newRequestQueue(cxt_face.getApplicationContext());
         requestQueue.add(stringRequest);
+    }
+
+    public static void pressedCount(final Context cxt_record) {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.POST, Urls.pressedCount, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            String date, func;
+                            int usr, times;
+                            recordIsGotten = true;
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                usr = jsonObject.getInt("usr_id");
+                                date = jsonObject.getString("day");
+                                func = jsonObject.getString("acup_func");
+                                times = jsonObject.getInt("times");
+                                Log.i("11", date);
+                                DiseaseClickedActivity.recordMap(i, usr, date, func, times);
+                            }
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(cxt_record , "Some error occurred -> " + error , Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        requestQueue = Volley.newRequestQueue(cxt_record.getApplicationContext());
+        requestQueue.add(jsonArrayRequest);
     }
 
 }

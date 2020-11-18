@@ -9,6 +9,7 @@ public class Urls {
     public static final String update_pwd = root_url + "user/update_pwd";
     public static final String upload_img = root_url + "user/upload_img";
     public static final String pressedRec = root_url + "user/save_record";
+    public static final String pressedCount = root_url + "user/get_record";
     public static final String acup       = root_url + "acupuncture/get_acup";
     public static final String acup_img_url = root_url + "resources/pic/acup/";
     public static final String self_img_url = root_url + "resources/pic/self/";

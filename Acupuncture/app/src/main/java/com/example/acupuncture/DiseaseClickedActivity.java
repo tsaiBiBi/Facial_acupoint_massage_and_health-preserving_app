@@ -5,9 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.graphics.Color;
+import android.icu.text.AlphabeticIndex;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.dataclass.Acup;
+import com.example.dataclass.Pressed;
+import com.example.webservice.Acupuncture;
+import com.example.webservice.User;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -16,16 +22,23 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DiseaseClickedActivity extends AppCompatActivity {
 
     int[] colorClassArray = new int[]{0xFF616621, 0xFFAC7D87, 0xFFE5CC53};  // 542200 2D1200
     private int count = 7;
+    public static List<Pressed> record = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diseaseclicked);
+
+        // 從資料庫去拿所有資料
+        if (!User.recordIsGotten) {
+            User.pressedCount(getApplicationContext());
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,14 +76,15 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         XAxis xAxis = chart.getXAxis();
         // x 軸顯示在下方
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(16);
+        xAxis.setTextSize(12);
         xAxis.setTextColor(Color.parseColor("#FFFFFF"));
         // 去除 x 軸
-        //xAxis.setDrawAxisLine(false);
+        xAxis.setDrawAxisLine(false);
 
         YAxis yAxis = chart.getAxisLeft();
-        yAxis.setTextSize(16);
+        yAxis.setTextSize(12);
         yAxis.setTextColor(Color.parseColor("#FFFFFF"));
+        yAxis.setAxisMinimum(0f);
 
         chart.setScaleEnabled(false);  // 圖表禁止縮放
     }
@@ -94,4 +108,10 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public static void recordMap(int num, int usr, String date, String func, int times) {
+        Pressed nowFunc = new Pressed(num, usr, date, func, times);
+        record.add(nowFunc);
+    }
+
 }

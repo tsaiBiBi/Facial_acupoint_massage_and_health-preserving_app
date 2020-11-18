@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,11 +95,25 @@ public class faceFragment extends Fragment {
         @Override
         public void onClick(View view) {
             if(showingAcup > 0) {
-                Intent intent = new Intent(); //呼叫照相機
-                intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
-                Integer acupID = acupunctures.get(showingAcup).num;
-                User.pressedRec(getActivity(), acupID);
-                startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("是否要記錄此次按壓，並作為就醫推薦的參考");
+                builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Integer acupID = acupunctures.get(showingAcup).num;
+                        User.pressedRec(getActivity(), acupID);
+                        Intent intent = new Intent(); //呼叫照相機
+                        intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
+                        startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(); //呼叫照相機
+                        intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
+                        startActivity(intent);
+                    }
+                });
+                builder.show();
             }
         }
     };

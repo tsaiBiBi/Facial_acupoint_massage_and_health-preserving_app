@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/navigation_chat"
         android:name="com.example.acupuncture.chatFragment"
-        android:label="@string/title_chat"
+        android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_chat" />
 
     <fragment

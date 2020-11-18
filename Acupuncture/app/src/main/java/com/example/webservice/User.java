@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 // dataclass & activity
 import com.example.acupuncture.ProfileActivity;
+import com.example.acupuncture.faceFragment;
 import com.example.dataclass.SharedPrefManager;
 import com.example.dataclass.Urls;
 
@@ -284,4 +285,33 @@ public class User {
         requestQueue = Volley.newRequestQueue(cxt_edit.getApplicationContext());
         requestQueue.add(stringRequest);
     }
+
+    // 紀錄使用者按壓穴道
+    public static void pressedRec(final Context cxt_face, final Integer acupID) {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST , Urls.pressedRec , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                requestQueue.getCache().clear();
+            }},
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(cxt_face , "Some error occurred -> " + error , Toast.LENGTH_LONG).show();
+                    }
+                })
+        {
+            @Override
+            protected Map<String , String> getParams()  {
+                Map<String , String> params = new HashMap<String , String>();
+                sharedprefmanager = new SharedPrefManager(cxt_face);
+                params.put("usr_id" , sharedprefmanager.get_user_detail().get(SharedPrefManager.ID));
+                params.put("acup_id" , String.valueOf(acupID));
+                return params;
+            }
+        };
+        requestQueue = Volley.newRequestQueue(cxt_face.getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
 }

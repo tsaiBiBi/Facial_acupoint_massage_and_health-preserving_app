@@ -35,41 +35,19 @@ public class gameplayingFragment extends Fragment {
     private String rightAnswer;
     private int rightAnswerCount = 0;
     private int quizCount = 1;
-    private int test = 0;
-    static final private int QUIZ_COUNT = 5;
-
-
-
+    private List<String> wronglist = new ArrayList<>();
+    private List<String> parsinglist = new ArrayList<>();
+    private List<String> choice = new ArrayList<>();
+    static final private int QUIZ_COUNT = 10;
     public static List<Que> questions = new ArrayList<>();
-
-    ArrayList<ArrayList<String>> quizArray = new ArrayList<>();
-    String quizData[][] = {
-            // {"Country", "Right Answer", "Choice1", "Choice2", "Choice3"}
-            {"請問哪一個穴道可以眼睛保健?", "承泣穴", "印堂穴", "下關穴", "絲竹空"},
-            {"請問哪一個穴道無法 \n達到臉部美容的效果?", "水溝穴", "顴髎穴", "陽白穴", "瞳子膠"},
-            {"Indonesia", "Jakarta", "Manila", "New Delhi", "Kuala Lumpur"},
-            {"Japan", "Tokyo", "Bangkok", "Taipei", "Jakarta"},
-            {"Thailand", "Bangkok", "Berlin", "Havana", "Kingston"},
-            {"Brazil", "Brasilia", "Havana", "Bangkok", "Copenhagen"},
-            {"Canada", "Ottawa", "Bern", "Copenhagen", "Jakarta"},
-            {"Cuba", "Havana", "Bern", "London", "Mexico City"},
-            {"Mexico", "Mexico City", "Ottawa", "Berlin", "Santiago"},
-            {"United States", "Washington D.C.", "San Jose", "Buenos Aires", "Kuala Lumpur"},
-            {"France", "Paris", "Ottawa", "Copenhagen", "Tokyo"},
-            {"Germany", "Berlin", "Copenhagen", "Bangkok", "Santiago"},
-            {"Italy", "Rome", "London", "Paris", "Athens"},
-            {"Spain", "Madrid", "Mexico City", "Jakarta", "Havana"},
-            {"United Kingdom", "London", "Rome", "Paris", "Singapore"}
-    };
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v  = inflater.inflate(R.layout.fragment_gameplaying, container, false);
 
-        if (!Questions.queIsGotten) {
-            Questions.que(getActivity());
-        }
+        questions = (List<Que>) getArguments().getSerializable("Questions");
+
 
         countLabel = v.findViewById(R.id.countLabel);
         questionLabel = v.findViewById(R.id.questionLabel);
@@ -79,93 +57,68 @@ public class gameplayingFragment extends Fragment {
         answerBtn4 = v.findViewById(R.id.answerBtn4);
 
 
-        for (int i = 0; i < quizData.length; i++) {
-
-            // Prepare array.
-            ArrayList<String> tmpArray = new ArrayList<>();
-            tmpArray.add(quizData[i][0]); // Country
-            tmpArray.add(quizData[i][1]); // Right Answer
-            tmpArray.add(quizData[i][2]); // Choice1
-            tmpArray.add(quizData[i][3]); // Choice2
-            tmpArray.add(quizData[i][4]); // Choice3
-
-            // Add tmpArray to quizArray.
-            quizArray.add(tmpArray);
-            Log.v("CATEGORY", tmpArray + "123");
-        }
 
         answerBtn1.setOnClickListener(whichdown);
         answerBtn2.setOnClickListener(whichdown);
         answerBtn3.setOnClickListener(whichdown);
         answerBtn4.setOnClickListener(whichdown);
+        Log.v("CATEGORY", questions.size() + "start33");
 
         showNextQuiz();
-
         return v;
-    }
-    public static void quesMap(int num, String topic,String answer,String select1,String select2,String select3,String parsing) {
-        // 將資料以穴道為單位分類
-        Que nowQue = new Que(num, topic, answer, select1, select2, select3, parsing);
-        questions.add(nowQue);
-
     }
 
 
     public void showNextQuiz() {
 
-        String[] totalques = new String[questions.size()];
         String[] totalanswer = new String[questions.size()];
+        String[] totalques = new String[questions.size()];
 
         int j = 0;
 
-
-        Log.v("CATEGORY", test + "testwooo");
-        Log.v("CATEGORY", questions.size() + "quizsizewooo");
+        Log.v("CATEGORY", questions.size() + "start2222");
 
         for (int i = 0; i < questions.size(); i++) {
-            Log.v("CATEGORY",  "i is"+ i + "wooo");
-            if(i == test){
+            if(i == (quizCount-1)){
                 totalques[j] = questions.get(i).topic;
                 totalanswer[j] = questions.get(i).answer;
-                Log.v("CATEGORY",  "part1"+totalques[j] + "wooo");
+                Log.v("CATEGORY",  "i is"+i + "ques woo");
+                Log.v("CATEGORY",  "i is"+quizCount + "ques woo");
                 questionLabel.setText(totalques[j]);
+                //存正確答案
                 rightAnswer=totalanswer[j];
-                answerBtn2.setText(totalanswer[j]);
+
+                //將四個選項存進去 choice 的 array list
+                choice.add(questions.get(i).answer);
+                choice.add(questions.get(i).select1);
+                choice.add(questions.get(i).select2);
+                choice.add(questions.get(i).select3);
+                Log.v("CATEGORY",  "part1"+choice + "ques woo");
+
             }
 
         }
-        test++;
+        Log.v("CATEGORY",  "part1"+totalques[j] + "wooo");
+        Log.v("CATEGORY",  "part1"+totalanswer[j] + "wooo");
+
+
 
         // Update quizCountLabel.
         countLabel.setText("Q" + quizCount);
 
-
-        // Generate random number between 0 and 14 (quizArray's size - 1)
-        Random random = new Random();
-        int randomNum = random.nextInt(quizArray.size());
-
-        // Pick one quiz set.
-        ArrayList<String> quiz = quizArray.get(randomNum);
-
-//        questionLabel.setText(quiz.get(0));
-//        rightAnswer = quiz.get(1);
-
-
-        // Remove "Country" from quiz and Shuffle choices.
-        quiz.remove(0);
-        Collections.shuffle(quiz);
+        //將 choice 的選項亂數
+        Collections.shuffle(choice);
 
         // Set choices.
-        answerBtn1.setText(quiz.get(0));
-//        answerBtn2.setText(quiz.get(1));
-        answerBtn3.setText(quiz.get(2));
-        answerBtn4.setText(quiz.get(3));
+        answerBtn1.setText(choice.get(0));
+        answerBtn2.setText(choice.get(1));
+        answerBtn3.setText(choice.get(2));
+        answerBtn4.setText(choice.get(3));
+
+        //清空 choice
+        choice.clear();
 
 
-
-        quizArray.remove(randomNum);
-
-        
     }
 
 
@@ -180,41 +133,40 @@ public class gameplayingFragment extends Fragment {
                 case R.id.answerBtn1:
                     Nowchoies = answerBtn1;
                     fSymp = (String) answerBtn1.getText();
-                    //Toast.makeText(getActivity(), fSymp, Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.answerBtn2:
                     Nowchoies = answerBtn2;
                     fSymp = (String) answerBtn2.getText();
-                    //Toast.makeText(getActivity(), fSymp, Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.answerBtn3:
                     Nowchoies = answerBtn3;
                     fSymp = (String) answerBtn3.getText();
-                    //Toast.makeText(getActivity(), fSymp, Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.answerBtn4:
                     Nowchoies = answerBtn4;
                     fSymp = (String) answerBtn4.getText();
-                    //Toast.makeText(getActivity(), fSymp, Toast.LENGTH_SHORT).show();
                     break;
             }
 
-
             if (fSymp == rightAnswer ){
-                Toast.makeText(getActivity(),"答對囉", Toast.LENGTH_SHORT).show();
+                //正確答案
                 Nowchoies.setBackgroundResource(R.drawable.quiz_correct);
-
                 rightAnswerCount++;
             } else {
-                Toast.makeText(getActivity(),"錯了", Toast.LENGTH_SHORT).show();
+                //錯誤
                 Nowchoies.setBackgroundResource(R.drawable.quiz_wrong);
-
-
+                //儲存錯誤的題目跟相對應的解析
+                wronglist.add((String) questionLabel.getText());
+                for (int i = 0; i < questions.size(); i++) {
+                    if (i == (quizCount-1)){
+                        parsinglist.add(questions.get(quizCount-1).parsing);
+                    }
+                }
             }
 
 
 
-            if (quizCount == QUIZ_COUNT) {
+            if (quizCount == 10) {
 
                 // Create new fragment and transaction
                 Fragment newfragment = new gameresultFragment();
@@ -222,16 +174,22 @@ public class gameplayingFragment extends Fragment {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, newfragment);
                 transaction.addToBackStack(null);
+                //傳達錯的題目以及解析過去
                 bundle.putInt("Integer", rightAnswerCount);
+                bundle.putStringArrayList("Wronglist", (ArrayList<String>) wronglist);
+                bundle.putStringArrayList("Parsinglist", (ArrayList<String>) parsinglist);
+                Log.v("CATEGORY", wronglist + "2lalala2");
+                Log.v("CATEGORY", parsinglist + "2lalala2");
                 newfragment.setArguments(bundle);
                 transaction.commit();
 
             } else {
                 quizCount++;
-                //Log.v("CATEGORY", rightAnswerCount + "qazqaz");
                 //幾秒後(delaySec)呼叫runTimerStop這個Runnable，再由這個Runnable去呼叫你想要做的事情
                 myHandler.postDelayed(runTimerStop,100);
                 showNextQuiz();
+                Log.v("CATEGORY",  "part"+ quizCount + "qqq");
+
             }
 
         }

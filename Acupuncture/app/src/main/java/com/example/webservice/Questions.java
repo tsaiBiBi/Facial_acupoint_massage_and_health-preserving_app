@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 // fragment & dataclass
 import com.example.acupuncture.gameplayingFragment;
+import com.example.acupuncture.gameFragment;
 import com.example.dataclass.Urls;
 
 
@@ -31,17 +32,19 @@ public class Questions {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
+                            Integer id;
                             String topic, answer, select1, select2, select3, parsing;
                             queIsGotten = true;
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
+                                id = jsonObject.getInt("question_id");
                                 topic = jsonObject.getString("question_topic");
                                 answer = jsonObject.getString("question_answer");
                                 select1 = jsonObject.getString("question_select_1");
                                 select2 = jsonObject.getString("question_select_2");
                                 select3 = jsonObject.getString("question_select_3");
                                 parsing = jsonObject.getString("question_parsing");
-                                gameplayingFragment.quesMap(i, topic, answer, select1, select2, select3, parsing);
+                                gameFragment.quesMap(i,id, topic, answer, select1, select2, select3, parsing);
                             }
                         }
                         catch (JSONException e) {

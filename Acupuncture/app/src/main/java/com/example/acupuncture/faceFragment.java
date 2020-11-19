@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class faceFragment extends Fragment {
-    private Button btnNose, btnCar, btnSleep, btnCold, btnPretty, btnEye, btnPain;
+    private Button btnNose, btnHead, btnSleep, btnTeeth, btnPretty, btnEye, btnEar;
     private Button btnOpenCam;
     private Button btnNext, btnLast;
     private Button btnNowSymp, btnLastSymp;
@@ -50,12 +50,13 @@ public class faceFragment extends Fragment {
         showingAcup = -1;
 
         btnNose = v.findViewById(R.id.nose);
-        btnCar = v.findViewById(R.id.car);
+        btnHead = v.findViewById(R.id.head);
         btnSleep = v.findViewById(R.id.sleep);
-        btnCold = v.findViewById(R.id.cold);
+        btnTeeth = v.findViewById(R.id.teeth);
         btnPretty = v.findViewById(R.id.pretty);
         btnEye = v.findViewById(R.id.eye);
-        btnPain = v.findViewById(R.id.pain);
+        btnEar = v.findViewById(R.id.ear);
+
         btnOpenCam = v.findViewById(R.id.openCamera);
 
         txtvAcup = v.findViewById(R.id.txtvAcup);
@@ -70,12 +71,12 @@ public class faceFragment extends Fragment {
         btnLast.setOnClickListener(btnLastAcup);
 
         btnNose.setOnClickListener(btnAcupList);
-        btnCar.setOnClickListener(btnAcupList);
+        btnHead.setOnClickListener(btnAcupList);
         btnSleep.setOnClickListener(btnAcupList);
-        btnCold.setOnClickListener(btnAcupList);
+        btnTeeth.setOnClickListener(btnAcupList);
         btnPretty.setOnClickListener(btnAcupList);
         btnEye.setOnClickListener(btnAcupList);
-        btnPain.setOnClickListener(btnAcupList);
+        btnEar.setOnClickListener(btnAcupList);
 
         btnOpenCam.setBackgroundResource(R.drawable.button_shape_notallowed);
         btnOpenCam.setTextColor(Color.GRAY);
@@ -129,20 +130,20 @@ public class faceFragment extends Fragment {
             switch (view.getId()) {
                 //執行方法
                 case R.id.nose:
-                    fSymp = "鼻子不適";
+                    fSymp = "改善鼻子不適";
                     btnNowSymp = btnNose;
                     break;
-                case R.id.car:
-                    fSymp = "暈車";
-                    btnNowSymp = btnCar;
+                case R.id.head:
+                    fSymp = "緩解頭痛";
+                    btnNowSymp = btnHead;
                     break;
                 case R.id.sleep:
-                    fSymp = "失眠";
+                    fSymp = "改善失眠";
                     btnNowSymp = btnSleep;
                     break;
-                case R.id.cold:
-                    fSymp = "預防感冒";
-                    btnNowSymp = btnCold;
+                case R.id.teeth:
+                    fSymp = "緩解牙痛";
+                    btnNowSymp = btnTeeth;
                     break;
                 case R.id.pretty:
                     fSymp = "臉部美容";
@@ -152,9 +153,9 @@ public class faceFragment extends Fragment {
                     fSymp = "眼睛保健";
                     btnNowSymp = btnEye;
                     break;
-                case R.id.pain:
-                    fSymp = "緩解疼痛";
-                    btnNowSymp = btnPain;
+                case R.id.ear:
+                    fSymp = "緩解耳鳴";
+                    btnNowSymp = btnEar;
                     break;
             }
             String[] matchAcups = new String[acupunctures.size()]; // 符合病徵的穴道
@@ -227,10 +228,15 @@ public class faceFragment extends Fragment {
     public void lastBtnControl() {
         // 如果此時TextView中的穴道號碼-1也等於現在的穴道名稱
         // 左還有資料就可亮
-        if (acupunctures.get(showingAcup - 1).num > 0 && acupunctures.get(showingAcup - 1).name.equals(acupunctures.get(showingAcup).name)) {
-            btnLast.setBackgroundResource(R.drawable.lastok);
-            lastCanBePressed = true;
-        } else {
+        if(showingAcup - 1 >= 0) {
+            if (acupunctures.get(showingAcup - 1).num > 0 && acupunctures.get(showingAcup - 1).name.equals(acupunctures.get(showingAcup).name)) {
+                btnLast.setBackgroundResource(R.drawable.lastok);
+                lastCanBePressed = true;
+            } else {
+                btnLast.setBackgroundResource(R.drawable.last);
+                lastCanBePressed = false;
+            }
+        }else if(showingAcup == 0){
             btnLast.setBackgroundResource(R.drawable.last);
             lastCanBePressed = false;
         }
@@ -239,10 +245,15 @@ public class faceFragment extends Fragment {
     public void nextBtnControl() {
         // 如果此時TextView中的穴道號碼+1也等於現在的穴道名稱
         // 右還有資料就可亮
-        if (acupunctures.get(showingAcup + 1).num < acupunctures.size() && acupunctures.get(showingAcup + 1).name.equals(acupunctures.get(showingAcup).name)) {
-            btnNext.setBackgroundResource(R.drawable.nextok);
-            nextCanBePressed = true;
-        } else {
+        if(showingAcup + 1 > acupunctures.size()) {
+            if (acupunctures.get(showingAcup + 1).num < acupunctures.size() && acupunctures.get(showingAcup + 1).name.equals(acupunctures.get(showingAcup).name)) {
+                btnNext.setBackgroundResource(R.drawable.nextok);
+                nextCanBePressed = true;
+            } else {
+                btnNext.setBackgroundResource(R.drawable.next);
+                nextCanBePressed = false;
+            }
+        }else if(showingAcup == acupunctures.size() - 1){
             btnNext.setBackgroundResource(R.drawable.next);
             nextCanBePressed = false;
         }
@@ -272,7 +283,7 @@ public class faceFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            if (showingAcup > 0 && nextCanBePressed) {
+            if(showingAcup >= 0 && nextCanBePressed) {
                 // 更改現狀
                 showingAcup = showingAcup + 1;
                 txtvAcup.setText(acupunctures.get(showingAcup).detail);
@@ -292,18 +303,18 @@ public class faceFragment extends Fragment {
     // 更改左排按鈕
     public void leftButtonControl(String function) {
         // 先改變btnNowSymp
-        switch (function) {
-            case "鼻子不適":
+        switch (function){
+            case "改善鼻子不適":
                 btnNowSymp = btnNose;
                 break;
-            case "暈車":
-                btnNowSymp = btnCar;
+            case "緩解頭痛":
+                btnNowSymp = btnHead;
                 break;
-            case "失眠":
+            case "改善失眠":
                 btnNowSymp = btnSleep;
                 break;
-            case "預防感冒":
-                btnNowSymp = btnCold;
+            case "緩解牙痛":
+                btnNowSymp = btnTeeth;
                 break;
             case "臉部美容":
                 btnNowSymp = btnPretty;
@@ -311,8 +322,8 @@ public class faceFragment extends Fragment {
             case "眼睛保健":
                 btnNowSymp = btnEye;
                 break;
-            case "緩解疼痛":
-                btnNowSymp = btnPain;
+            case "緩解耳鳴":
+                btnNowSymp = btnEar;
                 break;
         }
         btnLastSymp.setBackgroundResource(R.drawable.button_shape);

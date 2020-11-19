@@ -35,18 +35,18 @@
                     android:layout_height="75dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/button_shape"
-                    android:text="鼻塞"
+                    android:text="改善鼻子不適"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/car"
+                    android:id="@+id/head"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
-                    android:text="暈車"
+                    android:text="緩解頭痛"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -57,18 +57,18 @@
                     android:layout_height="75dp"
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
-                    android:text="失眠"
+                    android:text="改善失眠"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/pain"
+                    android:id="@+id/teeth"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
-                    android:text="緩解疼痛"
+                    android:text="緩解牙痛"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -96,12 +96,12 @@
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/cold"
+                    android:id="@+id/ear"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/button_shape"
-                    android:text="預防感冒"
+                    android:text="緩解耳鳴"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />

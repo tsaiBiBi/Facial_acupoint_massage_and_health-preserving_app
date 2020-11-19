@@ -6,14 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.screenTime.ScreenNotifyService;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -35,6 +40,11 @@ public class ScreenTimeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_time);
+
+
+        final TextView textTime = findViewById(R.id.textTime);
+        final AlertDialog.Builder dialog_time = new AlertDialog.Builder(this);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,6 +101,8 @@ public class ScreenTimeActivity extends AppCompatActivity {
 
         chart.setScaleEnabled(false);  // 圖表禁止縮放
 
+        final Intent intent = new Intent(this, ScreenNotifyService.class);
+
         // 超時設定(NumberPicker)
         overtime = findViewById(R.id.overtime);
         overtime.setOnClickListener(new View.OnClickListener() {
@@ -98,10 +110,12 @@ public class ScreenTimeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 LayoutInflater inflater = LayoutInflater.from(v.getContext());
                 final View vi = inflater.inflate(R.layout.activity_time_set, null);
-                NumberPicker picker = (NumberPicker) vi.findViewById(R.id.numberPicker);
+                final NumberPicker picker = (NumberPicker) vi.findViewById(R.id.numberPicker);
+
                 picker.setMaxValue(60);
-                picker.setMinValue(20);
+                picker.setMinValue(1);
                 picker.setValue(40);
+                picker.setWrapSelectorWheel(false);
                 // 數字變化的監聽事件
                 picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                     @Override
@@ -109,30 +123,35 @@ public class ScreenTimeActivity extends AppCompatActivity {
                         // ......
                     }
                 });
-
                 // 將 NumberPicker 設置成 AlertDialog
-                new AlertDialog.Builder(v.getContext())
-                        .setTitle("請設置時間")
+                dialog_time.setView(picker);
+                dialog_time.setTitle("請設置時間")
                         .setView(vi)
                         .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // 點選確定後......
+                                // 點選確定後
+                                // Toast.makeText(this, " " + which, Toast.LENGTH_SHORT).show();
+                                int restrict_time = picker.getValue();
+                                Log.i("ScreenTimeActivity", "picker value is:" + restrict_time);
+                                intent.putExtra("restrict_time", restrict_time);
+                                startService(intent);
                             }
-                        })
-                        .show();
+                        }).show();
             }
         });
     }
+
     // x, y 軸資料
     private List<BarEntry> getPoints() {
         List<BarEntry> points = new ArrayList<>();
-        for(int i = 1; i <= COUNT; i++) {
+        for (int i = 1; i <= COUNT; i++) {
             float y = (float) Math.random() * 20;
             points.add(new BarEntry(i, y));
         }
         return points;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

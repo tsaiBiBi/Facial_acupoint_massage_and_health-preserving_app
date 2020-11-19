@@ -22,8 +22,8 @@ import org.json.JSONObject;
 // dataclass & activity
 import com.example.acupuncture.DiseaseClickedActivity;
 import com.example.acupuncture.ProfileActivity;
-import com.example.acupuncture.faceFragment;
 import com.example.dataclass.SharedPrefManager;
+import com.example.acupuncture.chatFragment;
 import com.example.dataclass.Urls;
 
 public class User {
@@ -292,7 +292,6 @@ public class User {
 
     // 紀錄使用者按壓穴道
     public static void pressedRec(final Context cxt_face, final Integer acupID) {
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST , Urls.pressedRec , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -319,8 +318,12 @@ public class User {
     }
 
     public static void pressedCount(final Context cxt_record) {
+        sharedprefmanager = new SharedPrefManager(cxt_record);
+        String s = sharedprefmanager.get_user_detail().get(SharedPrefManager.ID);
+        String url = Urls.pressedCount+"?usr_id="+s;
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.POST, Urls.pressedCount, null, new Response.Listener<JSONArray>() {
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
@@ -333,8 +336,8 @@ public class User {
                                 date = jsonObject.getString("day");
                                 func = jsonObject.getString("acup_func");
                                 times = jsonObject.getInt("times");
-                                Log.i("11", date);
-                                DiseaseClickedActivity.recordMap(i, usr, date, func, times);
+
+                                chatFragment.recordMap(i, usr, date, func, times);
                             }
                         }
                         catch (JSONException e) {
@@ -342,6 +345,7 @@ public class User {
                         }
                     }
                 }, new Response.ErrorListener() {
+
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(cxt_record , "Some error occurred -> " + error , Toast.LENGTH_LONG).show();

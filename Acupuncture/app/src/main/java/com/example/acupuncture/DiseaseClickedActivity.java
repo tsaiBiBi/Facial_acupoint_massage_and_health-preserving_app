@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.AlphabeticIndex;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 
 import com.example.dataclass.Acup;
 import com.example.dataclass.Pressed;
+import com.example.dataclass.Que;
 import com.example.webservice.Acupuncture;
 import com.example.webservice.User;
 import com.github.mikephil.charting.charts.BarChart;
@@ -28,17 +30,23 @@ public class DiseaseClickedActivity extends AppCompatActivity {
 
     int[] colorClassArray = new int[]{0xFF616621, 0xFFAC7D87, 0xFFE5CC53};  // 542200 2D1200
     private int count = 7;
+    private String q;
     public static List<Pressed> record = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diseaseclicked);
 
-        // 從資料庫去拿所有資料
         if (!User.recordIsGotten) {
             User.pressedCount(getApplicationContext());
         }
+
+        //接收傳過來的值
+        Intent intent = getIntent();
+        List<Pressed> record = (List<Pressed>) intent.getSerializableExtra("Record");
+        Log.v("la;a", "recordtimes3 is"+record);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,6 +95,7 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         yAxis.setAxisMinimum(0f);
 
         chart.setScaleEnabled(false);  // 圖表禁止縮放
+        Log.v("la;a", "444444recordtimes is"+record);
     }
 
     private ArrayList<BarEntry> dataValue() {
@@ -94,6 +103,7 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         for(int i = 1; i <= count; i++) {
             float y = (float) Math.random() * 5;
             dataVals.add(new BarEntry(i, new float[]{y, y, y}));
+//            Log.v("la;a", "recordtimes1 is"+record);
         }
         return dataVals;
     }
@@ -108,10 +118,6 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public static void recordMap(int num, int usr, String date, String func, int times) {
-        Pressed nowFunc = new Pressed(num, usr, date, func, times);
-        record.add(nowFunc);
-    }
+    
 
 }

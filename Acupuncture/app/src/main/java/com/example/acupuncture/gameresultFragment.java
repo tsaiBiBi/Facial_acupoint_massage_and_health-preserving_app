@@ -41,8 +41,8 @@ public class gameresultFragment extends Fragment {
         //印出解析
         for (int i = 0; i < wronglist.size(); i++) {
             TextView textView2 = new TextView(getContext());
-            textView2.setText(wronglist.get(i));
-            textView2.append(":"+parsinglist.get(i));
+            textView2.setText(wronglist.get(i)+"\n");
+            textView2.append(parsinglist.get(i));
             gameend.addView(textView2);
         }
 

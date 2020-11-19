@@ -1,6 +1,8 @@
 package com.example.dataclass;
 
-public class Pressed {
+import java.io.Serializable;
+
+public class Pressed implements Serializable {
     public int num;
     public int usr;
     public String date;

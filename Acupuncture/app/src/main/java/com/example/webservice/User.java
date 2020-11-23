@@ -291,7 +291,7 @@ public class User {
     }
 
     // 紀錄使用者按壓穴道
-    public static void pressedRec(final Context cxt_face, final Integer acupID) {
+    public static void pressedRec(final Context cxt_face, final int acupID) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST , Urls.pressedRec , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -327,7 +327,7 @@ public class User {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            String date, func;
+                            String date, func, rtn_msg;
                             int usr, times;
                             recordIsGotten = true;
                             for (int i = 0; i < response.length(); i++) {

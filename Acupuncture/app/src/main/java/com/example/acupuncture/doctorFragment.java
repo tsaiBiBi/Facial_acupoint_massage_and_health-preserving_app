@@ -2,12 +2,19 @@ package com.example.acupuncture;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class doctorFragment extends Fragment {
 
@@ -16,11 +23,14 @@ public class doctorFragment extends Fragment {
     private Spinner sp1, sp2;
     private ArrayAdapter<String> adapter ;
     private ArrayAdapter<String> adapter2;
+    public List<String> disease2 = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_doctor, container, false);
 
+//        disease2  = Collections.singletonList(getArguments().getString("Disease"));
+//        Log.v("qwe", String.valueOf(disease2));
         // 載入第一個下拉選單
         adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, disease);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -96,12 +96,13 @@ public class faceFragment extends Fragment {
     private View.OnClickListener openCamOnListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(showingAcup > 0) {
+            if(showingAcup >= 0) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setMessage("是否要記錄此次按壓，並作為就醫推薦的參考");
                 builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Integer acupID = acupunctures.get(showingAcup).num;
+                        int acupID = acupunctures.get(showingAcup).num + 1;
+                        Log.v("testtest", "" +acupID);
                         User.pressedRec(getActivity(), acupID);
                         Intent intent = new Intent(); //呼叫照相機
                         intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
@@ -110,6 +111,8 @@ public class faceFragment extends Fragment {
                 });
                 builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        int acupID = acupunctures.get(showingAcup).num + 1;
+                        Log.v("testtest", "" + acupID);
                         Intent intent = new Intent(); //呼叫照相機
                         intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
                         startActivity(intent);

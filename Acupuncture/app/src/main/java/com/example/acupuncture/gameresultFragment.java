@@ -1,16 +1,21 @@
 package com.example.acupuncture;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Scroller;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,10 +45,15 @@ public class gameresultFragment extends Fragment {
 
         //印出解析
         for (int i = 0; i < wronglist.size(); i++) {
-            TextView textView2 = new TextView(getContext());
-            textView2.setText(wronglist.get(i)+"\n");
-            textView2.append(parsinglist.get(i));
-            gameend.addView(textView2);
+            TextView analyze = new TextView(getContext());
+            analyze.setTextColor(Color.parseColor("#00251a"));
+            analyze.setTextSize(22);
+            analyze.setScroller(new Scroller(getContext()));
+            analyze.setVerticalScrollBarEnabled(true);
+            analyze.setMovementMethod(new ScrollingMovementMethod());
+            analyze.setText(wronglist.get(i));
+            analyze.append(":"+parsinglist.get(i));
+            gameend.addView(analyze);
         }
 
         //回到首頁

@@ -33,12 +33,12 @@ public class DiseaseClickedActivity extends AppCompatActivity {
     private String q;
     public static List<Pressed> record = new ArrayList<>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diseaseclicked);
 
+        // 從資料庫去拿所有資料
         if (!User.recordIsGotten) {
             User.pressedCount(getApplicationContext());
         }
@@ -103,7 +103,6 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         for(int i = 1; i <= count; i++) {
             float y = (float) Math.random() * 5;
             dataVals.add(new BarEntry(i, new float[]{y, y, y}));
-//            Log.v("la;a", "recordtimes1 is"+record);
         }
         return dataVals;
     }
@@ -118,6 +117,5 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    
 
 }

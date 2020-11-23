@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:background="#004d40">
 
 
     <TextView
@@ -13,43 +12,86 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Q1"
-        android:textSize="22sp"
-        android:layout_marginTop="30dp"/>
+        android:textColor="#ffab40"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.30" />
 
     <TextView
         android:id="@+id/questionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:padding="10dp"
         android:text="Question"
-        android:textSize="24sp"
-        android:layout_marginTop="60dp"/>
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countLabel"
+        app:layout_constraintVertical_bias="0.30" />
 
-    <Button
-        android:id="@+id/answerBtn1"
-        android:layout_width="@dimen/answerBtn_width"
-        android:layout_height="@dimen/answerBtn_height"
-        android:text="answer1"
-        android:background="@drawable/quiz_nomal"
-        android:layout_marginTop="80dp" />
-    <Button
-        android:id="@+id/answerBtn2"
-        android:layout_width="@dimen/answerBtn_width"
-        android:layout_height="@dimen/answerBtn_height"
-        android:text="answer2"
-        android:background="@drawable/quiz_nomal"
-        android:layout_marginTop="6dp" />
-    <Button
-        android:id="@+id/answerBtn3"
-        android:layout_width="@dimen/answerBtn_width"
-        android:layout_height="@dimen/answerBtn_height"
-        android:text="answer3"
-        android:background="@drawable/quiz_nomal"
-        android:layout_marginTop="6dp" />
-    <Button
-        android:id="@+id/answerBtn4"
-        android:layout_width="@dimen/answerBtn_width"
-        android:layout_height="@dimen/answerBtn_height"
-        android:background="@drawable/quiz_nomal"
-        android:text="answer4"
-        android:layout_marginTop="6dp" />
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.80">
+
+        <Button
+            android:id="@+id/answerBtn1"
+            android:layout_width="@dimen/answerBtn_width"
+            android:layout_height="@dimen/answerBtn_height"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/quiz_nomal"
+            android:text="answer1"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/answerBtn2"
+            android:layout_width="@dimen/answerBtn_width"
+            android:layout_height="@dimen/answerBtn_height"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/quiz_nomal"
+            android:text="answer2"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/answerBtn3"
+            android:layout_width="@dimen/answerBtn_width"
+            android:layout_height="@dimen/answerBtn_height"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/quiz_nomal"
+            android:text="answer3"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/answerBtn4"
+            android:layout_width="@dimen/answerBtn_width"
+            android:layout_height="@dimen/answerBtn_height"
+            android:background="@drawable/quiz_nomal"
+            android:text="answer4"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

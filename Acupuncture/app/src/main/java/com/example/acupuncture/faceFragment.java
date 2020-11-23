@@ -17,11 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dataclass.Acup;
+import com.example.dataclass.Acup_pos;
 import com.example.dataclass.Urls;
 import com.example.webservice.Acupuncture;
 import com.example.webservice.User;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,13 +83,12 @@ public class faceFragment extends Fragment {
         btnOpenCam.setBackgroundResource(R.drawable.button_shape_notallowed);
         btnOpenCam.setTextColor(Color.GRAY);
         btnOpenCam.setOnClickListener(openCamOnListener);
-
         return v;
     }
 
-    public static void acupMap(int num, String name, String part, String position, String times, String func, String detail, String img) {
+    public static void acupMap(int num, String name, String part, String position, String times, String func, String detail, String img, List<Acup_pos> pos) {
         // 將資料以穴道為單位分類
-        Acup nowAcup = new Acup(num, name, part, position, times, func, detail, img);
+        Acup nowAcup = new Acup(num, name, part, position, times, func, detail, img, pos);
         acupunctures.add(nowAcup);
     }
 
@@ -191,7 +192,10 @@ public class faceFragment extends Fragment {
                     for (int i = 0; i < acupunctures.size(); i++) {
                         if (acupunctures.get(i).name.equals(acupList[which]) && acupunctures.get(i).num == acupNumList[which]) {
                             String detail = acupunctures.get(i).detail;
+                            List<Acup_pos> pos = acupunctures.get(i).pos;
+                            String posInfo = acupunctures.get(i).position;
                             txtvAcupTitle.setText(acupList[which]);
+
                             txtvAcup.setText(detail);
                             String urlImage = urls.acup_img_url + acupunctures.get(i).img;
                             Picasso.with(getActivity()).load(urlImage).into(ivAcup);
@@ -215,6 +219,19 @@ public class faceFragment extends Fragment {
                             btnOpenCam.setTextColor(Color.WHITE);
                             btnOpenCam.setBackgroundResource(R.drawable.button_shape);
 
+                            btnOpenCam.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("pos",(Serializable)pos);
+                                    bundle.putString("posInfo", posInfo);
+                                    intent.putExtras(bundle);
+                                    //呼叫照相機
+                                    intent.setClass(getActivity(),CameraXLivePreviewActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
                             break;
                         }
                     }

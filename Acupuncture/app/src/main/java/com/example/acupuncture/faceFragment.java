@@ -80,9 +80,6 @@ public class faceFragment extends Fragment {
         btnEye.setOnClickListener(btnAcupList);
         btnEar.setOnClickListener(btnAcupList);
 
-        btnOpenCam.setBackgroundResource(R.drawable.button_shape_notallowed);
-        btnOpenCam.setTextColor(Color.GRAY);
-        btnOpenCam.setOnClickListener(openCamOnListener);
         return v;
     }
 
@@ -91,38 +88,7 @@ public class faceFragment extends Fragment {
         Acup nowAcup = new Acup(num, name, part, position, times, func, detail, img, pos);
         acupunctures.add(nowAcup);
     }
-
-    // 可按壓開啟相機鍵
-    private View.OnClickListener openCamOnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if(showingAcup >= 0) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("是否要記錄此次按壓，並作為就醫推薦的參考");
-                builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        int acupID = acupunctures.get(showingAcup).num + 1;
-                        Log.v("testtest", "" +acupID);
-                        User.pressedRec(getActivity(), acupID);
-                        Intent intent = new Intent(); //呼叫照相機
-                        intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
-                        startActivity(intent);
-                    }
-                });
-                builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        int acupID = acupunctures.get(showingAcup).num + 1;
-                        Log.v("testtest", "" + acupID);
-                        Intent intent = new Intent(); //呼叫照相機
-                        intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
-                        startActivity(intent);
-                    }
-                });
-                builder.show();
-            }
-        }
-    };
-
+    
     private View.OnClickListener btnAcupList = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -225,14 +191,38 @@ public class faceFragment extends Fragment {
                             btnOpenCam.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Intent intent = new Intent();
-                                    Bundle bundle = new Bundle();
-                                    bundle.putSerializable("pos",(Serializable)pos);
-                                    bundle.putString("posInfo", posInfo);
-                                    intent.putExtras(bundle);
-                                    //呼叫照相機
-                                    intent.setClass(getActivity(),CameraXLivePreviewActivity.class);
-                                    startActivity(intent);
+                                    if (showingAcup > 0) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                        builder.setMessage("是否要記錄此次按壓，並作為就醫推薦的參考");
+                                        builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                int acupID = acupunctures.get(showingAcup).num + 1;
+                                                Log.v("testtest", "" +acupID);
+                                                User.pressedRec(getActivity(), acupID);
+                                                Intent intent = new Intent();
+                                                Bundle bundle = new Bundle();
+                                                bundle.putSerializable("pos", (Serializable) pos);
+                                                bundle.putString("posInfo", posInfo);
+                                                intent.putExtras(bundle);
+                                                //呼叫照相機
+                                                intent.setClass(getActivity(), CameraXLivePreviewActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                        builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                Intent intent = new Intent();
+                                                Bundle bundle = new Bundle();
+                                                bundle.putSerializable("pos", (Serializable) pos);
+                                                bundle.putString("posInfo", posInfo);
+                                                intent.putExtras(bundle);
+                                                //呼叫照相機
+                                                intent.setClass(getActivity(), CameraXLivePreviewActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                        builder.show();
+                                    }
                                 }
                             });
                             break;

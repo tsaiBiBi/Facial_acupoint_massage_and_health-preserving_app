@@ -249,7 +249,7 @@ public class faceFragment extends Fragment {
         // 如果此時TextView中的穴道號碼-1也等於現在的穴道名稱
         // 左還有資料就可亮
         if(showingAcup - 1 >= 0) {
-            if (acupunctures.get(showingAcup - 1).num > 0 && acupunctures.get(showingAcup - 1).name.equals(acupunctures.get(showingAcup).name)) {
+            if (acupunctures.get(showingAcup - 1).num >= 0 && acupunctures.get(showingAcup - 1).name.equals(acupunctures.get(showingAcup).name)) {
                 btnLast.setBackgroundResource(R.drawable.lastok);
                 lastCanBePressed = true;
             } else {

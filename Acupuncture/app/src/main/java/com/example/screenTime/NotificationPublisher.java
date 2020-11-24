@@ -20,11 +20,13 @@ public class NotificationPublisher extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        // Build a PendingIntent with a back stack
         // Create an Intent for the activity you want to start
         Intent toFragment= new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("toValue", "faceFragment");
+        toFragment.putExtra("toFragment", "faceFragment");
+
+//        toFragment.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        toFragment.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        toFragment.setAction("faceFragment");
         PendingIntent pend = PendingIntent.getActivity(context, 0, toFragment, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // ------------------+
@@ -35,19 +37,19 @@ public class NotificationPublisher extends BroadcastReceiver {
 //        PendingIntent resultPendingIntent =
 //                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
+
         // do notification
-        Notification notification = new NotificationCompat.Builder(context, CHANNEL_Screen_ID)
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(context, CHANNEL_Screen_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground) // 設置圖標
                 .setContentTitle("來自穴經驗的關懷") // 設置 notify title
                 .setContentText("您使用超時了唷！建議您休息一下:3～") // 設置 notify msg
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setSmallIcon(R.drawable.panda)
-                .setContentIntent(pend)
-                .build();
+                .setContentIntent(pend);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification);
+        notificationManager.notify(0, notification.build());
 
     }
 }

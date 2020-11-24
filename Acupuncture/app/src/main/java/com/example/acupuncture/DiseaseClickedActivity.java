@@ -5,28 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.example.dataclass.Pressed;
-import com.example.dataclass.pressNumber;
 import com.example.webservice.User;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.MarkerView;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.utils.MPPointF;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -47,7 +41,6 @@ public class DiseaseClickedActivity extends AppCompatActivity {
     public float[] funcpress2 = new float[]{0,0,0,0,0,0,0,0,0,0};
     public static List<Pressed> record = new ArrayList<>();
     public List<String> disease = new ArrayList<>();
-    private List<pressNumber> totalPressTime = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +68,9 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         BarChart chart = (BarChart) findViewById(R.id.clickedChart);
 
         // 設置數據
-        BarDataSet barDataSet = new BarDataSet(dataValue(), "data");
+        BarDataSet barDataSet = new BarDataSet(dataValue(), "");
         barDataSet.setColors(getColors());
-
+        barDataSet.setStackLabels(fmyp);
 
         BarData barData = new BarData(barDataSet);
         chart.setData(barData);
@@ -86,7 +79,7 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         // 去除右下角的 Description
         chart.getDescription().setEnabled(false);
         // 去除左下圖例
-        chart.getLegend().setEnabled(false);
+//        chart.getLegend().setEnabled(false);
         // 去除網格線
         chart.getXAxis().setDrawGridLines(false);
         chart.getAxisLeft().setDrawGridLines(false);
@@ -113,8 +106,11 @@ public class DiseaseClickedActivity extends AppCompatActivity {
 
         chart.setScaleEnabled(false);  // 圖表禁止縮放
 
-        chart.setDrawMarkers(true);
-        chart.setMarker(new pressMarker(this, totalPressTime));
+        Legend l = chart.getLegend();
+        l.setTextSize(14f);
+        l.setTextColor(Color.WHITE);
+        l.setWordWrapEnabled(true);
+        l.setXEntrySpace(12f);
     }
 
     private ArrayList<BarEntry> dataValue() {
@@ -143,10 +139,10 @@ public class DiseaseClickedActivity extends AppCompatActivity {
                 Log.v("ha", String.valueOf(a));
                 dataVals.add(new BarEntry(j+7, new float[]{a,b,c,d,e,f,g,h,i,k}));
 
-                Log.v("qqq", String.valueOf(fmyp[p]));
+                Log.v("qqq", fmyp[p]);
                 Log.v("qqq", String.valueOf(funcpress2[p]));
-                pressNumber temp = new pressNumber(fmyp[p], funcpress2[p]);
-                totalPressTime.add(temp);
+//                pressNumber temp = new pressNumber(p, fmyp[p]);
+//                totalPressTime.add(temp);
             }
 
             //統計有沒有數據超標用的
@@ -269,33 +265,5 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         colors[8] = getResources().getColor(R.color.common_google_signin_btn_text_light_default);
         colors[9] = getResources().getColor(R.color.colorAccent);
         return colors;
-    }
-}
-
-
-
-class pressMarker extends MarkerView {
-
-    private TextView contentView;
-    private List<pressNumber> totalPress;
-
-    public pressMarker(Context context, List<pressNumber> totalPress) {
-        // 设置布局文件
-        super(context, R.layout.view_marker);
-        this.totalPress = totalPress;
-        contentView = findViewById(R.id.tvContent);
-    }
-
-    @Override
-    public void refreshContent(Entry e, Highlight highlight) {
-        pressNumber item = totalPress.get((int) e.getX());
-        contentView.setText(item.getName());
-        super.refreshContent(e, highlight);
-    }
-
-    // 设置偏移量
-    @Override
-    public MPPointF getOffset() {
-        return new MPPointF(-(float) (getWidth() / 2), -getHeight() - 10);
     }
 }

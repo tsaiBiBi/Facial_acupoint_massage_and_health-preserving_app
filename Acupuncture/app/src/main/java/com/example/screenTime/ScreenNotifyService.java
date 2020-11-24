@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.acupuncture.R;
+import com.example.dataclass.AppUsageInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,10 +71,14 @@ public class ScreenNotifyService extends Service {
                     end_time = System.currentTimeMillis();
                     // Activity 傳來的 restrict time
                     try {
-                        restrict = intent.getIntExtra("restrict_time", 60);
-                        Log.i("ScreenTime", "restrict time isnt null:" + restrict);
-                    } catch (NumberFormatException e) {
-                        Log.i("ScreenTime", "restrict time error:");
+                        if(intent.hasExtra("restrict_name")) {
+                            restrict = intent.getIntExtra("restrict_time", 60);
+                            Log.i("ScreenTime", "restrict time isnt null:" + restrict);
+                        }
+                    } catch (NumberFormatException e ) {
+                        Log.e("ScreenTime", "NumberFormatException");
+                    } catch (NullPointerException a) {
+                        Log.e("ScreenTime", "NullPointerException");
                     }
 
                     if (getUsageStatisticsOver(start_time, end_time, restrict)) {  // 如果目前使用時間超過的話
@@ -122,7 +126,6 @@ public class ScreenNotifyService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy() executed");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -205,33 +208,4 @@ public class ScreenNotifyService extends Service {
         return totalUsageTime >= restrict_Time;  // 如果超過時間就回傳 true
     }
 
-    public String converLongToTimeChar(long usedTime) {
-        String hour = "", min = "", sec = "";
-
-        int h = (int) (usedTime / 1000 / 60 / 60);
-        if (h != 0)
-            hour = h + "h ";
-
-        int m = (int) ((usedTime / 1000 / 60) % 60);
-        if (m != 0)
-            min = m + "m ";
-
-        int s = (int) ((usedTime / 1000) % 60);
-        if (s == 0 && (h != 0 || m != 0))
-            sec = "";
-        else
-            sec = s + "s";
-
-        return hour + min + sec;
-    }
-}
-
-class AppUsageInfo {
-    String appName, packageName;
-    long timeInForeground = 0;
-
-    public AppUsageInfo(String pName, String aName) {
-        this.packageName = pName;
-        this.appName = aName;
-    }
 }

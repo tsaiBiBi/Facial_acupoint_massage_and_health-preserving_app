@@ -12,10 +12,11 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:text=""
-        android:textSize="12dp"
+        android:textSize="14dp"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
         android:ellipsize="end"
-        android:singleLine="true"
+        android:singleLine="false"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

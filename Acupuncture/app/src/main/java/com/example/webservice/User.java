@@ -4,6 +4,8 @@ package com.example.webservice;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +26,7 @@ import com.example.acupuncture.DiseaseClickedActivity;
 import com.example.acupuncture.ProfileActivity;
 import com.example.dataclass.SharedPrefManager;
 import com.example.acupuncture.chatFragment;
+import com.example.acupuncture.doctorFragment;
 import com.example.dataclass.Urls;
 
 public class User {
@@ -327,9 +330,13 @@ public class User {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            String date, func, rtn_msg;
+                            // clear
+                            chatFragment.record = new ArrayList<>();
+                            doctorFragment.recordweek = new ArrayList<>();
+                            String date, func;
                             int usr, times;
                             recordIsGotten = true;
+                            Log.v("b8-aaa", String.valueOf(response.length()));
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
                                 usr = jsonObject.getInt("usr_id");
@@ -338,6 +345,7 @@ public class User {
                                 times = jsonObject.getInt("times");
 
                                 chatFragment.recordMap(i, usr, date, func, times);
+                                doctorFragment.recordWeekMap(i, usr, date, func, times);
                             }
                         }
                         catch (JSONException e) {
@@ -355,5 +363,6 @@ public class User {
         requestQueue = Volley.newRequestQueue(cxt_record.getApplicationContext());
         requestQueue.add(jsonArrayRequest);
     }
+
 
 }

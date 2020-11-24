@@ -15,9 +15,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 // fragment & dataclass
+import com.example.acupuncture.chatFragment;
 import com.example.acupuncture.gameplayingFragment;
 import com.example.acupuncture.gameFragment;
 import com.example.dataclass.Urls;
+
+import java.util.ArrayList;
 
 
 public class Questions {
@@ -32,6 +35,7 @@ public class Questions {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
+                            gameFragment.questions = new ArrayList<>();
                             Integer id;
                             String topic, answer, select1, select2, select3, parsing;
                             queIsGotten = true;

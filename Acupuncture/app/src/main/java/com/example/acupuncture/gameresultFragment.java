@@ -38,7 +38,7 @@ public class gameresultFragment extends Fragment {
         back = v.findViewById(R.id.back);
 
         int x  =   getArguments().getInt("Integer");//Integer value
-        textView1.setText("總分為:"+x+" /10");
+        textView1.setText("總分為:"+x+" /5");
 
         wronglist = getArguments().getStringArrayList("Wronglist");
         parsinglist = getArguments().getStringArrayList("Parsinglist");

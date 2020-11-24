@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.example.dataclass.Que;
 import com.example.webservice.Questions;
+import com.example.webservice.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -52,6 +53,16 @@ public class gameFragment extends Fragment {
         // 將資料以穴道為單位分類
         Que nowQue = new Que(num,id, topic, answer, select1, select2, select3, parsing);
         questions.add(nowQue);
+//        for(int i = 0; i< questions.size();i++){
+//            Log.e("www-i", String.valueOf(i));
+//            Log.v("www",questions.get(i).topic);
+//        }
+    }
+    @Override
+    public void onResume() {
+//        Log.e("DEBUG", "onResume of HomeFragment");
+        super.onResume();
+        Questions.que(getActivity());
     }
 
 }

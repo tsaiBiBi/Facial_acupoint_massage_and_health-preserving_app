@@ -166,7 +166,7 @@ public class gameplayingFragment extends Fragment {
 
 
 
-            if (quizCount == 10) {
+            if (quizCount == 5) {
 
                 // Create new fragment and transaction
                 Fragment newfragment = new gameresultFragment();

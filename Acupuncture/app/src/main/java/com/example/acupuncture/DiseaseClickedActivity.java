@@ -34,7 +34,6 @@ public class DiseaseClickedActivity extends AppCompatActivity {
 //            ,0x2D1200,0xE7655A,0xF6CE5D,0xBAE6FB,0x542200};  // 542200 2D1200
     private static String[] fmyp = new String[]{"眼睛保健","臉部美容","緩解頭痛", "改善鼻子不適",
             "改善失眠","緩解牙痛","緩解耳鳴","昏迷急救","改善口腔衛生","緩解顔面神經麻痺"};
-    private int count = 7;
 //    private List<String> times2 = new ArrayList<String>();;
 //    String[] funcpress2 = new String[10];
     private float[] staticdata = new float[10];
@@ -47,10 +46,6 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diseaseclicked);
 
-        // 從資料庫去拿所有資料
-        if (!User.recordIsGotten) {
-            User.pressedCount(getApplicationContext());
-        }
 
         //接收傳過來的值
         Intent intent = getIntent();
@@ -118,12 +113,9 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
 
         for(int j= -6;j<1;j++) {
-            Log.v("qqq", "--------"+String.valueOf(getOldDate(j)));
-            Log.v("test", String.valueOf(j));
+
             everypress(j);
-            for(int p = 0; p < 10; p++){
-                Log.v("123",p+ String.valueOf(funcpress2[p]));
-            }
+
             for(int p = 0; p < 10; p++){
                 float a = funcpress2[0];
                 float b = funcpress2[1];
@@ -135,9 +127,7 @@ public class DiseaseClickedActivity extends AppCompatActivity {
                 float h = funcpress2[7];
                 float i = funcpress2[8];
                 float k = funcpress2[9];
-
-                Log.v("ha", String.valueOf(a));
-                dataVals.add(new BarEntry(j+7, new float[]{a,b,c,d,e,f,g,h,i,k}));
+                 dataVals.add(new BarEntry(j+7, new float[]{a,b,c,d,e,f,g,h,i,k}));
 
                 Log.v("qqq", fmyp[p]);
                 Log.v("qqq", String.valueOf(funcpress2[p]));
@@ -185,12 +175,10 @@ public class DiseaseClickedActivity extends AppCompatActivity {
     public void everypress(int j){
             for (int i = 0; i <record.size();i++){
                 if (getOldDate(j).compareTo(record.get(i).date) == 0) {
-
-                    Log.v("fuck2", "查證用"+getOldDate(j));
-                    Log.v("fuck2","查證用"+record.get(i).date);
-                    Log.v("fuck2","查證用"+record.get(i).times);
-                    Log.v("fuck2","查證用"+record.get(i).func);
-
+//                    Log.v("fuck2", "查證用"+getOldDate(j));
+//                    Log.v("fuck2","查證用"+record.get(i).date);
+//                    Log.v("fuck2","查證用"+record.get(i).times);
+//                    Log.v("fuck2","查證用"+record.get(i).func);
                     cate(record.get(i).date, record.get(i).func, record.get(i).times);
                 } else {
                     cate2(record.get(i).date, record.get(i).func);
@@ -208,49 +196,36 @@ public class DiseaseClickedActivity extends AppCompatActivity {
     }
 
     public void cate( String date , String func, int time2){
-        Log.v("fuck2","查證用------");
         for (int j = 0; j < fmyp.length;j++){
             if ((fmyp[j]).equals(func)) {
                 funcpress2[j] = time2 +funcpress2[j];
-//                Log.v("fuck2", "查證用"+getOldDate(j));
-                Log.v("fuck2","查證用"+record.get(j).date);
-                Log.v("fuck2","查證用"+record.get(j).times);
-                Log.v("fuck2","查證用---"+record.get(j).func);
-                Log.v("fuck2","查證用000000"+fmyp[j]);
+//                Log.v("fuck2","查證用"+record.get(j).date);
+//                Log.v("fuck2","查證用"+record.get(j).times);
+//                Log.v("fuck2","查證用---"+record.get(j).func);
+//                Log.v("fuck2","查證用000000"+fmyp[j]);
             }
         }
-//        for(int p = 0; p < 10; p++){
-//            Log.v("woo",p+ String.valueOf(funcpress2[p]));
+        return;
+    }
+
+//    public void statistics(float[] tmp_funpress){
+//        for (int j = 0; j<fmyp.length; j++){
+//            if (tmp_funpress[j] == 0){
+//                staticdata[j] = 0 + staticdata[j];
+//            } else {
+//                staticdata[j] = 1 + staticdata[j];
+//            }
+//            if (staticdata[j] > 1 ){
+//                if (disease.contains(fmyp[j])){
+//                } else {
+//                    disease.add(fmyp[j]);
+//                    doctorFragment.disease2.add(fmyp[j]);
+//                }
+//            }
+//            Log.v("oomg!!!!!!!!!!!", String.valueOf(disease));
 //        }
-        return;
-    }
-
-    public void statistics(float[] tmp_funpress){
-        Log.v("yyy","---------");
-        for (int j = 0; j<fmyp.length; j++){
-            float tmp;
-//            float[] staticdata = new float[]{0,0,0,0,0,0,0,0,0,0};
-//            String[] disease = new String[]{};
-
-            tmp = tmp_funpress[j];
-            staticdata[j] = staticdata[j]+tmp;
-
-            //判斷按壓次數
-            if (staticdata[j] > 3){
-                if (disease.contains(fmyp[j])){
-                    //為了不加入重複的病徵
-                } else {
-                    disease.add(fmyp[j]);
-                }
-            }
-        }
-        Log.v("oomg", String.valueOf(disease));
-        Fragment doctorFragment = new Fragment();
-        Bundle bundle = new Bundle();
-//        bundle.putStringArray("Disease", disease);//這裡的values就是我們要傳的值
-        doctorFragment.setArguments(bundle);
-        return;
-    }
+//        return;
+//    }
 
     private int[] getColors() {
         int[] colors = new int[10];

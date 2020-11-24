@@ -69,14 +69,6 @@ public class chatFragment extends Fragment {
         Pressed nowFunc = new Pressed(num, usr, date, func, times);
         record.add(nowFunc);
 
-        for (int i = 0; i <record.size();i++) {
-            //如果相等就把他加入 times2 的 list
-            Log.v("fuck22222222", String.valueOf(i));
-            Log.v("fuck22222222", "查證用" + record.get(i).date);
-            Log.v("fuck22222222", "查證用" + record.get(i).times);
-            Log.v("fuck22222222", "查證用" + record.get(i).func);
-        }
-
     }
     @Override
     public void onResume() {

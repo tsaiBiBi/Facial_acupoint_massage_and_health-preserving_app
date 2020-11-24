@@ -191,7 +191,7 @@ public class faceFragment extends Fragment {
                             btnOpenCam.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    if (showingAcup > 0) {
+                                    if (showingAcup >= 0) {
                                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                                         builder.setMessage("是否要記錄此次按壓，並作為就醫推薦的參考");
                                         builder.setPositiveButton("是", new DialogInterface.OnClickListener() {

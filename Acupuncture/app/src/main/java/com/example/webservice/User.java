@@ -336,7 +336,6 @@ public class User {
                             String date, func;
                             int usr, times;
                             recordIsGotten = true;
-                            Log.v("b8-aaa", String.valueOf(response.length()));
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
                                 usr = jsonObject.getInt("usr_id");

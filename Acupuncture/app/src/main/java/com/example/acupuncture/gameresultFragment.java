@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,9 @@ public class gameresultFragment extends Fragment {
     Button back;
     private List<String> wronglist = new ArrayList<>();
     private List<String> parsinglist = new ArrayList<>();
+    private static String[] funny = new String[]{"好...好像需要更努力一點","好像有點完蛋","再加油喔",
+            "一半的功力還不夠", "快變小神童囉!!", "根本小天才"};
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v  = inflater.inflate(R.layout.fragment_gameresult, container, false);
@@ -38,7 +42,11 @@ public class gameresultFragment extends Fragment {
         back = v.findViewById(R.id.back);
 
         int x  =   getArguments().getInt("Integer");//Integer value
+
         textView1.setText("總分為:"+x+" /5");
+        Toast.makeText(getContext() , funny[x], Toast.LENGTH_LONG).show();
+
+
 
         wronglist = getArguments().getStringArrayList("Wronglist");
         parsinglist = getArguments().getStringArrayList("Parsinglist");
@@ -51,7 +59,7 @@ public class gameresultFragment extends Fragment {
             analyze.setScroller(new Scroller(getContext()));
             analyze.setVerticalScrollBarEnabled(true);
             analyze.setMovementMethod(new ScrollingMovementMethod());
-            analyze.setText(wronglist.get(i));
+            analyze.setText((i+1)+"."+wronglist.get(i));
             analyze.append(":"+parsinglist.get(i));
             gameend.addView(analyze);
         }

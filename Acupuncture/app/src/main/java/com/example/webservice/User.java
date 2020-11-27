@@ -357,7 +357,9 @@ public class User {
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(cxt_record , "Some error occurred -> " + error , Toast.LENGTH_LONG).show();
                     }
-                });
+                })
+        {
+        };
 
         requestQueue = Volley.newRequestQueue(cxt_record.getApplicationContext());
         requestQueue.add(jsonArrayRequest);

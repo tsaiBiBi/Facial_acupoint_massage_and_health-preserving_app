@@ -72,7 +72,7 @@ public class Acupuncture {
     }
 
     public static List<Acup_pos> get_points(final Context cxt_face, int pos_id){
-        List<Acup_pos> pos = new ArrayList<Acup_pos>();
+        final List<Acup_pos> pos = new ArrayList<Acup_pos>();
 
         // get points via pos_id
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest

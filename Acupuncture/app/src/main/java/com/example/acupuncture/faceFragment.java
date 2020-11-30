@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class faceFragment extends Fragment {
-    private Button btnNose, btnHead, btnSleep, btnTeeth, btnPretty, btnEye, btnEar;
+    private Button btnNose, btnHead, btnSleep, btnTeeth, btnPretty, btnEye, btnEar, btnStun, btnMouth, btnFace;
     private Button btnOpenCam;
     private Button btnNext, btnLast;
     private Button btnNowSymp, btnLastSymp;
@@ -58,6 +58,9 @@ public class faceFragment extends Fragment {
         btnPretty = v.findViewById(R.id.pretty);
         btnEye = v.findViewById(R.id.eye);
         btnEar = v.findViewById(R.id.ear);
+        btnStun = v.findViewById(R.id.stun);
+        btnMouth = v.findViewById(R.id.mouth);
+        btnFace = v.findViewById(R.id.face);
 
         btnOpenCam = v.findViewById(R.id.openCamera);
 
@@ -79,6 +82,9 @@ public class faceFragment extends Fragment {
         btnPretty.setOnClickListener(btnAcupList);
         btnEye.setOnClickListener(btnAcupList);
         btnEar.setOnClickListener(btnAcupList);
+        btnStun.setOnClickListener(btnAcupList);
+        btnMouth.setOnClickListener(btnAcupList);
+        btnFace.setOnClickListener(btnAcupList);
 
         return v;
     }
@@ -126,6 +132,18 @@ public class faceFragment extends Fragment {
                 case R.id.ear:
                     fSymp = "緩解耳鳴";
                     btnNowSymp = btnEar;
+                    break;
+                case R.id.stun:
+                    fSymp = "昏迷急救";
+                    btnNowSymp = btnStun;
+                    break;
+                case R.id.mouth:
+                    fSymp = "改善口腔衛生";
+                    btnNowSymp = btnMouth;
+                    break;
+                case R.id.face:
+                    fSymp = "緩解顏面神經麻痺";
+                    btnNowSymp = btnFace;
                     break;
             }
             String[] matchAcups = new String[acupunctures.size()]; // 符合病徵的穴道
@@ -334,6 +352,15 @@ public class faceFragment extends Fragment {
                 break;
             case "緩解耳鳴":
                 btnNowSymp = btnEar;
+                break;
+            case "昏迷急救":
+                btnNowSymp = btnStun;
+                break;
+            case "改善口腔衛生":
+                btnNowSymp = btnMouth;
+                break;
+            case "緩解顏面神經麻痺":
+                btnNowSymp = btnFace;
                 break;
         }
         btnLastSymp.setBackgroundResource(R.drawable.button_shape);

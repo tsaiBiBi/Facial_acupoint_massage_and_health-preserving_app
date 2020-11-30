@@ -37,7 +37,7 @@
                     android:background="@drawable/button_shape"
                     android:text="改善鼻子不適"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -106,6 +106,39 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
+                <Button
+                    android:id="@+id/stun"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/button_shape"
+                    android:text="昏迷急救"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/mouth"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/button_shape"
+                    android:text="改善口腔衛生"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/face"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/button_shape"
+                    android:text="緩解顏面神經麻痺"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -149,7 +182,6 @@
                         android:id="@+id/openCamera"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:background="@drawable/button_shape"
                         android:backgroundTint="#00251a"
                         android:text="開始按壓"
@@ -159,7 +191,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageAcup"
                         app:layout_constraintTop_toBottomOf="@+id/txtvAcup"
                         app:layout_constraintVertical_bias="1.0" />
 
@@ -190,18 +222,19 @@
 
                     <TextView
                         android:id="@+id/txtvAcupPosition"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
                         android:layout_marginVertical="14dp"
-                        android:text="穴道位置"
                         android:lineSpacingMultiplier="1.5"
+                        android:text="穴道位置"
                         android:textColor="	#3C3C3C"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toTopOf="@+id/imageAcup"
-                        app:layout_constraintTop_toTopOf="@+id/txtvAcup"
-                        app:layout_constraintVertical_bias="1.0"
-                        tools:layout_editor_absoluteX="5dp" />
+                        app:layout_constraintEnd_toEndOf="@+id/imageAcup"
+                        app:layout_constraintStart_toStartOf="@+id/imageAcup"
+                        app:layout_constraintTop_toBottomOf="@+id/txtvAcup"
+                        app:layout_constraintVertical_bias="1.0" />
 
                     <ImageView
                         android:id="@+id/imageAcup"

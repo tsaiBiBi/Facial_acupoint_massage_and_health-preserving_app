@@ -229,16 +229,16 @@ public class DiseaseClickedActivity extends AppCompatActivity {
 
     private int[] getColors() {
         int[] colors = new int[10];
-        colors[0] = getResources().getColor(R.color.colorAccent);
-        colors[1] = getResources().getColor(R.color.design_default_color_primary);
-        colors[2] = getResources().getColor(R.color.colorPrimaryDark);
-        colors[3] = getResources().getColor(R.color.design_default_color_primary);
-        colors[4] = getResources().getColor(R.color.common_google_signin_btn_text_light);
-        colors[5] = getResources().getColor(R.color.common_google_signin_btn_text_light_disabled);
-        colors[6] = getResources().getColor(R.color.common_google_signin_btn_text_light_pressed);
-        colors[7] = getResources().getColor(R.color.common_google_signin_btn_tint);
-        colors[8] = getResources().getColor(R.color.common_google_signin_btn_text_light_default);
-        colors[9] = getResources().getColor(R.color.colorAccent);
+        colors[0] = getResources().getColor(R.color.nose);
+        colors[1] = getResources().getColor(R.color.head);
+        colors[2] = getResources().getColor(R.color.sleep);
+        colors[3] = getResources().getColor(R.color.teeth);
+        colors[4] = getResources().getColor(R.color.pretty);
+        colors[5] = getResources().getColor(R.color.eye);
+        colors[6] = getResources().getColor(R.color.ear);
+        colors[7] = getResources().getColor(R.color.stun);
+        colors[8] = getResources().getColor(R.color.mouth);
+        colors[9] = getResources().getColor(R.color.face);
         return colors;
     }
 }

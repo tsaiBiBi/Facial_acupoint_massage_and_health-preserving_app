@@ -3,4 +3,14 @@
     <color name="colorPrimary">#004d40</color>
     <color name="colorPrimaryDark">#00251a</color>
     <color name="colorAccent">#ffab40</color>
+    <color name="nose">#D7E5CC</color>
+    <color name="head">#E5CC53</color>
+    <color name="sleep">#AFBF75</color>
+    <color name="teeth">#BF702E</color>
+    <color name="pretty">#AC7D87</color>
+    <color name="eye">#AAABBB</color>
+    <color name="ear">#B3D7D3</color>
+    <color name="stun">#ECC963</color>
+    <color name="mouth">#F19B99</color>
+    <color name="face">#FF9874</color>
 </resources>

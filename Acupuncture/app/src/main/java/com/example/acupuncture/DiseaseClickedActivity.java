@@ -30,13 +30,8 @@ import java.util.List;
 
 public class DiseaseClickedActivity extends AppCompatActivity {
 
-//    int[] colorClassArray = new int[]{0xFF616621, 0xFFAC7D87, 0xFF616621,0xFFAC7D87,0x542200
-//            ,0x2D1200,0xE7655A,0xF6CE5D,0xBAE6FB,0x542200};  // 542200 2D1200
     private static String[] fmyp = new String[]{"眼睛保健","臉部美容","緩解頭痛", "改善鼻子不適",
             "改善失眠","緩解牙痛","緩解耳鳴","昏迷急救","改善口腔衛生","緩解顔面神經麻痺"};
-//    private List<String> times2 = new ArrayList<String>();;
-//    String[] funcpress2 = new String[10];
-    private float[] staticdata = new float[10];
     public float[] funcpress2 = new float[]{0,0,0,0,0,0,0,0,0,0};
     public static List<Pressed> record = new ArrayList<>();
     public List<String> disease = new ArrayList<>();

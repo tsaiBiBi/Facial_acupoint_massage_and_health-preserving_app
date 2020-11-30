@@ -85,9 +85,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAnm5zUrbevGUJn_UCFzsRR2n99CuhlJDw"/>
-
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyB7wEVHNJqnpALpjyPESI2Zy2ZwJmC9o98"/>
         <activity
             android:name=".CameraXLivePreviewActivity"
             android:exported="true">

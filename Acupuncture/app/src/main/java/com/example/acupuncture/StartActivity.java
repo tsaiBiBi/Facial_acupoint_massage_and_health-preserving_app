@@ -33,6 +33,13 @@ public class StartActivity extends AppCompatActivity {
         // class
         sharedprefmanager = new SharedPrefManager(this);
 
+        if(sharedprefmanager.chk_login()){
+            Intent intent = new Intent();
+            intent.setClass(StartActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);  // Toolbar 取代 ActionBar

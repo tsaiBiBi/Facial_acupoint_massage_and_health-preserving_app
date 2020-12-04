@@ -37,7 +37,7 @@
                     android:background="@drawable/button_shape"
                     android:text="改善鼻子不適"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -182,10 +182,11 @@
                         android:id="@+id/openCamera"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/button_shape"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_shape_notallowed"
                         android:backgroundTint="#00251a"
                         android:text="開始按壓"
-                        android:textColor="#FFFFFF"
+                        android:textColor="#6C6C6C"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"

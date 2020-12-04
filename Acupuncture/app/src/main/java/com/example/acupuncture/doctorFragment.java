@@ -1,6 +1,7 @@
 package com.example.acupuncture;
 
 import com.example.dataclass.Clinic;
+import com.example.dataclass.MusicService;
 import com.example.dataclass.Pressed;
 import com.example.webservice.User;
 import com.example.webservice.WClinic;
@@ -8,6 +9,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -67,6 +69,9 @@ public class doctorFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_doctor, container, false);
+
+        Intent stopIntent = new Intent(getContext(), MusicService.class);
+        getActivity().stopService(stopIntent);
 
         //從資料庫去拿所有資料
         if (!User.recordIsGotten) {

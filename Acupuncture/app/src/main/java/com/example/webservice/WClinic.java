@@ -24,9 +24,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class WClinic {
 
-    private static RequestQueue requestQueue;
-    public static boolean acupIsGotten;
-
     public static void q_clinic(Context cli_cnt, GoogleMap mMap, final double lat, final double lng, final String type) {
         final String clinic_url = "http://10.32.21.159/project/clinic/get_clinic?lat=" + lat + "&lng=" + lng + "&type=" + type;
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, clinic_url, null, new Response.Listener<JSONArray>() {
@@ -41,7 +38,6 @@ public class WClinic {
                         options.snippet(jsonObject.getString("clinic_address"));
                         mMap.addMarker((options));
                     }
-                    Toast.makeText(cli_cnt, "ok", Toast.LENGTH_LONG).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

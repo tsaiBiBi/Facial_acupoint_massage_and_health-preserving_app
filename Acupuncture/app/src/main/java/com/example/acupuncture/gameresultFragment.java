@@ -19,6 +19,8 @@ import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dataclass.MusicService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +76,6 @@ public class gameresultFragment extends Fragment {
                 transaction.replace(R.id.nav_host_fragment, fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-
             }
         });
 

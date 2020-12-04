@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.dataclass.Acup;
 import com.example.dataclass.Acup_pos;
+import com.example.dataclass.MusicService;
 import com.example.dataclass.Urls;
 import com.example.webservice.Acupuncture;
 import com.example.webservice.User;
@@ -45,6 +46,10 @@ public class faceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_face, container, false);
+
+        Intent stopIntent = new Intent(getContext(), MusicService.class);
+        getActivity().stopService(stopIntent);
+
         // 從資料庫去拿所有穴道的資料
         if (!Acupuncture.acupIsGotten) {
             Acupuncture.acup(getActivity());
@@ -254,17 +259,12 @@ public class faceFragment extends Fragment {
     };
 
     public void lastBtnControl() {
-        // 如果此時TextView中的穴道號碼-1也等於現在的穴道名稱
-        // 左還有資料就可亮
-        if(showingAcup - 1 >= 0) {
-            if (acupunctures.get(showingAcup - 1).num >= 0 && acupunctures.get(showingAcup - 1).name.equals(acupunctures.get(showingAcup).name)) {
-                btnLast.setBackgroundResource(R.drawable.lastok);
-                lastCanBePressed = true;
-            } else {
-                btnLast.setBackgroundResource(R.drawable.last);
-                lastCanBePressed = false;
-            }
-        }else if(showingAcup == 0){
+        // 如果此時TextView中的穴道號碼-1也等於現在的穴道名稱，那就是還有資料
+        if (showingAcup - 1 >= 0 && acupunctures.get(showingAcup - 1).name.equals(acupunctures.get(showingAcup).name)) {
+            // 左還有資料就可亮
+            btnLast.setBackgroundResource(R.drawable.lastok);
+            lastCanBePressed = true;
+        } else {
             btnLast.setBackgroundResource(R.drawable.last);
             lastCanBePressed = false;
         }
@@ -272,23 +272,17 @@ public class faceFragment extends Fragment {
 
     public void nextBtnControl() {
         // 如果此時TextView中的穴道號碼+1也等於現在的穴道名稱
-        // 右還有資料就可亮
-        if(showingAcup + 1 > acupunctures.size()) {
-            if (acupunctures.get(showingAcup + 1).num < acupunctures.size() && acupunctures.get(showingAcup + 1).name.equals(acupunctures.get(showingAcup).name)) {
-                btnNext.setBackgroundResource(R.drawable.nextok);
-                nextCanBePressed = true;
-            } else {
-                btnNext.setBackgroundResource(R.drawable.next);
-                nextCanBePressed = false;
-            }
-        }else if(showingAcup == acupunctures.size() - 1){
+        if (showingAcup + 1 < acupunctures.size() && acupunctures.get(showingAcup + 1).name.equals(acupunctures.get(showingAcup).name)) {
+            // 右還有資料就可亮
+            btnNext.setBackgroundResource(R.drawable.nextok);
+            nextCanBePressed = true;
+        } else {
             btnNext.setBackgroundResource(R.drawable.next);
             nextCanBePressed = false;
         }
     }
 
     private View.OnClickListener btnLastAcup = new View.OnClickListener() {
-
         @Override
         public void onClick(View view) {
             if (showingAcup > 0 && lastCanBePressed) {

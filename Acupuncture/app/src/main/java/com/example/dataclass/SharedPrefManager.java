@@ -3,6 +3,7 @@ package com.example.dataclass;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.acupuncture.StartActivity;
 
@@ -36,7 +37,12 @@ public class SharedPrefManager {
         editor.putString(GENDER , gender);
         editor.putString(NAME , name);
         editor.putString(IMG , img);
-        editor.apply();
+        editor.commit();
+//        if(IS_LOGIN == "true"){
+//            Log.e("CreateLoginCheck", "摁摁 IS LOGIN 是 TRUE 欸");
+//        }else{
+//            Log.e("CreateLoginCheck", "摁摁 IS LOGIN 是 FALSE 欸");
+//        }
     }
 
     // 重設

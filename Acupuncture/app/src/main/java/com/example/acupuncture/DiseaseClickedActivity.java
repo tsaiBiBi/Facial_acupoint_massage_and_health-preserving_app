@@ -5,22 +5,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.dataclass.Pressed;
 import com.example.webservice.User;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CandleEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.utils.MPPointF;
+import com.github.mikephil.charting.utils.Utils;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -35,6 +43,7 @@ public class DiseaseClickedActivity extends AppCompatActivity {
     public float[] funcpress2 = new float[]{0,0,0,0,0,0,0,0,0,0};
     public static List<Pressed> record = new ArrayList<>();
     public List<String> disease = new ArrayList<>();
+    public static int[] week = new int[7];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +106,45 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         chart.setScaleEnabled(false);  // 圖表禁止縮放
 
         Legend l = chart.getLegend();
-        l.setTextSize(14f);
+        l.setTextSize(20f);
         l.setTextColor(Color.WHITE);
         l.setWordWrapEnabled(true);
         l.setXEntrySpace(12f);
+
+        String[] aWeek = getWeek();
+        pressMarker myMarkerView = new pressMarker(this, aWeek);
+        myMarkerView.setChartView(chart);
+        chart.setMarker(myMarkerView);
     }
 
+    public String[] getWeek(){
+        String[] day_of_week = new String[7];
+        for(int i = 0; i < 7; i++){
+            switch (week[i]) {
+                case 1:
+                    day_of_week[i] = "星期日";
+                    break;
+                case 2:
+                    day_of_week[i] = "星期一";
+                    break;
+                case 3:
+                    day_of_week[i] = "星期二";
+                    break;
+                case 4:
+                    day_of_week[i] = "星期三";
+                    break;
+                case 5:
+                    day_of_week[i] = "星期四";
+                    break;
+                case 6:
+                    day_of_week[i] = "星期五";
+                    break;
+                case 7:
+                    day_of_week[i] = "星期六";
+            }
+        }
+        return day_of_week;
+    }
     private ArrayList<BarEntry> dataValue() {
 
         ArrayList<BarEntry> dataVals = new ArrayList<BarEntry>();
@@ -164,6 +206,8 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        // distanceDay 為 -6~0，week 陣列從 distanceDay+6 (0~6)
+        week[distanceDay+6] = date.get(Calendar.DAY_OF_WEEK);
         return dft.format(endDate);
     }
 
@@ -235,5 +279,45 @@ public class DiseaseClickedActivity extends AppCompatActivity {
         colors[8] = getResources().getColor(R.color.mouth);
         colors[9] = getResources().getColor(R.color.face);
         return colors;
+    }
+}
+
+class pressMarker extends MarkerView {
+
+    private final TextView tvContent;
+    private String[] week;
+
+    public pressMarker(Context context, String[] week) {
+        super(context, R.layout.view_marker);
+        this.week = week;
+
+        tvContent = findViewById(R.id.tvContent);
+    }
+
+    // runs every time the MarkerView is redrawn, can be used to update the
+    // content (user-interface)
+    @Override
+    public void refreshContent(Entry e, Highlight highlight) {
+
+        if (e instanceof CandleEntry) {
+
+            CandleEntry ce = (CandleEntry) e;
+            tvContent.setText(week[(int) e.getX()-1] + "\n" + Utils.formatNumber(ce.getHigh(), 0, false));
+        } else {
+            tvContent.setText(week[(int) e.getX()-1] + "\n" + Utils.formatNumber(((BarEntry) e).getYVals()[highlight.getStackIndex()], 0, false)  + " 次");
+        }
+
+        super.refreshContent(e, highlight);
+    }
+
+    private MPPointF mpPointF;
+
+    @Override
+    public MPPointF getOffset() {
+
+        if(mpPointF == null){
+            mpPointF = new MPPointF(-(getWidth() / 2), -getHeight());
+        }
+        return mpPointF;
     }
 }

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.dataclass.MusicService;
 import com.example.dataclass.Pressed;
 import com.example.webservice.User;
 import com.github.mikephil.charting.charts.BarChart;
@@ -33,6 +34,9 @@ public class chatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chat, container, false);
+
+        Intent stopIntent = new Intent(getContext(), MusicService.class);
+        getActivity().stopService(stopIntent);
 
         if (!User.recordIsGotten) {
             User.pressedCount(getActivity());

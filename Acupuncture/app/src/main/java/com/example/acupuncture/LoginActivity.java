@@ -2,7 +2,10 @@ package com.example.acupuncture;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,8 +16,8 @@ import com.example.webservice.User;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button btn_back , btn_login;
-    public EditText et_account , et_password;
+    Button btn_back, btn_login;
+    public EditText et_account, et_password;
     SharedPrefManager sharedprefmanager;
 
     @Override
@@ -25,12 +28,12 @@ public class LoginActivity extends AppCompatActivity {
         sharedprefmanager = new SharedPrefManager(this);
 
         // edittext
-        et_account  = (EditText) findViewById(R.id.eT_account_log);
+        et_account = (EditText) findViewById(R.id.eT_account_log);
         et_password = (EditText) findViewById(R.id.eT_password_log);
 
         // button
         btn_login = (Button) findViewById(R.id.btn_log_ok);
-        btn_back  = (Button) findViewById(R.id.btn_log_back);
+        btn_back = (Button) findViewById(R.id.btn_log_back);
 
         // 判斷空值及登入
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -64,8 +67,8 @@ public class LoginActivity extends AppCompatActivity {
     // 確認是否有欄位為空值
     private boolean chk_null(String faccount, String fpassword) {
         Boolean is_null = false;
-        if(faccount.isEmpty() || fpassword.isEmpty()) {
-            Toast.makeText(LoginActivity.this ,"請填完所有欄位" , Toast.LENGTH_LONG).show();
+        if (faccount.isEmpty() || fpassword.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "請填完所有欄位", Toast.LENGTH_LONG).show();
             is_null = true;
         }
         return is_null;

@@ -6,6 +6,7 @@
 
     <!-- permission add -->
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -19,14 +20,18 @@
     <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
-        android:usesCleartextTraffic="true"
         android:name="com.example.screenTime.AppNotify"
         android:allowBackup="true"
         android:icon="@mipmap/logo_round"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <service
+            android:name="com.example.dataclass.MusicService"
+            android:enabled="true"
+            android:exported="true"></service>
 
         <receiver
             android:name="com.example.screenTime.NotificationPublisher"
@@ -85,6 +90,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyB7wEVHNJqnpALpjyPESI2Zy2ZwJmC9o98"/>
         <activity
             android:name=".CameraXLivePreviewActivity"

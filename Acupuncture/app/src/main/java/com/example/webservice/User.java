@@ -45,9 +45,9 @@ public class User {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     msg = jsonObject.getString("rtn_msg");
-//                    if(msg.equals("註冊成功")){
-//                        RegisterActivity.registeredJump();
-//                    }
+                    if(msg.compareTo("註冊成功") == 0){
+                        RegisterActivity.registeredJump();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

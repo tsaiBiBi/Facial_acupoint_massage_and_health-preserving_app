@@ -168,24 +168,28 @@ public class MainActivity extends AppCompatActivity {
     private void getNotify(Intent intent) {
         //拿到參數後 首先判斷是不是爲空
         Log.e("getNotify()", "有進來這嗎");
-        if(!intent.getStringExtra("toFragment").isEmpty()) {
-            String toFragment = intent.getStringExtra("toFragment");
+        try {
+            if (!intent.getStringExtra("toFragment").isEmpty()) {
+                String toFragment = intent.getStringExtra("toFragment");
 
-            // If menuFragment is defined, then this activity was launched with a fragment selection
-            Log.e("getNotify()", "真的有進來嗎" + toFragment);
+                // If menuFragment is defined, then this activity was launched with a fragment selection
+                Log.e("getNotify()", "真的有進來嗎" + toFragment);
 
-            // Here we can decide what do to -- perhaps load other parameters from the intent extras such as IDs, etc
-            if (toFragment.equals("faceFragment")) {
-                Log.i("getNotify()go", "ok有值");
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                // Here we can decide what do to -- perhaps load other parameters from the intent extras such as IDs, etc
+                if (toFragment.equals("faceFragment")) {
+                    Log.i("getNotify()go", "ok有值");
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                Fragment faceFragment = new faceFragment();
-                fragmentTransaction.replace(R.id.nav_host_fragment, faceFragment);
-                fragmentTransaction.commit();
+                    Fragment faceFragment = new faceFragment();
+                    fragmentTransaction.replace(R.id.nav_host_fragment, faceFragment);
+                    fragmentTransaction.commit();
+                }
+            } else {
+                Log.e("FragmentTest", "抓不到");
             }
-        }else{
-            Log.e("FragmentTest", "抓不到");
+        }catch (NullPointerException e){
+            Log.e("FragmentTest", "NullPointerException");
         }
         //做完操作以後必須將toValue的值初始化
         intent.putExtra("toFragment", "");

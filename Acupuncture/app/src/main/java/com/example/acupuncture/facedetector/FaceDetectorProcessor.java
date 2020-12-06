@@ -61,7 +61,6 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
         detector = FaceDetection.getClient(options);
     }
 
-//    @Override
     public void setAcuPos(List<Acup_pos> pos){
         this.pos = pos;
     }

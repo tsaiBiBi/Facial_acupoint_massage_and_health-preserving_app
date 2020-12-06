@@ -99,7 +99,7 @@ public class faceFragment extends Fragment {
         Acup nowAcup = new Acup(num, name, part, position, times, func, detail, img, pos);
         acupunctures.add(nowAcup);
     }
-    
+
     private View.OnClickListener btnAcupList = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -183,9 +183,13 @@ public class faceFragment extends Fragment {
                 public void onClick(DialogInterface dialog, int which) {
                     for (int i = 0; i < acupunctures.size(); i++) {
                         if (acupunctures.get(i).name.equals(acupList[which]) && acupunctures.get(i).num == acupNumList[which]) {
+
                             String detail = acupunctures.get(i).detail;
                             List<Acup_pos> pos = acupunctures.get(i).pos;
+                            String acup_name = acupunctures.get(i).name;
                             String posInfo = acupunctures.get(i).position;
+                            String acup_times = acupunctures.get(i).times;
+
                             txtvAcupTitle.setText(acupList[which]);
 
                             txtvAcup.setText(detail);
@@ -225,7 +229,9 @@ public class faceFragment extends Fragment {
                                                 Intent intent = new Intent();
                                                 Bundle bundle = new Bundle();
                                                 bundle.putSerializable("pos", (Serializable) pos);
+                                                bundle.putString("acup_name", acup_name);
                                                 bundle.putString("posInfo", posInfo);
+                                                bundle.putString("acup_times", acup_times);
                                                 intent.putExtras(bundle);
                                                 //呼叫照相機
                                                 intent.setClass(getActivity(), CameraXLivePreviewActivity.class);
@@ -237,7 +243,9 @@ public class faceFragment extends Fragment {
                                                 Intent intent = new Intent();
                                                 Bundle bundle = new Bundle();
                                                 bundle.putSerializable("pos", (Serializable) pos);
+                                                bundle.putString("acup_name", acup_name);
                                                 bundle.putString("posInfo", posInfo);
+                                                bundle.putString("acup_times", acup_times);
                                                 intent.putExtras(bundle);
                                                 //呼叫照相機
                                                 intent.setClass(getActivity(), CameraXLivePreviewActivity.class);

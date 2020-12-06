@@ -43,6 +43,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -68,6 +69,8 @@ import com.google.mlkit.vision.face.FaceDetectorOptions;
 import com.google.mlkit.common.MlKitException;
 
 import com.example.acupuncture.facedetector.PreferenceUtils;
+
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -112,7 +115,12 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         List<Acup_pos> pos = (List<Acup_pos>) intent.getSerializableExtra("pos");
+        String posInfo = intent.getStringExtra("posInfo");
+        String acup_times = intent.getStringExtra("acup_times");
+        String acup_name = intent.getStringExtra("acup_name");
         this.pos = pos;
+
+
 
         if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP) {
             Toast.makeText(
@@ -130,6 +138,15 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
         cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
         setContentView(R.layout.activity_vision_camerax_live_preview);
+
+        // 相機穴道 Info (穴道名 / 定位方式 / 按壓方式)
+        TextView tv_acupInfo = findViewById(R.id.tv_acupInfo);
+        String acup_info =
+                acup_name+"\n"
+                + "定位方式: "+ posInfo + "\n"
+                + "按壓方式: "+ acup_times;
+        tv_acupInfo.setText(acup_info);
+
         previewView = findViewById(R.id.preview_view);
         if (previewView == null) {
             Log.d(TAG, "previewView is null");

@@ -44,6 +44,7 @@ public class NotificationPublisher extends BroadcastReceiver {
                 .setContentTitle("來自穴經驗的關懷") // 設置 notify title
                 .setContentText("您使用超時了唷！建議您休息一下:3～") // 設置 notify msg
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setSmallIcon(R.drawable.panda)
                 .setContentIntent(pend);

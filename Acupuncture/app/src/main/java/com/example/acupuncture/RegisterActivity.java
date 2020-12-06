@@ -1,6 +1,7 @@
 package com.example.acupuncture;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -20,6 +21,8 @@ public class RegisterActivity extends AppCompatActivity {
     public static RadioGroup rgrp_gender;
     public static Integer int_year, int_month, int_day , int_gender;
     public static EditText et_name , et_account , et_password , et_height , et_weight , et_birth;
+    private static boolean isRegistered = false;
+
     Button btn_back , btn_register , btn_date;
 
     @Override
@@ -84,6 +87,11 @@ public class RegisterActivity extends AppCompatActivity {
                 Integer fgender  = int_gender;
                 if(!chk_null(fname , faccount , fpassword , fheight , fweight , fbirth , fgender)) {
                     User.register(RegisterActivity.this , fname , faccount , fpassword , fheight , fweight , fbirth , fgender);
+                    if(registeredJump()){
+                        Intent intent = new Intent();
+                        intent.setClass(RegisterActivity.this, StartActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -111,5 +119,9 @@ public class RegisterActivity extends AppCompatActivity {
             isnull = true;
         }
         return isnull;
+    }
+    public static boolean registeredJump(){
+        isRegistered = true;
+        return isRegistered;
     }
 }

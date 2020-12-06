@@ -24,6 +24,7 @@ import org.json.JSONObject;
 // dataclass & activity
 import com.example.acupuncture.DiseaseClickedActivity;
 import com.example.acupuncture.ProfileActivity;
+import com.example.acupuncture.RegisterActivity;
 import com.example.dataclass.SharedPrefManager;
 import com.example.acupuncture.chatFragment;
 import com.example.acupuncture.doctorFragment;
@@ -37,11 +38,20 @@ public class User {
 
     // 註冊
     public static void register(final Context cxt_register, final String fname, final String faccount, final String fpassword, final String fheight, final String fweight, final String fbirth, final Integer fgender) {
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST , Urls.register , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(cxt_register , response , Toast.LENGTH_LONG).show();
+                String msg = "";
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    msg = jsonObject.getString("rtn_msg");
+//                    if(msg.equals("註冊成功")){
+//                        RegisterActivity.registeredJump();
+//                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(cxt_register , msg , Toast.LENGTH_LONG).show();
             }
         } ,
                 new Response.ErrorListener() {

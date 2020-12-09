@@ -27,17 +27,12 @@ import com.example.webservice.Weather;
 import org.json.JSONObject;
 
 import com.example.dataclass.MusicService;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 
 public class homeFragment extends Fragment {
 
     ImageView gender_image;
     public static JSONObject weatherInfo;
-    private FusedLocationProviderClient fusedLocationClient;
 
     public homeFragment() {
     }
@@ -56,8 +51,6 @@ public class homeFragment extends Fragment {
         set_gender_img();
         Log.e("b8-home", String.valueOf(weatherInfo));
         TextView tv_weatherInfo = view.findViewById(R.id.tv_weatherInfo);
-//        Weather.get_predict(getActivity(), tv_weatherInfo);
-//        tv_weatherInfo.setText(String.valueOf(weatherInfo));
 
         // check permission
         while (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED){

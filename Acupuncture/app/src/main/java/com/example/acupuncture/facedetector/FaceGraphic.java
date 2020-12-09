@@ -103,6 +103,18 @@ public class FaceGraphic extends Graphic {
             else
                 continue;
 
+            Log.e("B8-lengthR", String.valueOf(this.length_rate));
+            // bias
+            if(point.sym == 1 && point.side.equals("l")){
+                coordinate[0] += (point.bias_x * this.length_rate);
+                coordinate[1] -= (point.bias_y* this.length_rate);
+            }
+            else{
+                coordinate[0] -= (point.bias_x * this.length_rate);
+                coordinate[1] -= (point.bias_y* this.length_rate);
+            }
+            canvas.drawCircle(100, 100, 5,acupPaint);
+            canvas.drawCircle(100+(float)point.bias_x * this.length_rate, 100, 25,facePositionPaint);
             // 熊貓(耳朵)
             canvas.drawCircle((float)(coordinate[0]*0.98), (float)(coordinate[1] * 0.99), 5,acupPaint);
             canvas.drawCircle((float)(coordinate[0]*1.02), (float)(coordinate[1] * 0.99),5,acupPaint);
@@ -125,9 +137,8 @@ public class FaceGraphic extends Graphic {
         float[] coordinate = new float[2]; // 座標 x(0), y(1)
         PointF a_point = face.getContour(point.a_con).getPoints().get(point.a_idx);
 
-        Log.e("(b8)IN", String.valueOf(this.length_rate));
-        coordinate[0] = translateX(a_point.x) + ((float)point.bias_x*length_rate);
-        coordinate[1] = translateY(a_point.y) + ((float)point.bias_y*length_rate);
+        coordinate[0] = translateX(a_point.x);
+        coordinate[1] = translateY(a_point.y);
         return coordinate;
     }
 
@@ -136,8 +147,8 @@ public class FaceGraphic extends Graphic {
         PointF a_point = face.getContour(point.a_con).getPoints().get(point.a_idx);
         PointF b_point = face.getContour(point.b_con).getPoints().get(point.b_idx);
 
-        coordinate[0] = (translateX(a_point.x) + translateX(b_point.x)) * (float)point.ratio + (float)point.bias_x;
-        coordinate[1] = (translateY(a_point.y) + translateY(b_point.y)) * (float)point.ratio + (float)point.bias_y;
+        coordinate[0] = (translateX(a_point.x) + translateX(b_point.x)) * (float)point.ratio;
+        coordinate[1] = (translateY(a_point.y) + translateY(b_point.y)) * (float)point.ratio;
         return coordinate;
     }
 

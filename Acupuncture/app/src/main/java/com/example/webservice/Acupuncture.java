@@ -52,7 +52,6 @@ public class Acupuncture {
                                 detail = jsonObject.getString("acup_detail");
                                 img = jsonObject.getString("acup_image");
                                 pos_id = jsonObject.getInt("pos_id");
-                                String TAG = "B99";
                                 pos = get_points(cxt_face, pos_id);
                                 faceFragment.acupMap(i, name, part, position, times, func, detail, img, pos);
                             }
@@ -80,9 +79,9 @@ public class Acupuncture {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            String pos_type;
+                            String pos_type, side;
                             double bias_x, bias_y, ratio;
-                            int a_idx, b_idx, c_idx, d_idx, a_con, b_con, c_con, d_con;
+                            int a_idx, b_idx, c_idx, d_idx, a_con, b_con, c_con, d_con, sym;
 
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
@@ -101,11 +100,10 @@ public class Acupuncture {
                                 ratio = jsonObject.getDouble("ratio");
                                 bias_x = jsonObject.getDouble("bias_x");
                                 bias_y = jsonObject.getDouble("bias_y");
+                                sym = jsonObject.getInt("sym");
+                                side = jsonObject.getString("side");
 
-                                String TAG = "B8";
-                                Log.e(TAG, pos_name+" "+pos_type);
-
-                                pos.add( new Acup_pos(pos_type, a_con, a_idx, b_con, b_idx, c_con, c_idx, d_con, d_idx, ratio, bias_x, bias_y) );
+                                pos.add( new Acup_pos(pos_type, a_con, a_idx, b_con, b_idx, c_con, c_idx, d_con, d_idx, ratio, bias_x, bias_y, sym, side) );
                             }
                         }
                         catch (JSONException e) {

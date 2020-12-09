@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.dataclass.SharedPrefManager;
 import com.example.screenTime.ScreenNotifyService;
-import com.example.webservice.Weather;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -30,6 +29,7 @@ public class StartActivity extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
         }
+
         // class
         sharedprefmanager = new SharedPrefManager(this);
 

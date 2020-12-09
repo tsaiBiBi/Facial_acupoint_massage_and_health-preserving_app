@@ -65,28 +65,25 @@ public class ScreenTimeActivity extends AppCompatActivity {
 
         List<usageTime> totalTimeFormat = new ArrayList<>(7);
 
-        try {
-            for (int i = 6; i >= 0; i--) {
-                Calendar[] startEnd = getPastDate(i);
-                long start_time = startEnd[0].getTimeInMillis();
-                long end_time = startEnd[1].getTimeInMillis();
-                int week = startEnd[0].get(Calendar.DAY_OF_WEEK);
-                if (i == 0) {
-                    totalUsageTime[6 - i] = getUsageStatistics(start_time, System.currentTimeMillis());
-                } else {
-                    totalUsageTime[6 - i] = getUsageStatistics(start_time, end_time);
-                }
-                String tmp = converLongToTimeChar(totalUsageTime[6 - i]);
-
-                usageTime temp = new usageTime(week, tmp);
-                totalTimeFormat.add(temp);
+//        try {
+        for (int i = 6; i >= 0; i--) {
+            Calendar[] startEnd = getPastDate(i);
+            long start_time = startEnd[0].getTimeInMillis();
+            long end_time = startEnd[1].getTimeInMillis();
+            int week = startEnd[0].get(Calendar.DAY_OF_WEEK);
+            if (i == 0) {
+                totalUsageTime[6 - i] = getUsageStatistics(start_time, System.currentTimeMillis());
+            } else {
+                totalUsageTime[6 - i] = getUsageStatistics(start_time, end_time);
             }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            String tmp = converLongToTimeChar(totalUsageTime[6 - i]);
+
+            usageTime temp = new usageTime(week, tmp);
+            totalTimeFormat.add(temp);
         }
+//        }
 
         // ----------------
-        final TextView textTime = findViewById(R.id.textTime);
         final AlertDialog.Builder dialog_time = new AlertDialog.Builder(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -188,13 +185,14 @@ public class ScreenTimeActivity extends AppCompatActivity {
         // 設置 Marker View
         chart.setMarker(new usageTimeMarker(this, totalTimeFormat));
     }
+
     // x, y 軸資料
     private List<BarEntry> getPoints(long[] totalUsageEventTime) {
         List<BarEntry> points = new ArrayList<>();
 
         for (int i = 1; i <= COUNT; i++) {
 //            float y = (float) Math.random() * 20;
-            float y = (float) (Math.round(totalUsageEventTime[i-1]));
+            float y = (float) (Math.round(totalUsageEventTime[i - 1]));
             points.add(new BarEntry(i, y));
         }
         return points;
@@ -222,7 +220,7 @@ public class ScreenTimeActivity extends AppCompatActivity {
         pastDays[0].set(Calendar.MILLISECOND, 0);
 
         pastDays[1] = Calendar.getInstance();
-        pastDays[1].set(Calendar.DAY_OF_YEAR, pastDays[1].get(Calendar.DAY_OF_YEAR) - (past-1));
+        pastDays[1].set(Calendar.DAY_OF_YEAR, pastDays[1].get(Calendar.DAY_OF_YEAR) - (past - 1));
         pastDays[1].set(Calendar.HOUR_OF_DAY, 0);
         pastDays[1].set(Calendar.SECOND, 0);
         pastDays[1].set(Calendar.MINUTE, 0);
@@ -231,7 +229,7 @@ public class ScreenTimeActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    long getUsageStatistics(long start_time, long end_time) throws PackageManager.NameNotFoundException {
+    long getUsageStatistics(long start_time, long end_time) {
         long sum = 0;
         UsageEvents.Event currentEvent;
         //  List<UsageEvents.Event> allEvents = new ArrayList<>();
@@ -253,14 +251,18 @@ public class ScreenTimeActivity extends AppCompatActivity {
                         currentEvent.getEventType() == UsageEvents.Event.MOVE_TO_BACKGROUND) {
                     //  allEvents.add(currentEvent);
                     String key = currentEvent.getPackageName();  // map 的 key 是這個事件應用程式的名字
-                    PackageManager pm = getApplicationContext().getPackageManager();
-                    ApplicationInfo applicationInfo = pm.getApplicationInfo(key, PackageManager.GET_META_DATA);
-                    String appName = (String) pm.getApplicationLabel(applicationInfo);
-                    if (map.get(key) == null) {  // 如果這個 key 尚未存在在 map 裡，就放進 map 跟 sameEvents 裡
-                        map.put(key, new AppUsageInfo(key, appName));
-                        sameEvents.put(key, new ArrayList<UsageEvents.Event>());
+                    try {
+                        PackageManager pm = getApplicationContext().getPackageManager();
+                        ApplicationInfo applicationInfo = pm.getApplicationInfo(key, PackageManager.GET_META_DATA);
+                        String appName = pm.getApplicationLabel(applicationInfo).toString();
+                        if (map.get(key) == null) {  // 如果這個 key 尚未存在在 map 裡，就放進 map 跟 sameEvents 裡
+                            map.put(key, new AppUsageInfo(key, appName));
+                            sameEvents.put(key, new ArrayList<UsageEvents.Event>());
+                        }
+                        sameEvents.get(key).add(currentEvent); // sameEvents 裡就會有同一個 key(packageName) 的所有事件
+                    } catch (PackageManager.NameNotFoundException e) {
+                        Log.e("Screen Time PackageManager", "......");
                     }
-                    sameEvents.get(key).add(currentEvent); // sameEvents 裡就會有同一個 key(packageName) 的所有事件
                 }
             }
 
@@ -345,7 +347,7 @@ class usageTimeMarker extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
         // 不減一的話，最後一天無法點擊框框
-        usageTime item = weekUsage.get((int) e.getX()-1);
+        usageTime item = weekUsage.get((int) e.getX() - 1);
         contentView.setText(item.getWeek() + "\n" + item.getTotalTime());
         super.refreshContent(e, highlight);
     }

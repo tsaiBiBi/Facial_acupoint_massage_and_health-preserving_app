@@ -71,11 +71,11 @@ public class ScreenNotifyService extends Service {
                     end_time = System.currentTimeMillis();
                     // Activity 傳來的 restrict time
                     try {
-                        if(intent.hasExtra("restrict_name")) {
+                        if (intent.hasExtra("restrict_name")) {
                             restrict = intent.getIntExtra("restrict_time", 60);
                             Log.i("ScreenTime", "restrict time isnt null:" + restrict);
                         }
-                    } catch (NumberFormatException e ) {
+                    } catch (NumberFormatException e) {
                         Log.e("ScreenTime", "NumberFormatException");
                     } catch (NullPointerException a) {
                         Log.e("ScreenTime", "NullPointerException");
@@ -109,12 +109,12 @@ public class ScreenNotifyService extends Service {
         long anMinute = 10 * 1000; // 每10秒去做這個偵測的動作
         long triggerAtTime;  // 此為任務觸發時間，elapseRealtime 可以獲取到系統開機至今所經歷時間的毫秒數
         // 如果有休息過！
-//        if(toResetTime){
-//            triggerAtTime = SystemClock.elapsedRealtime() + 5 * 60 * 1000;   // 五分鐘後再去偵測是否有超時的現象
-//            notifiedYet = false;
-//        }else{
-        triggerAtTime = SystemClock.elapsedRealtime() + anMinute;
-//        }
+        if (toResetTime) {
+            triggerAtTime = SystemClock.elapsedRealtime() + 5 * 60 * 1000;   // 五分鐘後再去偵測是否有超時的現象
+            notifiedYet = false;
+        } else {
+            triggerAtTime = SystemClock.elapsedRealtime() + anMinute;
+        }
         Intent i = new Intent(this, ScreenNotifyService.class);
         // PendingIntent 就是一個 Intent 的描述，我們可以把這個描述交給別的程式，別的程式根據這個描述在後面的別的時間做你安排做的事情
         PendingIntent pi = PendingIntent.getService(this, 0, i, 0);

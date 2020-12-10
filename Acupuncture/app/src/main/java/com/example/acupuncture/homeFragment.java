@@ -59,12 +59,11 @@ public class homeFragment extends Fragment {
 //        }
         gender_image = (ImageView) view.findViewById(R.id.image);
         set_gender_img();
-        Log.e("b8-home", String.valueOf(weatherInfo));
         cl = view.findViewById(R.id.cl);
         TextView tv_wPre = view.findViewById(R.id.tv_wPre);
         TextView tv_wSug = view.findViewById(R.id.tv_wSug);
         TextView tv_wKnow = view.findViewById(R.id.tv_wKnow);
-        TextView tv_weatherInfo = view.findViewById(R.id.tv_weatherInfo);
+//        TextView tv_weatherInfo = view.findViewById(R.id.tv_weatherInfo);
 
         /*ConstraintSet cs = new ConstraintSet();
         cs.clone(cl);

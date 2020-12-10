@@ -73,6 +73,8 @@ public class FaceGraphic extends Graphic {
         if (face == null) {
             return;
         }
+        float rotY = face.getHeadEulerAngleY();
+        Log.e("B8-EulerY", String.valueOf(rotY));
 
         // Draws a circle at the position of the detected face, with the face's track id below.
         float x = translateX(face.getBoundingBox().centerX());
@@ -88,43 +90,59 @@ public class FaceGraphic extends Graphic {
 
         get_length_rate();
         for(int i = 0; i < pos.size(); i++){
-            float[] coordinate;
             Acup_pos point = pos.get(i);
 
-            if(point.pos_type.equals("PT")){
-                coordinate = mark_on_point(point);
+            // turn left
+            if (rotY > 30){
+                if(point.side.equals("l"))
+                    show(point, canvas);
             }
-            else if(point.pos_type.equals("BT")){
-                coordinate = mark_between_point(point);
+            // turn right
+            else if(rotY < -30){
+                if(point.side.equals("r"))
+                    show(point, canvas);
             }
-            else if(point.pos_type.equals("CS")){
-                coordinate = mark_cross_point(point);
+            // 中間 (30 ~ -30)
+            else {
+                show(point, canvas);
             }
-            else
-                continue;
-
-            Log.e("B8-lengthR", String.valueOf(this.length_rate));
-            // bias
-            if(point.sym == 1 && point.side.equals("l")){
-                coordinate[0] += (point.bias_x * this.length_rate);
-                coordinate[1] -= (point.bias_y* this.length_rate);
-            }
-            else{
-                coordinate[0] -= (point.bias_x * this.length_rate);
-                coordinate[1] -= (point.bias_y* this.length_rate);
-            }
-            canvas.drawCircle(100, 100, 5,acupPaint);
-            canvas.drawCircle(100+(float)point.bias_x * this.length_rate, 100, 25,facePositionPaint);
-            // 熊貓(耳朵)
-            canvas.drawCircle((float)(coordinate[0]*0.98), (float)(coordinate[1] * 0.99), 5,acupPaint);
-            canvas.drawCircle((float)(coordinate[0]*1.02), (float)(coordinate[1] * 0.99),5,acupPaint);
-            // 熊貓(臉)
-            canvas.drawCircle((float)coordinate[0], (float)(coordinate[1]), 15, facePositionPaint);
-            // 熊貓(眼睛)
-            canvas.drawCircle((float)(coordinate[0]*1.01), (float)(coordinate[1] * 1),4,acupPaint);
-            canvas.drawCircle((float)(coordinate[0]*0.99), (float)(coordinate[1] * 1),4,acupPaint);
         }
     }
+    public void show(Acup_pos point, Canvas canvas){
+        float[] coordinate;
+
+        if(point.pos_type.equals("PT")){
+            coordinate = mark_on_point(point);
+        }
+        else if(point.pos_type.equals("BT")){
+            coordinate = mark_between_point(point);
+        }
+        else if(point.pos_type.equals("CS")){
+            coordinate = mark_cross_point(point);
+        }
+        else
+            return;
+
+        // bias
+        if(point.sym == 1 && point.side.equals("l")){
+            coordinate[0] += (point.bias_x * this.length_rate);
+            coordinate[1] -= (point.bias_y* this.length_rate);
+        }
+        else{
+            coordinate[0] -= (point.bias_x * this.length_rate);
+            coordinate[1] -= (point.bias_y* this.length_rate);
+        }
+
+        // 熊貓(耳朵)
+        canvas.drawCircle((float)(coordinate[0]-15), (float)(coordinate[1]-7), 5,acupPaint);
+        canvas.drawCircle((float)(coordinate[0]+15), (float)(coordinate[1]-7),5,acupPaint);
+        // 熊貓(臉)
+        canvas.drawCircle((float)coordinate[0], (float)(coordinate[1]), 15, facePositionPaint);
+        // 熊貓(眼睛)
+        canvas.drawCircle((float)(coordinate[0]+7), (float)(coordinate[1]),4,acupPaint);
+        canvas.drawCircle((float)(coordinate[0]-7), (float)(coordinate[1]),4,acupPaint);
+    }
+
     // 取得 cm 與 座標 的比例 (座標點/cm)
     public void get_length_rate(){
         // 平均眼距估實際長度 (正常大人約 58~62 mm)

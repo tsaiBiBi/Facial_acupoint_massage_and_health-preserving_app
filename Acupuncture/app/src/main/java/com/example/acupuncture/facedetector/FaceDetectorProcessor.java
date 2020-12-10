@@ -50,7 +50,8 @@ public class FaceDetectorProcessor extends VisionProcessorBase<List<Face>> {
         this(
                 context,
                 new FaceDetectorOptions.Builder()
-                        .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
+//                        .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
+                        .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
                         .enableTracking()
                         .build());
     }

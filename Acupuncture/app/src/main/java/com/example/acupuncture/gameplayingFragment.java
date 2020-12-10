@@ -186,7 +186,7 @@ public class gameplayingFragment extends Fragment {
             } else {
                 quizCount++;
                 //幾秒後(delaySec)呼叫runTimerStop這個Runnable，再由這個Runnable去呼叫你想要做的事情
-                myHandler.postDelayed(runTimerStop,100);
+                myHandler.postDelayed(runTimerStop,500);
                 showNextQuiz();
                 Log.v("CATEGORY",  "part"+ quizCount + "qqq");
 

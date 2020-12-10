@@ -81,6 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
                 extras.putString("usr_name"   , String.valueOf(et_name.getText()));
                 extras.putString("usr_height" , String.valueOf(et_height.getText()));
                 extras.putString("usr_weight" , String.valueOf(et_weight.getText()));
+                extras.putString("usr_birth" , String.valueOf(et_birth.getText()));
                 extras.putString("img_url" , String.valueOf(img_url));
                 extras.putInt("usr_gender" , int_gender);
                 startActivity(intent.putExtras(extras));

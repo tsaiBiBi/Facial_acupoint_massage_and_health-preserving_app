@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,11 +46,16 @@ public class LoginActivity extends AppCompatActivity {
                     User.login(LoginActivity.this, faccount, fpassword);
                 }
 
-                if(sharedprefmanager.chk_login() == true) {
-                    Intent intent = new Intent();
-                    intent.setClass(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
+                        if(sharedprefmanager.chk_login() == true) {
+                            Intent intent = new Intent();
+                            intent.setClass(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }}, 1000);
 
                 finish();
             }

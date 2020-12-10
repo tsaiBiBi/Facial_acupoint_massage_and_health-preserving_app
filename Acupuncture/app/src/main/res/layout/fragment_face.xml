@@ -37,7 +37,7 @@
                     android:background="@drawable/button_shape"
                     android:text="改善鼻子不適"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -48,7 +48,7 @@
                     android:background="@drawable/button_shape"
                     android:text="緩解頭痛"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -59,7 +59,7 @@
                     android:background="@drawable/button_shape"
                     android:text="改善失眠"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -70,7 +70,7 @@
                     android:background="@drawable/button_shape"
                     android:text="緩解牙痛"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -81,7 +81,7 @@
                     android:background="@drawable/button_shape"
                     android:text="臉部美容"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -92,7 +92,7 @@
                     android:background="@drawable/button_shape"
                     android:text="眼睛保健"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -103,7 +103,7 @@
                     android:background="@drawable/button_shape"
                     android:text="緩解耳鳴"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -114,7 +114,7 @@
                     android:background="@drawable/button_shape"
                     android:text="昏迷急救"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -136,7 +136,7 @@
                     android:background="@drawable/button_shape"
                     android:text="緩解顏面神經麻痺"
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -160,21 +160,39 @@
                     android:scrollbarAlwaysDrawVerticalTrack="true"
                     android:scrollbars="vertical">
 
+                    <TextView
+                        android:id="@+id/txtvAcupEngTitle"
+                        android:layout_width="165dp"
+                        android:layout_height="24dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="4dp"
+                        android:hint="穴道英文名稱"
+                        android:textAlignment="center"
+                        android:textColor="#00251A"
+                        android:textSize="17sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtvAcupTitle" />
+
                     <Button
                         android:id="@+id/next"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="29dp"
                         android:background="@drawable/next"
-                        app:layout_constraintBottom_toBottomOf="@+id/txtvAcupTitle"
-                        app:layout_constraintEnd_toEndOf="@+id/txtvAcupTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/txtvAcup"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
                         android:id="@+id/last"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="29dp"
                         android:background="@drawable/last"
-                        app:layout_constraintBottom_toBottomOf="@+id/txtvAcupTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/txtvAcup"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -200,7 +218,7 @@
                         android:id="@+id/txtvAcupTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp"
+                        android:layout_marginVertical="4dp"
                         android:gravity="center"
                         android:hint="穴道名稱"
                         android:textColor="#00251a"
@@ -213,13 +231,17 @@
                         android:id="@+id/txtvAcup"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="穴道資訊"
-                        android:lineSpacingMultiplier="1.5"
-                        android:layout_marginVertical="14dp"
                         android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="14dp"
+                        android:layout_marginTop="12dp"
+                        android:hint="穴道資訊"
+                        android:lineSpacingMultiplier="1.15"
                         android:textColor="#00251a"
                         android:textSize="25sp"
-                        app:layout_constraintTop_toBottomOf="@+id/txtvAcupTitle" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.263"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtvAcupEngTitle" />
 
                     <TextView
                         android:id="@+id/txtvAcupPosition"

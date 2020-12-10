@@ -214,10 +214,11 @@ public class DiseaseClickedActivity extends AppCompatActivity {
     public void everypress(int j){
             for (int i = 0; i <record.size();i++){
                 if (getOldDate(j).compareTo(record.get(i).date) == 0) {
-//                    Log.v("fuck2", "查證用"+getOldDate(j));
-//                    Log.v("fuck2","查證用"+record.get(i).date);
-//                    Log.v("fuck2","查證用"+record.get(i).times);
-//                    Log.v("fuck2","查證用"+record.get(i).func);
+                    Log.v("fuck2", "查證用"+getOldDate(j));
+                    Log.v("fuck2","查證用"+record.get(i).date);
+                    Log.v("fuck2","查證用"+record.get(i).times);
+                    Log.v("fuck2","查證用"+record.get(i).func);
+                    Log.v("fuck2","------------------------");
                     cate(record.get(i).date, record.get(i).func, record.get(i).times);
                 } else {
                     cate2(record.get(i).date, record.get(i).func);

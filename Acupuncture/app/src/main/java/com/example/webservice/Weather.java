@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.acupuncture.R;
 import com.example.acupuncture.homeFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -27,23 +29,19 @@ import com.google.android.gms.tasks.Task;
 
 public class Weather {
 
-    static TextView tv_weatherInfo;
+    static TextView tv_wPre, tv_wSug, tv_wKnow;
     static Context ctx;
     public static Double lat, lng;
 
-    public static void get_predict(Context ctx, String cityName, TextView tv_weather) {
+    public static void get_predict(Context ctx, String cityName) {
 
-//        String countryName = "臺南市";
         String url = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-2F5A7CDF-44C8-4B8C-9EBE-9C69CCA87516&locationName="+cityName;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Thread t = Thread.currentThread();
-                        t.setName("Admin Thread");
-                        t.setPriority(1);
-                        Log.e("B8-thread", String.valueOf(t));
+
                         try {
                             JSONArray wEle = response.getJSONObject("records")
                                                 .getJSONArray("location")
@@ -64,8 +62,10 @@ public class Weather {
 
                             Log.e("wInfo", String.valueOf(weatherInfo));
                             homeFragment.weatherInfo = weatherInfo;
-                            tv_weather.setText(String.valueOf(weatherInfo));
-                            tv_weather.setText(acupSuggestion(cityName, weatherInfo));
+                            JSONObject wInfo = acupSuggestion(cityName, weatherInfo);
+                            tv_wPre.setText(wInfo.getString("wPre"));
+                            tv_wSug.setText(wInfo.getString("wSug"));
+                            tv_wKnow.setText(wInfo.getString("wKnow"));
                         } catch (JSONException e) {
                             Log.e("B8-Err","sth wrong");
                             e.printStackTrace();
@@ -97,8 +97,7 @@ public class Weather {
                     if(city_name.contains("台")) {
                         city_name = city_name.replaceFirst("台", "臺");
                     }
-                    Toast.makeText(ctx , city_name , Toast.LENGTH_LONG).show();
-                    get_predict(ctx, city_name, Weather.tv_weatherInfo);
+                    get_predict(ctx, city_name);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -113,9 +112,11 @@ public class Weather {
         requestQueue.add(request);
     }
 
-    public static void get_weather_suggestion(Context ctx, TextView tv_weatherInfo){
+    public static void get_weather_suggestion(Context ctx, TextView tv_wPre, TextView tv_wSug, TextView tv_wKnow){
         Weather.ctx = ctx;
-        Weather.tv_weatherInfo = tv_weatherInfo;
+        Weather.tv_wPre = tv_wPre;
+        Weather.tv_wSug = tv_wSug;
+        Weather.tv_wKnow = tv_wKnow;
         getLocation();
     }
 
@@ -137,29 +138,39 @@ public class Weather {
         });
     }
 
-    public static String acupSuggestion(String cityName, JSONObject weatherInfo) throws JSONException {
-        String suggestion = "";
+    public static JSONObject acupSuggestion(String cityName, JSONObject weatherInfo) throws JSONException {
+        JSONObject wInfo = new JSONObject();
+        String wPre = "";
+        String wSug = "";
+        String wKnow = "";
         JSONObject minT = weatherInfo.getJSONObject("curMinT").getJSONObject("parameter");
         JSONObject maxT = weatherInfo.getJSONObject("curMaxT").getJSONObject("parameter");
         String startTIme = weatherInfo.getJSONObject("curMinT").getString("startTime");
         String endTime = weatherInfo.getJSONObject("curMinT").getString("endTime");
-        suggestion = cityName + "氣象資訊";
-        suggestion += "\n時間: "+ startTIme + " ~ " + endTime ;
-        suggestion += "\n最高溫: "+ maxT.getString("parameterName")+"°"+maxT.getString("parameterUnit");
-        suggestion += "\n最低溫: "+ minT.getString("parameterName")+"°"+maxT.getString("parameterUnit");
+        wPre = "⛅ "+ cityName + "氣象資訊";
+        wPre += "\n時間: "+ startTIme + " - " + endTime ;
+        wPre += "\n最高溫: "+ maxT.getString("parameterName")+"°"+maxT.getString("parameterUnit");
+        wPre += "\n最低溫: "+ minT.getString("parameterName")+"°"+maxT.getString("parameterUnit");
+        tv_wPre.setBackground(ContextCompat.getDrawable(ctx, R.drawable.msg));
         // too hot --> 中暑
         if(maxT.getInt("parameterName") >= 25){
-            suggestion += "\n\n天氣炎熱注意補充水分以免中暑!\n";
-            suggestion += "\n穴道小知識:";
-            suggestion += "\n水溝穴被視為昏迷急救的穴道，中醫師在急救中暑昏迷的病人時會按壓水溝穴，使病人感到劇烈疼痛達到喚醒病人的效果";
-            Log.e("sug", suggestion);
+            wSug += "天氣炎熱注意補充水分以免中暑！";
+            tv_wSug.setBackground(ContextCompat.getDrawable(ctx, R.drawable.msg));
+            wKnow += "😀 穴道小知識：";
+            wKnow += "\n水溝穴被視為昏迷急救的穴道，中醫師在急救中暑昏迷的病人時會按壓水溝穴，使病人感到劇烈疼痛達到喚醒病人的效果。";
+            tv_wKnow.setBackground(ContextCompat.getDrawable(ctx, R.drawable.tip));
         }
         // too cold --> 頭痛
-        else if(minT.getInt("parameterName") < 20){
-            suggestion += "\n\n天氣寒冷注意保暖!\n";
-            suggestion += "\n穴道小知識:";
-            suggestion += "\n天冷容易造成氣血循環不順，增加頭痛發生的機率。當頭痛找上門時可以按壓「太陽穴」、「印堂穴」與「絲竹空」來舒緩喔~";
+        else if(minT.getInt("parameterName") < 25){
+            wSug += "天氣寒冷注意保暖！";
+            tv_wSug.setBackground(ContextCompat.getDrawable(ctx, R.drawable.msg));
+            wKnow += "❤️ 穴道小知識：";
+            wKnow += "\n天冷容易造成氣血循環不順，增加頭痛發生的機率。當頭痛找上門時可以按壓「太陽穴」、「印堂穴」與「絲竹空」來舒緩喔～";
+            tv_wKnow.setBackground(ContextCompat.getDrawable(ctx, R.drawable.tip));
         }
-        return suggestion;
+        wInfo.put("wPre", wPre);
+        wInfo.put("wSug", wSug);
+        wInfo.put("wKnow", wKnow);
+        return wInfo;
     }
 }

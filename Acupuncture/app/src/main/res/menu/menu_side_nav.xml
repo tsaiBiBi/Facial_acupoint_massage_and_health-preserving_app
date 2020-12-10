@@ -6,6 +6,10 @@
             android:icon="@drawable/profile"
             android:title="個人資料" />
         <item
+            android:id="@+id/nav_developer"
+            android:icon="@drawable/developer"
+            android:title="開發人員" />
+        <item
             android:id="@+id/nav_about"
             android:icon="@android:drawable/ic_dialog_info"
             android:title="關於" />

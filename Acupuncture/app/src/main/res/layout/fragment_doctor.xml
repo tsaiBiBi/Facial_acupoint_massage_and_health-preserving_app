@@ -21,9 +21,10 @@
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:background="#004d40"
             android:gravity="center_vertical"
+            android:paddingBottom="5dp"
             android:text="根據一週的統計，您較常按壓以下功能之穴道："
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
@@ -36,9 +37,10 @@
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:background="#004d40"
             android:gravity="center_vertical"
+            android:paddingVertical="5dp"
             android:text="我們推薦您可以至以下科別進行檢查："
             android:textColor="#FFFFFF"
             android:textSize="18sp" />

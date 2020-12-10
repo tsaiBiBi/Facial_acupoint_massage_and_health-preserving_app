@@ -34,12 +34,10 @@ public class ScreenNotifyService extends Service {
     public static long totalUsageTime = 0;
 
     boolean notifiedYet = false;   // 提醒過了沒，提醒過了就不要再提醒了
-    int restrict = 5; // 使用者自行輸入的時間
-    boolean toResetTime = false;   // 因為有螢幕關掉休息了，所以可以(30分鐘後)重置時間
-    long time_temp = 0;
-
-    long end_time = System.currentTimeMillis(); // 目前時間
-    long start_time = end_time - 1000 * 60 * 60;  // 一小時內使用情況
+    int restrict; // 使用者自行輸入的時間
+    boolean timeIsSet = false;  // 初始時間設置過了沒
+    long start_time, end_time;
+    BroadcastReceiver mReceiver = new ScreenReceiver();
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -54,9 +52,9 @@ public class ScreenNotifyService extends Service {
         super.onCreate();
 
         // 要偵測螢幕是否已關閉來停止使用，就要從註冊廣播並接收資訊
-        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
-        BroadcastReceiver mReceiver = new ScreenReceiver();
         registerReceiver(mReceiver, filter);
 
         Log.d(TAG, "onCreate() executed");
@@ -67,54 +65,61 @@ public class ScreenNotifyService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                // 確認時間是否設置過
+                if (!timeIsSet) {
+                    start_time = System.currentTimeMillis(); // 目前時間
+                    end_time = start_time + 1000 * 60 * 60;  // 一小時內使用情況
+                    timeIsSet = true;
+                    Log.e("timeIsSet", "??????????????????????? " + start_time + "...." + end_time);
+                } else {
+                    Log.e("timeIsSet", "-----------------------  " + start_time + "...." + end_time);
+                }
+
+                // Activity 傳來的 restrict time
                 try {
-                    end_time = System.currentTimeMillis();
-                    // Activity 傳來的 restrict time
-                    try {
-                        if (intent.hasExtra("restrict_name")) {
-                            restrict = intent.getIntExtra("restrict_time", 60);
-                            Log.i("ScreenTime", "restrict time isnt null:" + restrict);
-                        }
-                    } catch (NumberFormatException e) {
-                        Log.e("ScreenTime", "NumberFormatException");
-                    } catch (NullPointerException a) {
-                        Log.e("ScreenTime", "NullPointerException");
+                    if (intent.hasExtra("restrict_time")) {
+                        restrict = intent.getIntExtra("restrict_time", 60);
+                        Log.e("限制時間查看", "restrict time isnt null:" + restrict);
+                    } else {
+                        Log.e("限制時間查看", "restrict time is null:");
                     }
+                } catch (NumberFormatException e) {
+                    Log.e("限制時間查看", "NumberFormatException");
+                } catch (NullPointerException a) {
+                    Log.e("限制時間查看", "NullPointerException");
+                }
 
-                    if (getUsageStatisticsOver(start_time, end_time, restrict)) {  // 如果目前使用時間超過的話
-                        // 就進行一個提醒的動作
-                        if (!notifiedYet) {  // 時間內還沒提醒過
-                            Intent intent = new Intent(getApplicationContext(), NotificationPublisher.class);
-                            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                if (getUsageStatisticsOver(start_time, end_time, restrict)) {  // 如果目前使用時間超過的話
+                    // 就進行一個提醒的動作
+                    if (!notifiedYet) {  // 時間內還沒提醒過
+                        Intent intent = new Intent(getApplicationContext(), NotificationPublisher.class);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-                            AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
-                            Log.i(TAG, "notification!");
-                            notifiedYet = true;
-                        } else {  // 時間內已經提醒過了
-                            // 如果有停止使用 (關閉螢幕)  // 去確認使用者是否有停止使用手機
-                            if (!ScreenReceiver.wasScreenOn) {
-                                Log.i(TAG, "screen off!");
-                                start_time = end_time;
-                            }
+                        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//                        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+                        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), restrict*60*1000, pendingIntent);
+                        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), restrict*60*1000, pendingIntent);
+                        Log.i("提醒出來", "notification!");
+                        notifiedYet = true;
+                    } else {  // 時間內已經提醒過了
+                        // 如果有停止使用 (關閉螢幕)  // 去確認使用者是否有停止使用手機
+                        if (!ScreenReceiver.wasScreenOn) {
+                            Log.i(TAG, "screen off!");
+                            notifiedYet = false;
+                            timeIsSet = false;
+                            totalUsageTime = 0;
                         }
                     }
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
+                }else{
+                    Log.i("限制時間", "沒有超過時間!");
                 }
             }
         }).start();  // 要 start 才會執行 thread 唷
 
         AlarmManager alarmManage = (AlarmManager) getSystemService(ALARM_SERVICE);
-        long anMinute = 10 * 1000; // 每10秒去做這個偵測的動作
         long triggerAtTime;  // 此為任務觸發時間，elapseRealtime 可以獲取到系統開機至今所經歷時間的毫秒數
         // 如果有休息過！
-        if (toResetTime) {
-            triggerAtTime = SystemClock.elapsedRealtime() + 5 * 60 * 1000;   // 五分鐘後再去偵測是否有超時的現象
-            notifiedYet = false;
-        } else {
-            triggerAtTime = SystemClock.elapsedRealtime() + anMinute;
-        }
+        triggerAtTime = SystemClock.elapsedRealtime() + 1 * 60 * 1000;   // 五分鐘後再去偵測是否有超時的現象
         Intent i = new Intent(this, ScreenNotifyService.class);
         // PendingIntent 就是一個 Intent 的描述，我們可以把這個描述交給別的程式，別的程式根據這個描述在後面的別的時間做你安排做的事情
         PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
@@ -126,10 +131,11 @@ public class ScreenNotifyService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(mReceiver);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    boolean getUsageStatisticsOver(long start_time, long end_time, long restrict) throws PackageManager.NameNotFoundException {
+    boolean getUsageStatisticsOver(long start_time, long end_time, long restrict) {
         long restrict_Time = 1000 * 60 * restrict; // Restrict Time In Milliseconds
         totalUsageTime = 0;
         UsageEvents.Event currentEvent;
@@ -152,14 +158,18 @@ public class ScreenNotifyService extends Service {
                         currentEvent.getEventType() == UsageEvents.Event.MOVE_TO_BACKGROUND) {
                     //  allEvents.add(currentEvent);
                     String key = currentEvent.getPackageName();  // map 的 key 是這個事件應用程式的名字
-                    PackageManager pm = getApplicationContext().getPackageManager();
-                    ApplicationInfo applicationInfo = pm.getApplicationInfo(key, PackageManager.GET_META_DATA);
-                    String appName = (String) pm.getApplicationLabel(applicationInfo);
-                    if (map.get(key) == null) {  // 如果這個 key 尚未存在在 map 裡，就放進 map 跟 sameEvents 裡
-                        map.put(key, new AppUsageInfo(key, appName));
-                        sameEvents.put(key, new ArrayList<UsageEvents.Event>());
+                    try {
+                        PackageManager pm = getApplicationContext().getPackageManager();
+                        ApplicationInfo applicationInfo = pm.getApplicationInfo(key, PackageManager.GET_META_DATA);
+                        String appName = pm.getApplicationLabel(applicationInfo).toString();
+                        if (map.get(key) == null) {  // 如果這個 key 尚未存在在 map 裡，就放進 map 跟 sameEvents 裡
+                            map.put(key, new AppUsageInfo(key, appName));
+                            sameEvents.put(key, new ArrayList<UsageEvents.Event>());
+                        }
+                        sameEvents.get(key).add(currentEvent); // sameEvents 裡就會有同一個 key(packageName) 的所有事件
+                    } catch (PackageManager.NameNotFoundException e) {
+                        Log.e("Screen Time PackageManager", "......");
                     }
-                    sameEvents.get(key).add(currentEvent); // sameEvents 裡就會有同一個 key(packageName) 的所有事件
                 }
             }
 
@@ -190,7 +200,7 @@ public class ScreenNotifyService extends Service {
                 // If Last eventtype is ACTIVITY_RESUMED then added the difference of end_time and Event occuring time because the application is still running .
                 // 最後一個
                 if (entry.getValue().get(totalEvents - 1).getEventType() == 1) {
-                    long diff = end_time - entry.getValue().get(totalEvents - 1).getTimeStamp();
+                    long diff = System.currentTimeMillis() - entry.getValue().get(totalEvents - 1).getTimeStamp();
                     map.get(entry.getValue().get(totalEvents - 1).getPackageName()).timeInForeground += diff;
                 }
             }
@@ -205,6 +215,8 @@ public class ScreenNotifyService extends Service {
         } else {
             Toast.makeText(this, "Sorry...", Toast.LENGTH_SHORT).show();
         }
+        Log.e("總時間查看！！！", ".:" + totalUsageTime + " restrict:" + restrict_Time);
+
         return totalUsageTime >= restrict_Time;  // 如果超過時間就回傳 true
     }
 

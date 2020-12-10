@@ -3,6 +3,7 @@ package com.example.acupuncture;
 import com.example.dataclass.Clinic;
 import com.example.dataclass.MusicService;
 import com.example.dataclass.Pressed;
+import com.example.dataclass.SharedPrefManager;
 import com.example.webservice.User;
 import com.example.webservice.WClinic;
 import android.Manifest;
@@ -27,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -64,7 +66,7 @@ public class doctorFragment extends Fragment implements OnMapReadyCallback {
     private LocationManager mLocationMgr;
     private FusedLocationProviderClient client;
     public final String type = "1";
-
+    private SharedPrefManager sharedprefmanager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,6 +74,18 @@ public class doctorFragment extends Fragment implements OnMapReadyCallback {
 
         Intent stopIntent = new Intent(getContext(), MusicService.class);
         getActivity().stopService(stopIntent);
+
+        // 訪客控制------------------------
+        sharedprefmanager = new SharedPrefManager(getContext());
+        // 還沒登入的話
+        if(!sharedprefmanager.chk_login()){
+            Fragment fragment = new guestFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, fragment);
+            transaction.commit();
+        }
+        //------------------------
+
 
         //從資料庫去拿所有資料
         if (!User.recordIsGotten) {
@@ -135,10 +149,14 @@ public class doctorFragment extends Fragment implements OnMapReadyCallback {
         for (int i = 0; i < disease_tmpcount.length; i++) {
             if (i == fymp_index) {
                 disease_tmpcount[fymp_index] = tmp_date2.size();
+                Log.v("check", String.valueOf(fmyp[i]));
+                Log.v("check", String.valueOf(tmp_date2));
+                Log.v("check", String.valueOf(disease_tmpcount[i]));
+                Log.v("check", "----------------------");
             }
             //為了要讓他的長度不要無限增大
             //七天超過四次在這裡判斷的
-            if (disease_tmpcount[i] > 1) {
+            if (disease_tmpcount[i] > 3) {
                 if (!disease_tmp.contains(fmyp[i])) {
                     disease_tmp.add(fmyp[i]);
                 }

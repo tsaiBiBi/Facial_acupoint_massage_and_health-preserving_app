@@ -185,7 +185,7 @@ public class User {
     }
 
     // 修改使用者資料
-    public static void edit(final Context cxt_edit , final String fname, final String fheight , final String fweight , final Integer fgender) {
+    public static void edit(final Context cxt_edit , final String fname, final String fheight , final String fweight , final Integer fgender , final String fbirth) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST , Urls.edit , new Response.Listener<String>() {
             @Override
@@ -222,6 +222,7 @@ public class User {
                 params.put("usr_name"   , fname);
                 params.put("usr_height" , fheight);
                 params.put("usr_weight" , fweight);
+                params.put("usr_birth" , fbirth);
                 params.put("usr_gender" , String.valueOf(fgender));
                 return params;
             }

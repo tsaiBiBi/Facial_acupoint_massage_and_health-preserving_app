@@ -222,7 +222,7 @@
                                 android:layout_height="wrap_content">
 
                                 <EditText
-                                    android:id="@+id/dT_birth_edit"
+                                    android:id="@+id/eT_birth_edit"
                                     android:layout_width="177dp"
                                     android:layout_height="50dp"
                                     android:ems="10"

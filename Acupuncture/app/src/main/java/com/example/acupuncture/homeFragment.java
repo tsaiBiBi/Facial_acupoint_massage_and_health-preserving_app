@@ -11,11 +11,15 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.constraintlayout.widget.Constraints;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +31,18 @@ import com.example.webservice.Weather;
 import org.json.JSONObject;
 
 import com.example.dataclass.MusicService;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 
 public class homeFragment extends Fragment {
 
+    ConstraintLayout cl;
     ImageView gender_image;
     public static JSONObject weatherInfo;
+    private FusedLocationProviderClient fusedLocationClient;
 
     public homeFragment() {
     }
@@ -50,14 +60,23 @@ public class homeFragment extends Fragment {
         gender_image = (ImageView) view.findViewById(R.id.image);
         set_gender_img();
         Log.e("b8-home", String.valueOf(weatherInfo));
+        cl = view.findViewById(R.id.cl);
+        TextView tv_wPre = view.findViewById(R.id.tv_wPre);
+        TextView tv_wSug = view.findViewById(R.id.tv_wSug);
+        TextView tv_wKnow = view.findViewById(R.id.tv_wKnow);
         TextView tv_weatherInfo = view.findViewById(R.id.tv_weatherInfo);
+
+        /*ConstraintSet cs = new ConstraintSet();
+        cs.clone(cl);
+        cs.setHorizontalBias(gender_image.getId(), 0.9f);
+        cs.applyTo(cl);*/
 
         // check permission
         while (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED){
             // ask permission
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
         }
-        Weather.get_weather_suggestion(getActivity(), tv_weatherInfo);
+        Weather.get_weather_suggestion(getActivity(), tv_wPre, tv_wSug, tv_wKnow);
 
         return view;
     }

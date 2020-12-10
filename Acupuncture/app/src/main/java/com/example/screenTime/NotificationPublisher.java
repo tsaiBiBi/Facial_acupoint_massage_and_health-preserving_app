@@ -29,20 +29,11 @@ public class NotificationPublisher extends BroadcastReceiver {
 //        toFragment.setAction("faceFragment");
         PendingIntent pend = PendingIntent.getActivity(context, 0, toFragment, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        // ------------------+
-        // Create the TaskStackBuilder and add the intent, which inflates the back stack
-//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-//        stackBuilder.addNextIntentWithParentStack(resultIntent);
-        // Get the PendingIntent containing the entire back stack
-//        PendingIntent resultPendingIntent =
-//                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
         // do notification
         NotificationCompat.Builder notification = new NotificationCompat.Builder(context, CHANNEL_Screen_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground) // 設置圖標
                 .setContentTitle("來自穴經驗的關懷") // 設置 notify title
-                .setContentText("您使用超時了唷！建議您休息一下:3～") // 設置 notify msg
+                .setContentText("您使用超時了唷！建議您休息一下！") // 設置 notify msg
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)

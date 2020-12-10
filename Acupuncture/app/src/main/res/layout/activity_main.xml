@@ -63,7 +63,7 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view_side"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"

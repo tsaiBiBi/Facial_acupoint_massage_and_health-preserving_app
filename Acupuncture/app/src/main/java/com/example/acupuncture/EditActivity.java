@@ -39,7 +39,7 @@ import java.util.Date;
 
 public class EditActivity extends AppCompatActivity {
 
-    public static EditText et_name , et_height , et_weight;
+    public static EditText et_name , et_height , et_weight , et_birth;
     public static RadioButton radio_man , radio_woman;
     public static Integer int_gender;
     public static final int EDIT_PHOTO = 2;
@@ -49,7 +49,6 @@ public class EditActivity extends AppCompatActivity {
     public String img_url;
     public CircleImageView img;
     public static Integer int_year, int_month, int_day;
-    public static EditText et_birth;
 
     Button btn_date;
     RadioGroup rgrp_gender;
@@ -66,6 +65,7 @@ public class EditActivity extends AppCompatActivity {
         et_name = (EditText) findViewById(R.id.eT_name_edit);
         et_height = (EditText) findViewById(R.id.eT_height_edit);
         et_weight = (EditText) findViewById(R.id.eT_weight_edit);
+        et_birth = (EditText) findViewById(R.id.eT_birth_edit);
 
         // button
         btn_edit = (Button) findViewById(R.id.btn_edit_ok);
@@ -81,6 +81,7 @@ public class EditActivity extends AppCompatActivity {
         et_name.setText(extras.getString("usr_name"));
         et_height.setText(extras.getString("usr_height"));
         et_weight.setText(extras.getString("usr_weight"));
+        et_birth.setText(extras.getString("usr_birth"));
         img_url = extras.getString("img_url");
         int_gender = extras.getInt("usr_gender");
 
@@ -104,7 +105,7 @@ public class EditActivity extends AppCompatActivity {
                 int_gender = selected == R.id.rBt_man_edit ? 1 : 0;
             }
         });
-        et_birth = (EditText) findViewById(R.id.dT_birth_edit);
+        et_birth = (EditText) findViewById(R.id.eT_birth_edit);
         btn_date = (Button)findViewById(R.id.dBt_birth);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -136,9 +137,10 @@ public class EditActivity extends AppCompatActivity {
                 String fname   = et_name.getText().toString();
                 String fheight = et_height.getText().toString();
                 String fweight = et_weight.getText().toString();
+                String fbirth = et_birth.getText().toString();
                 Integer fgender = int_gender;
                 if (!chk_null(fname , fheight , fweight , fgender)) {
-                    User.edit(EditActivity.this, fname , fheight , fweight , fgender);
+                    User.edit(EditActivity.this, fname , fheight , fweight , fgender , fbirth);
                 }
             }
         });
@@ -183,6 +185,7 @@ public class EditActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             Uri uri = data.getData();
             try {

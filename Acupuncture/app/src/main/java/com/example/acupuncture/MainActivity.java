@@ -77,10 +77,14 @@ public class MainActivity extends AppCompatActivity {
         // sidebar
         NavigationView navViewSide = (NavigationView) findViewById(R.id.nav_view_side);
 
+
         // get sidebar textview
         View headerView = navViewSide.getHeaderView(0);
         nav_user_name = (TextView) headerView.findViewById(R.id.username);
         nav_user_image = (CircleImageView) headerView.findViewById(R.id.icon_image);
+
+//        MenuItem logout = (MenuItem) findViewById(R.id.nav_logout);
+//        logout.setTitle("離開");
 
         // 側滑選單點擊事件
         navViewSide.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -99,8 +103,15 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                         break;
+                    case R.id.nav_developer:
+                        Intent intent = new Intent();
+                        intent.setClass(MainActivity.this, DeveloperActivity.class);
+                        startActivity(intent);
+                        break;
                     case R.id.nav_about:
-
+                        Intent intent2 = new Intent();
+                        intent2.setClass(MainActivity.this, AboutActivity.class);
+                        startActivity(intent2);
                         break;
 
                     case R.id.nav_logout:
@@ -155,29 +166,21 @@ public class MainActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         getIntent().putExtra("toFragment", "faceFragment");
 
-        String extras = getIntent().getStringExtra("toFragment");;
+        String extras = getIntent().getStringExtra("toFragment");
+        ;
         if (extras != null) {
-            Log.i("onNewIntentGo", extras);
             getNotify(intent);
-        }else{
-            Log.e("onNewIntentGo", "toFragment 沒有值");
         }
         setIntent(intent);
     }
 
     private void getNotify(Intent intent) {
-        //拿到參數後 首先判斷是不是爲空
-        Log.e("getNotify()", "有進來這嗎");
         try {
             if (!intent.getStringExtra("toFragment").isEmpty()) {
                 String toFragment = intent.getStringExtra("toFragment");
 
-                // If menuFragment is defined, then this activity was launched with a fragment selection
-                Log.e("getNotify()", "真的有進來嗎" + toFragment);
-
                 // Here we can decide what do to -- perhaps load other parameters from the intent extras such as IDs, etc
                 if (toFragment.equals("faceFragment")) {
-                    Log.i("getNotify()go", "ok有值");
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -185,10 +188,8 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.nav_host_fragment, faceFragment);
                     fragmentTransaction.commit();
                 }
-            } else {
-                Log.e("FragmentTest", "抓不到");
             }
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Log.e("FragmentTest", "NullPointerException");
         }
         //做完操作以後必須將toValue的值初始化

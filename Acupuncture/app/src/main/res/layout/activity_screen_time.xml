@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:text="一小時內若使用裝置超出設定的時間，我們就會傳送提醒給您。"
+            android:text="一旦超過您設定的限制使用時間，我們就會傳送提醒給您。"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
     </LinearLayout>

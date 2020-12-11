@@ -111,17 +111,19 @@ public class FaceGraphic extends Graphic {
     public void show(Acup_pos point, Canvas canvas){
         float[] coordinate;
 
-        if(point.pos_type.equals("PT")){
-            coordinate = mark_on_point(point);
-        }
-        else if(point.pos_type.equals("BT")){
-            coordinate = mark_between_point(point);
-        }
-        else if(point.pos_type.equals("CS")){
-            coordinate = mark_cross_point(point);
-        }
-        else
+        try {
+            if (point.pos_type.equals("PT")) {
+                coordinate = mark_on_point(point);
+            } else if (point.pos_type.equals("BT")) {
+                coordinate = mark_between_point(point);
+            } else if (point.pos_type.equals("CS")) {
+                coordinate = mark_cross_point(point);
+            } else
+                return;
+        }catch (Exception e){
+            Log.e("B8-Exception-show", String.valueOf(e));
             return;
+        }
 
         // bias
         if(point.sym == 1 && point.side.equals("l")){
@@ -145,11 +147,15 @@ public class FaceGraphic extends Graphic {
 
     // 取得 cm 與 座標 的比例 (座標點/cm)
     public void get_length_rate(){
-        // 平均眼距估實際長度 (正常大人約 58~62 mm)
-        PointF r_eye = face.getContour(FaceContour.RIGHT_EYE).getPoints().get(0);
-        PointF l_eye = face.getContour(FaceContour.LEFT_EYE).getPoints().get(8);
-        float eye_dist =  translateX(l_eye.x) - translateX(r_eye.x);
-        this.length_rate = eye_dist / 6.0f;
+        try {
+            // 平均眼距估實際長度 (正常大人約 58~62 mm)
+            PointF r_eye = face.getContour(FaceContour.RIGHT_EYE).getPoints().get(0);
+            PointF l_eye = face.getContour(FaceContour.LEFT_EYE).getPoints().get(8);
+            float eye_dist =  translateX(l_eye.x) - translateX(r_eye.x);
+            this.length_rate = eye_dist / 6.0f;
+        }catch (Exception e){
+            Log.e("B8-Exception", String.valueOf(e));
+        }
     }
     public float[] mark_on_point(Acup_pos point){
         float[] coordinate = new float[2]; // 座標 x(0), y(1)

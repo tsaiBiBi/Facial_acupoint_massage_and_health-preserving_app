@@ -156,7 +156,7 @@ public class doctorFragment extends Fragment implements OnMapReadyCallback {
             }
             //為了要讓他的長度不要無限增大
             //七天超過四次在這裡判斷的
-            if (disease_tmpcount[i] > 3) {
+            if (disease_tmpcount[i] > 0) {
                 if (!disease_tmp.contains(fmyp[i])) {
                     disease_tmp.add(fmyp[i]);
                 }

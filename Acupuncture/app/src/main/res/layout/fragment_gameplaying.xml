@@ -31,13 +31,14 @@
         android:padding="10dp"
         android:text="Question"
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/countLabel"
-        app:layout_constraintVertical_bias="0.30" />
+        app:layout_constraintVertical_bias="0.256" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -58,7 +59,7 @@
             android:background="@drawable/quiz_nomal"
             android:text="answer1"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <Button
@@ -69,7 +70,7 @@
             android:background="@drawable/quiz_nomal"
             android:text="answer2"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <Button
@@ -80,7 +81,7 @@
             android:background="@drawable/quiz_nomal"
             android:text="answer3"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <Button
